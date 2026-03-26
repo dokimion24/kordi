@@ -1,0 +1,53 @@
+{
+  "common": {
+    "appName": "Kordi"
+  },
+  "home": {
+    "subtitle": "Piano practice web service",
+    "freePlay": "Free Play",
+    "freePlayDesc": "Play piano freely",
+    "chordQuiz": "Chord Quiz",
+    "chordQuizDesc": "Practice with random chord flash cards"
+  },
+  "piano": {
+    "title": "Piano",
+    "clickToStart": "Click to Start",
+    "audioDescription": "Audio requires user interaction to begin",
+    "loadingSamples": "Loading piano samples...",
+    "noMidiDevice": "No MIDI Device",
+    "instructions": "Use your keyboard (A-J, W/E/T/Y/U) or connect a MIDI device to play"
+  },
+  "chordQuiz": {
+    "title": "Chord Quiz",
+    "clickToStart": "Click to Start",
+    "audioDescription": "Audio requires user interaction to begin",
+    "loadingSamples": "Loading piano samples...",
+    "noMidiDevice": "No MIDI Device",
+    "gameMode": "Game Mode",
+    "mode_practice": "Practice",
+    "mode_timeattack": "Time Attack",
+    "start": "Start",
+    "stop": "Stop",
+    "pause": "Pause",
+    "resume": "Resume",
+    "score": "Score",
+    "streak": "Streak",
+    "best": "Best",
+    "accuracy": "Accuracy",
+    "settings": "Settings",
+    "difficulty": "Difficulty",
+    "difficulty_beginner": "Beginner",
+    "difficulty_intermediate": "Intermediate",
+    "difficulty_advanced": "Advanced",
+    "difficulty_custom": "Custom",
+    "chordTypes": "Chord Types",
+    "key": "Key",
+    "anyKey": "Any Key",
+    "tempo": "Tempo",
+    "barsPerChord": "Bars per Chord",
+    "timeSignature": "Time Signature",
+    "metronomeAudio": "Metronome Audio",
+    "metronomeVisual": "Metronome Visual",
+    "showNextChord": "Show Next Chord"
+  }
+}

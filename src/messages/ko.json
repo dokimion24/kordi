@@ -1,0 +1,53 @@
+{
+  "common": {
+    "appName": "Kordi"
+  },
+  "home": {
+    "subtitle": "피아노 연습 웹 서비스",
+    "freePlay": "자유 연주",
+    "freePlayDesc": "피아노를 자유롭게 연주하세요",
+    "chordQuiz": "코드 퀴즈",
+    "chordQuizDesc": "랜덤 코드를 맞춰보세요"
+  },
+  "piano": {
+    "title": "피아노",
+    "clickToStart": "클릭하여 시작",
+    "audioDescription": "오디오를 시작하려면 클릭이 필요합니다",
+    "loadingSamples": "피아노 샘플 로딩 중...",
+    "noMidiDevice": "MIDI 장치 없음",
+    "instructions": "키보드 (A~J, W/E/T/Y/U) 또는 MIDI 장치를 연결하여 연주하세요"
+  },
+  "chordQuiz": {
+    "title": "코드 퀴즈",
+    "clickToStart": "클릭하여 시작",
+    "audioDescription": "오디오를 시작하려면 클릭이 필요합니다",
+    "loadingSamples": "피아노 샘플 로딩 중...",
+    "noMidiDevice": "MIDI 장치 없음",
+    "gameMode": "게임 모드",
+    "mode_practice": "연습",
+    "mode_timeattack": "타임어택",
+    "start": "시작",
+    "stop": "정지",
+    "pause": "일시정지",
+    "resume": "계속",
+    "score": "점수",
+    "streak": "연속",
+    "best": "최고",
+    "accuracy": "정확도",
+    "settings": "설정",
+    "difficulty": "난이도",
+    "difficulty_beginner": "초급",
+    "difficulty_intermediate": "중급",
+    "difficulty_advanced": "고급",
+    "difficulty_custom": "사용자 정의",
+    "chordTypes": "코드 종류",
+    "key": "조성",
+    "anyKey": "모든 키",
+    "tempo": "템포",
+    "barsPerChord": "코드당 마디",
+    "timeSignature": "박자",
+    "metronomeAudio": "메트로놈 소리",
+    "metronomeVisual": "메트로놈 시각표시",
+    "showNextChord": "다음 코드 미리보기"
+  }
+}

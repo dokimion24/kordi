@@ -12,7 +12,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 app/                          # Next.js App Router (thin routing shell only)
 ├── layout.tsx                # Root layout
 ├── (routes)/                 # Route groups
-│   └── page.tsx              # Re-exports from src/pages layer
+│   └── page.tsx              # Re-exports from src/views layer
 
 src/
 ├── pages/                    # FSD: page compositors (compose widgets + features)
@@ -39,9 +39,9 @@ src/
 ## FSD Rules
 
 1. **Unidirectional imports only**: Higher layers import from lower layers. NEVER import upward.
-   - `app → pages → widgets → features → entities → shared`
+   - `app → views → widgets → features → entities → shared`
 2. **Public API contract**: Every slice exports through `index.ts`. Never import from slice internals.
-3. **Thin app/ routes**: `app/` route files only compose and re-export from `src/pages/`. No business logic.
+3. **Thin app/ routes**: `app/` route files only compose and re-export from `src/views/`. No business logic.
 4. **Server Actions → features**: Mutations (`"use server"`) belong in `features/{domain}/api/`.
 5. **Data reads → entities**: Query functions belong in `entities/{domain}/api/`.
 6. **Route Handlers → app/api/**: Only for webhooks, OAuth callbacks, external integrations.
