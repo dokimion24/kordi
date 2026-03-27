@@ -18,6 +18,7 @@ import {
   QuizControls,
   QuizSettingsPanel,
 } from "@/widgets/chord-quiz-game";
+import { AppHeader } from "@/widgets/app-header";
 import { cn } from "@/shared/lib/utils";
 
 export function ChordQuizPage() {
@@ -78,14 +79,14 @@ export function ChordQuizPage() {
   // Audio start overlay
   if (!isAudioStarted) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center bg-zinc-950">
+      <div className="flex min-h-screen flex-col items-center justify-center">
         <button
           onClick={startAudio}
-          className="group flex flex-col items-center gap-4 rounded-2xl border border-zinc-800 bg-zinc-900 px-12 py-10 transition-all hover:border-violet-500/50 hover:shadow-[0_0_30px_rgba(139,92,246,0.15)]"
+          className="glass glass-hover group flex flex-col items-center gap-4 rounded-2xl px-12 py-10 transition-all duration-300 hover:neon-glow"
         >
-          <div className="flex size-16 items-center justify-center rounded-full bg-violet-500/10">
+          <div className="flex size-16 items-center justify-center rounded-full bg-neon/10">
             <svg
-              className="size-8 text-violet-400 transition-transform group-hover:scale-110"
+              className="size-8 text-neon transition-transform group-hover:scale-110"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -99,8 +100,8 @@ export function ChordQuizPage() {
             </svg>
           </div>
           <div className="text-center">
-            <p className="text-lg font-semibold text-zinc-100">{t("clickToStart")}</p>
-            <p className="mt-1 text-sm text-zinc-500">{t("audioDescription")}</p>
+            <p className="text-lg font-semibold text-foreground">{t("clickToStart")}</p>
+            <p className="mt-1 text-sm text-muted-foreground">{t("audioDescription")}</p>
           </div>
         </button>
       </div>
@@ -108,23 +109,23 @@ export function ChordQuizPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center bg-zinc-950 pt-6">
+    <div className="flex min-h-screen flex-col items-center pt-6">
       {/* Header */}
-      <div className="mb-4 flex w-full max-w-4xl items-center justify-between px-4">
-        <h1 className="text-xl font-bold text-zinc-100">{tCommon("appName")}</h1>
-        <div className="flex items-center gap-2">
-          {selectedDevice ? (
-            <span className="flex items-center gap-1.5 rounded-full bg-violet-500/10 px-3 py-1 text-xs text-violet-400">
-              <span className="size-1.5 rounded-full bg-violet-400" />
-              {selectedDevice.name}
-            </span>
-          ) : (
-            <span className="flex items-center gap-1.5 rounded-full bg-zinc-800 px-3 py-1 text-xs text-zinc-500">
-              <span className="size-1.5 rounded-full bg-zinc-600" />
-              {t("noMidiDevice")}
-            </span>
-          )}
-        </div>
+      <AppHeader showBack />
+
+      {/* MIDI Status */}
+      <div className="mb-2 flex w-full max-w-4xl justify-end px-4">
+        {selectedDevice ? (
+          <span className="glass flex items-center gap-1.5 rounded-full px-3 py-1 text-xs text-neon">
+            <span className="size-1.5 rounded-full bg-neon" />
+            {selectedDevice.name}
+          </span>
+        ) : (
+          <span className="glass flex items-center gap-1.5 rounded-full px-3 py-1 text-xs text-muted-foreground">
+            <span className="size-1.5 rounded-full bg-muted-foreground" />
+            {t("noMidiDevice")}
+          </span>
+        )}
       </div>
 
       {/* Idle: show inline settings */}
@@ -183,15 +184,15 @@ export function ChordQuizPage() {
 
       {/* Loading */}
       {!isLoaded && (
-        <div className="mb-4 text-sm text-zinc-500">{t("loadingSamples")}</div>
+        <div className="mb-4 text-sm text-muted-foreground">{t("loadingSamples")}</div>
       )}
 
       {/* Piano Keyboard with feedback glow */}
       <div
         className={cn(
           "w-full max-w-4xl rounded-lg px-4 transition-shadow duration-200",
-          feedbackState === "correct" && "shadow-[0_0_30px_rgba(16,185,129,0.3)]",
-          feedbackState === "incorrect" && "shadow-[0_0_30px_rgba(239,68,68,0.3)]"
+          feedbackState === "correct" && "shadow-[0_0_25px_oklch(0.72_0.1_165/20%)]",
+          feedbackState === "incorrect" && "shadow-[0_0_25px_oklch(0.65_0.12_20/20%)]"
         )}
       >
         <PianoKeyboard
