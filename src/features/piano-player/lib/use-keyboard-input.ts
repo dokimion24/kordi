@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useCallbackRef } from "@/shared/lib/react/use-callback-ref";
 import {
   NOTE_KEY_OFFSETS,
   CONTROL_KEYS,
@@ -34,14 +35,10 @@ export function useKeyboardInput({
   octaveRef.current = octave;
   velocityRef.current = velocity;
 
-  const onNoteOnRef = useRef(onNoteOn);
-  const onNoteOffRef = useRef(onNoteOff);
-  const onSustainChangeRef = useRef(onSustainChange);
-  onNoteOnRef.current = onNoteOn;
-  onNoteOffRef.current = onNoteOff;
-  onSustainChangeRef.current = onSustainChange;
+  const onNoteOnRef = useCallbackRef(onNoteOn);
+  const onNoteOffRef = useCallbackRef(onNoteOff);
+  const onSustainChangeRef = useCallbackRef(onSustainChange);
 
-  // Track which keys are pressed and what MIDI note they mapped to
   const pressedKeys = useRef(new Map<string, number>());
 
   useEffect(() => {
@@ -53,7 +50,6 @@ export function useKeyboardInput({
 
       const { code } = e;
 
-      // Control keys
       if (code === CONTROL_KEYS.OCTAVE_DOWN) {
         e.preventDefault();
         setOctave((prev) => Math.max(MIN_OCTAVE, prev - 1));
@@ -84,7 +80,6 @@ export function useKeyboardInput({
         return;
       }
 
-      // Note keys
       const offset = NOTE_KEY_OFFSETS[code];
       if (offset === undefined) return;
       if (pressedKeys.current.has(code)) return;
@@ -97,7 +92,6 @@ export function useKeyboardInput({
 
     function handleKeyUp(e: KeyboardEvent) {
       const { code } = e;
-
       const midi = pressedKeys.current.get(code);
       if (midi === undefined) return;
 

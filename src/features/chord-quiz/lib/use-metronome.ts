@@ -2,20 +2,9 @@
 
 import { useCallback, useRef, useState } from "react";
 import * as Tone from "tone";
+import { useCallbackRef } from "@/shared/lib/react/use-callback-ref";
+import { TIME_SIGNATURE_CONFIGS } from "@/shared/lib/music/time-signature";
 import type { TimeSignature } from "@/entities/chord-quiz";
-
-function getBeatsPerBar(ts: TimeSignature): number {
-  switch (ts) {
-    case "4/4": return 4;
-    case "3/4": return 3;
-    case "2/4": return 2;
-    case "6/8": return 6;
-  }
-}
-
-function getSubdivision(ts: TimeSignature): string {
-  return ts === "6/8" ? "8n" : "4n";
-}
 
 interface UseMetronomeOptions {
   bpm: number;
@@ -37,17 +26,14 @@ export function useMetronome({
   const synthRef = useRef<Tone.Synth | null>(null);
   const eventIdRef = useRef<number | null>(null);
   const barCountRef = useRef(0);
-  const onBeatRef = useRef(onBeat);
-  const onBarCompleteRef = useRef(onBarComplete);
-  onBeatRef.current = onBeat;
-  onBarCompleteRef.current = onBarComplete;
+  const onBeatRef = useCallbackRef(onBeat);
+  const onBarCompleteRef = useCallbackRef(onBarComplete);
 
   const start = useCallback(() => {
-    const beatsPerBar = getBeatsPerBar(timeSignature);
-    const subdivision = getSubdivision(timeSignature);
+    const config = TIME_SIGNATURE_CONFIGS[timeSignature];
     const transport = Tone.getTransport();
 
-    transport.bpm.value = timeSignature === "6/8" ? bpm * 1.5 : bpm;
+    transport.bpm.value = bpm * config.bpmMultiplier;
     transport.cancel();
 
     if (audioEnabled && !synthRef.current) {
@@ -63,7 +49,7 @@ export function useMetronome({
 
     eventIdRef.current = transport.scheduleRepeat(
       (time) => {
-        const beatInBar = beatIndex % beatsPerBar;
+        const beatInBar = beatIndex % config.beatsPerBar;
         const isDownbeat = beatInBar === 0;
 
         if (audioEnabled && synthRef.current) {
@@ -86,7 +72,7 @@ export function useMetronome({
 
         beatIndex++;
       },
-      subdivision
+      config.subdivision
     );
 
     transport.start();
@@ -107,7 +93,7 @@ export function useMetronome({
     setIsPlaying(false);
   }, []);
 
-  const beatsPerBar = getBeatsPerBar(timeSignature);
+  const beatsPerBar = TIME_SIGNATURE_CONFIGS[timeSignature].beatsPerBar;
 
   return { currentBeat, isPlaying, beatsPerBar, start, stop };
 }

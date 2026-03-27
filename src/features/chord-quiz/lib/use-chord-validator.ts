@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallbackRef } from "@/shared/lib/react/use-callback-ref";
 import { validateChord } from "@/shared/lib/music";
 import type { ActiveNote } from "@/entities/note";
 import type { QuizResult } from "@/entities/chord-quiz";
@@ -24,10 +25,8 @@ export function useChordValidator({
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const answeredRef = useRef(false);
   const cooldownRef = useRef(false);
-  const onCorrectRef = useRef(onCorrect);
-  const onIncorrectRef = useRef(onIncorrect);
-  onCorrectRef.current = onCorrect;
-  onIncorrectRef.current = onIncorrect;
+  const onCorrectRef = useCallbackRef(onCorrect);
+  const onIncorrectRef = useCallbackRef(onIncorrect);
 
   // Reset answered flag when target chord changes, with cooldown
   useEffect(() => {

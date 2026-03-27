@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallbackRef } from "@/shared/lib/react/use-callback-ref";
 import type { MidiDeviceInfo } from "../model/types";
 
 interface UseMidiInputOptions {
@@ -17,11 +18,8 @@ export function useMidiInput({
   const [devices, setDevices] = useState<MidiDeviceInfo[]>([]);
   const [selectedDeviceId, setSelectedDeviceId] = useState<string | null>(null);
   const midiAccessRef = useRef<MIDIAccess | null>(null);
-  const onNoteOnRef = useRef(onNoteOn);
-  const onNoteOffRef = useRef(onNoteOff);
-
-  onNoteOnRef.current = onNoteOn;
-  onNoteOffRef.current = onNoteOff;
+  const onNoteOnRef = useCallbackRef(onNoteOn);
+  const onNoteOffRef = useCallbackRef(onNoteOff);
 
   const updateDevices = useCallback((access: MIDIAccess) => {
     const infos: MidiDeviceInfo[] = [];
