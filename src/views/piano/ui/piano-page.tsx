@@ -1,65 +1,16 @@
 "use client";
 
-import { useCallback } from "react";
 import { useTranslations } from "next-intl";
-import { useActiveNotes } from "@/entities/note";
-import {
-  useKeyboardInput,
-  useMidiInput,
-  useSoundEngine,
-} from "@/features/piano-player";
+import { usePianoInput } from "@/features/piano-player";
 import { PianoKeyboard, ChordDisplay } from "@/widgets/piano-keyboard";
 import { AppHeader } from "@/widgets/app-header";
 import { InstrumentSelector } from "@/shared/ui/instrument-selector";
 
 export function PianoPage() {
   const t = useTranslations("piano");
-  const tCommon = useTranslations("common");
-  const { activeNotes, noteOn, noteOff } = useActiveNotes();
 
-  const { isAudioStarted, isLoaded, startAudio, handleNoteOn, handleNoteOff } =
-    useSoundEngine({ noteOn, noteOff });
-
-  const keyboardNoteOn = useCallback(
-    (midi: number, velocity: number) => handleNoteOn(midi, velocity, "keyboard"),
-    [handleNoteOn]
-  );
-  const keyboardNoteOff = useCallback(
-    (midi: number) => handleNoteOff(midi, "keyboard"),
-    [handleNoteOff]
-  );
-
-  const { octave, velocity, sustain } = useKeyboardInput({
-    onNoteOn: keyboardNoteOn,
-    onNoteOff: keyboardNoteOff,
-    enabled: isAudioStarted,
-  });
-
-  const midiNoteOn = useCallback(
-    (midi: number, velocity: number) => handleNoteOn(midi, velocity, "midi"),
-    [handleNoteOn]
-  );
-  const midiNoteOff = useCallback(
-    (midi: number) => handleNoteOff(midi, "midi"),
-    [handleNoteOff]
-  );
-
-  const { devices, selectedDeviceId } = useMidiInput({
-    onNoteOn: midiNoteOn,
-    onNoteOff: midiNoteOff,
-    enabled: isAudioStarted,
-  });
-
-  const mouseNoteOn = useCallback(
-    (midi: number) => handleNoteOn(midi, 0.8, "mouse"),
-    [handleNoteOn]
-  );
-  const mouseNoteOff = useCallback(
-    (midi: number) => handleNoteOff(midi, "mouse"),
-    [handleNoteOff]
-  );
-
-  const selectedDevice = devices.find((d) => d.id === selectedDeviceId);
+  const { activeNotes, isAudioStarted, isLoaded, startAudio, keyboard, midi, mouse } =
+    usePianoInput();
 
   if (!isAudioStarted) {
     return (
@@ -94,15 +45,14 @@ export function PianoPage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center pt-8">
-      {/* Header */}
       <AppHeader showBack />
 
       {/* MIDI Status */}
       <div className="mb-4 flex w-full max-w-4xl justify-end px-4">
-        {selectedDevice ? (
+        {midi.selectedDevice ? (
           <span className="glass flex items-center gap-1.5 rounded-full px-3 py-1 text-xs text-neon">
             <span className="size-1.5 rounded-full bg-neon" />
-            {selectedDevice.name}
+            {midi.selectedDevice.name}
           </span>
         ) : (
           <span className="glass flex items-center gap-1.5 rounded-full px-3 py-1 text-xs text-muted-foreground">
@@ -128,21 +78,21 @@ export function PianoPage() {
       {/* Controls */}
       <div className="mb-4 flex items-center gap-3 text-xs">
         <span className="glass rounded-lg px-2.5 py-1 text-muted-foreground">
-          Oct: <span className="text-foreground">{octave}</span>
+          Oct: <span className="text-foreground">{keyboard.octave}</span>
           <span className="ml-1 opacity-40">[Z/X]</span>
         </span>
         <span className="glass rounded-lg px-2.5 py-1 text-muted-foreground">
-          Vel: <span className="text-foreground">{velocity}</span>
+          Vel: <span className="text-foreground">{keyboard.velocity}</span>
           <span className="ml-1 opacity-40">[C/V]</span>
         </span>
         <span
           className={`rounded-lg px-2.5 py-1 ${
-            sustain
+            keyboard.sustain
               ? "glass neon-border text-neon"
               : "glass text-muted-foreground"
           }`}
         >
-          Sustain {sustain ? "ON" : "OFF"}
+          Sustain {keyboard.sustain ? "ON" : "OFF"}
           <span className="ml-1 opacity-40">[Tab]</span>
         </span>
       </div>
@@ -151,10 +101,10 @@ export function PianoPage() {
       <div className="w-full max-w-4xl px-4">
         <PianoKeyboard
           activeNotes={activeNotes}
-          onNoteOn={mouseNoteOn}
-          onNoteOff={mouseNoteOff}
+          onNoteOn={mouse.onNoteOn}
+          onNoteOff={mouse.onNoteOff}
           showShortcuts={true}
-          octave={octave}
+          octave={keyboard.octave}
         />
       </div>
 

@@ -1,14 +1,9 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { useActiveNotes } from "@/entities/note";
 import { DEFAULT_QUIZ_SETTINGS, type QuizSettings } from "@/entities/chord-quiz";
-import {
-  useKeyboardInput,
-  useMidiInput,
-  useSoundEngine,
-} from "@/features/piano-player";
+import { usePianoInput } from "@/features/piano-player";
 import { useQuizGame } from "@/features/chord-quiz";
 import { PianoKeyboard } from "@/widgets/piano-keyboard";
 import {
@@ -23,60 +18,15 @@ import { cn } from "@/shared/lib/utils";
 
 export function ChordQuizPage() {
   const t = useTranslations("chordQuiz");
-  const tCommon = useTranslations("common");
   const [settings, setSettings] = useState<QuizSettings>(DEFAULT_QUIZ_SETTINGS);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
-  const { activeNotes, noteOn, noteOff } = useActiveNotes();
-
-  const { isAudioStarted, isLoaded, startAudio, handleNoteOn, handleNoteOff } =
-    useSoundEngine({ noteOn, noteOff });
-
-  const keyboardNoteOn = useCallback(
-    (midi: number, velocity: number) => handleNoteOn(midi, velocity, "keyboard"),
-    [handleNoteOn]
-  );
-  const keyboardNoteOff = useCallback(
-    (midi: number) => handleNoteOff(midi, "keyboard"),
-    [handleNoteOff]
-  );
-
-  const { octave } = useKeyboardInput({
-    onNoteOn: keyboardNoteOn,
-    onNoteOff: keyboardNoteOff,
-    enabled: isAudioStarted,
-  });
-
-  const midiNoteOn = useCallback(
-    (midi: number, velocity: number) => handleNoteOn(midi, velocity, "midi"),
-    [handleNoteOn]
-  );
-  const midiNoteOff = useCallback(
-    (midi: number) => handleNoteOff(midi, "midi"),
-    [handleNoteOff]
-  );
-
-  const { devices, selectedDeviceId } = useMidiInput({
-    onNoteOn: midiNoteOn,
-    onNoteOff: midiNoteOff,
-    enabled: isAudioStarted,
-  });
-
-  const mouseNoteOn = useCallback(
-    (midi: number) => handleNoteOn(midi, 0.8, "mouse"),
-    [handleNoteOn]
-  );
-  const mouseNoteOff = useCallback(
-    (midi: number) => handleNoteOff(midi, "mouse"),
-    [handleNoteOff]
-  );
+  const { activeNotes, isAudioStarted, isLoaded, startAudio, keyboard, midi, mouse } =
+    usePianoInput();
 
   const { state, feedbackState, metronome, start, stop, pause, resume } =
     useQuizGame(settings, activeNotes);
 
-  const selectedDevice = devices.find((d) => d.id === selectedDeviceId);
-
-  // Audio start overlay
   if (!isAudioStarted) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center">
@@ -90,7 +40,7 @@ export function ChordQuizPage() {
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              strokeWidth={2}
+              strokeWidth={1.5}
             >
               <path
                 strokeLinecap="round"
@@ -110,15 +60,14 @@ export function ChordQuizPage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center pt-6">
-      {/* Header */}
       <AppHeader showBack />
 
       {/* MIDI Status */}
       <div className="mb-2 flex w-full max-w-4xl justify-end px-4">
-        {selectedDevice ? (
+        {midi.selectedDevice ? (
           <span className="glass flex items-center gap-1.5 rounded-full px-3 py-1 text-xs text-neon">
             <span className="size-1.5 rounded-full bg-neon" />
-            {selectedDevice.name}
+            {midi.selectedDevice.name}
           </span>
         ) : (
           <span className="glass flex items-center gap-1.5 rounded-full px-3 py-1 text-xs text-muted-foreground">
@@ -141,7 +90,7 @@ export function ChordQuizPage() {
         </div>
       )}
 
-      {/* Chord Prompt (playing/paused) */}
+      {/* Playing/Paused */}
       {state.status !== "idle" && (
         <>
           <div className="mb-4">
@@ -197,10 +146,10 @@ export function ChordQuizPage() {
       >
         <PianoKeyboard
           activeNotes={activeNotes}
-          onNoteOn={mouseNoteOn}
-          onNoteOff={mouseNoteOff}
+          onNoteOn={mouse.onNoteOn}
+          onNoteOff={mouse.onNoteOff}
           showShortcuts={true}
-          octave={octave}
+          octave={keyboard.octave}
         />
       </div>
 
