@@ -40,6 +40,13 @@ export {
 
 export { validateChord } from "./chord-validator";
 
+export { toPitchClasses, pitchClassesEqual } from "./pitch-class";
+
+export {
+  TIME_SIGNATURE_CONFIGS,
+  type TimeSignatureConfig,
+} from "./time-signature";
+
 export {
   NOTE_KEY_OFFSETS,
   CONTROL_KEYS,

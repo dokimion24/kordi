@@ -1,9 +1,5 @@
 import { CHORD_TEMPLATES, NOTE_LABELS } from "./chord-templates";
-
-function toPitchClasses(midiNotes: number[]): number[] {
-  const unique = new Set(midiNotes.map((n) => n % 12));
-  return [...unique].sort((a, b) => a - b);
-}
+import { toPitchClasses, pitchClassesEqual } from "./pitch-class";
 
 function matchTemplate(
   pitchClasses: number[],
@@ -15,7 +11,7 @@ function matchTemplate(
     const rotated = template
       .map((interval) => (interval + root) % 12)
       .sort((a, b) => a - b);
-    if (rotated.every((val, i) => val === pitchClasses[i])) {
+    if (pitchClassesEqual(rotated, pitchClasses)) {
       return root;
     }
   }
