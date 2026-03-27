@@ -17,28 +17,34 @@ export function ChordPrompt({
   feedbackState,
 }: ChordPromptProps) {
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex flex-col items-center gap-3">
       <div
         className={cn(
-          "flex h-28 w-48 items-center justify-center rounded-2xl border transition-all duration-200",
+          "glass flex h-28 w-48 items-center justify-center rounded-2xl transition-all duration-200",
           feedbackState === "correct" &&
-            "border-emerald-500 bg-emerald-500/10 shadow-[0_0_30px_rgba(16,185,129,0.3)]",
+            "border-success/40 bg-success/8 shadow-[0_0_25px_oklch(0.72_0.1_165/20%)]",
           feedbackState === "incorrect" &&
-            "border-red-500 bg-red-500/10 shadow-[0_0_30px_rgba(239,68,68,0.3)]",
+            "border-error/40 bg-error/8 shadow-[0_0_25px_oklch(0.65_0.12_20/20%)]",
           feedbackState === "timeout" &&
-            "border-amber-500 bg-amber-500/10",
-          !feedbackState && "border-zinc-700 bg-zinc-900"
+            "border-[oklch(0.7_0.08_80/30%)] bg-[oklch(0.7_0.08_80/5%)]"
         )}
       >
-        <span className="text-5xl font-bold tracking-tight text-zinc-100">
+        <span
+          className={cn(
+            "text-5xl font-bold tracking-tight",
+            feedbackState === "correct" && "text-success",
+            feedbackState === "incorrect" && "text-error",
+            !feedbackState && "neon-text"
+          )}
+        >
           {currentChord?.name ?? "-"}
         </span>
       </div>
 
       {showNext && nextChord && (
-        <div className="text-sm text-zinc-500">
+        <div className="text-sm text-muted-foreground">
           Up next:{" "}
-          <span className="font-medium text-zinc-400">{nextChord.name}</span>
+          <span className="font-medium text-foreground/70">{nextChord.name}</span>
         </div>
       )}
     </div>

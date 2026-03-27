@@ -42,7 +42,7 @@ function SettingsContent({
     <div className="flex flex-col gap-5">
       {/* Game Mode */}
       <div>
-        <label className="mb-2 block text-xs font-medium text-zinc-400">{t("gameMode")}</label>
+        <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("gameMode")}</label>
         <div className="flex gap-1.5">
           {(["practice", "timeattack"] as GameMode[]).map((mode) => (
             <button
@@ -50,8 +50,8 @@ function SettingsContent({
               onClick={() => update({ gameMode: mode })}
               className={`rounded-md px-3 py-1.5 text-xs transition-colors ${
                 settings.gameMode === mode
-                  ? "bg-violet-500 text-white"
-                  : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
+                  ? "bg-neon/20 text-neon ring-1 ring-neon/30"
+                  : "glass text-muted-foreground hover:text-foreground"
               }`}
             >
               {t(`mode_${mode}`)}
@@ -62,7 +62,7 @@ function SettingsContent({
 
       {/* Difficulty */}
       <div>
-        <label className="mb-2 block text-xs font-medium text-zinc-400">{t("difficulty")}</label>
+        <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("difficulty")}</label>
         <div className="flex flex-wrap gap-1.5">
           {DIFFICULTIES.map((d) => (
             <button
@@ -73,8 +73,8 @@ function SettingsContent({
               }}
               className={`rounded-md px-2.5 py-1 text-xs transition-colors ${
                 settings.difficulty === d
-                  ? "bg-violet-500 text-white"
-                  : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
+                  ? "bg-neon/20 text-neon ring-1 ring-neon/30"
+                  : "glass text-muted-foreground hover:text-foreground"
               }`}
             >
               {t(`difficulty_${d}`)}
@@ -86,7 +86,7 @@ function SettingsContent({
       {/* Custom chord types */}
       {settings.difficulty === "custom" && (
         <div>
-          <label className="mb-2 block text-xs font-medium text-zinc-400">{t("chordTypes")}</label>
+          <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("chordTypes")}</label>
           <div className="flex flex-wrap gap-1.5">
             {ALL_CHORD_TYPES.map((type) => {
               const label = type === "" ? "Major" : type;
@@ -102,8 +102,8 @@ function SettingsContent({
                   }}
                   className={`rounded-md px-2 py-1 text-xs transition-colors ${
                     isSelected
-                      ? "bg-violet-500/20 text-violet-300 ring-1 ring-violet-500/50"
-                      : "bg-zinc-800 text-zinc-500 hover:bg-zinc-700"
+                      ? "bg-neon/15 text-neon ring-1 ring-neon/30"
+                      : "glass text-muted-foreground/60 hover:text-muted-foreground"
                   }`}
                 >
                   {label}
@@ -116,11 +116,11 @@ function SettingsContent({
 
       {/* Key */}
       <div>
-        <label className="mb-2 block text-xs font-medium text-zinc-400">{t("key")}</label>
+        <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("key")}</label>
         <select
           value={settings.keyFilter ?? "any"}
           onChange={(e) => update({ keyFilter: e.target.value === "any" ? null : e.target.value })}
-          className="w-full rounded-md border border-zinc-700 bg-zinc-800 px-3 py-1.5 text-sm text-zinc-200"
+          className="w-full rounded-md glass px-3 py-1.5 text-sm text-foreground"
         >
           <option value="any">{t("anyKey")}</option>
           {ALL_KEYS.map((k) => (
@@ -132,7 +132,7 @@ function SettingsContent({
       {/* BPM (timeattack only) */}
       {!isPractice && (
         <div>
-          <label className="mb-2 block text-xs font-medium text-zinc-400">
+          <label className="mb-2 block text-xs font-medium text-muted-foreground">
             {t("tempo")}: {settings.bpm} BPM
           </label>
           <input
@@ -141,7 +141,7 @@ function SettingsContent({
             max={200}
             value={settings.bpm}
             onChange={(e) => update({ bpm: Number(e.target.value) })}
-            className="w-full accent-violet-500"
+            className="w-full accent-[oklch(0.75_0.08_195)]"
           />
         </div>
       )}
@@ -149,7 +149,7 @@ function SettingsContent({
       {/* Bars per chord (timeattack only) */}
       {!isPractice && (
         <div>
-          <label className="mb-2 block text-xs font-medium text-zinc-400">{t("barsPerChord")}</label>
+          <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("barsPerChord")}</label>
           <div className="flex gap-1.5">
             {[1, 2, 3, 4].map((n) => (
               <button
@@ -157,8 +157,8 @@ function SettingsContent({
                 onClick={() => update({ barsPerChord: n })}
                 className={`rounded-md px-3 py-1 text-xs transition-colors ${
                   settings.barsPerChord === n
-                    ? "bg-violet-500 text-white"
-                    : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
+                    ? "bg-neon/20 text-neon ring-1 ring-neon/30"
+                    : "glass text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {n}
@@ -171,7 +171,7 @@ function SettingsContent({
       {/* Time signature (timeattack only) */}
       {!isPractice && (
         <div>
-          <label className="mb-2 block text-xs font-medium text-zinc-400">{t("timeSignature")}</label>
+          <label className="mb-2 block text-xs font-medium text-muted-foreground">{t("timeSignature")}</label>
           <div className="flex gap-1.5">
             {TIME_SIGNATURES.map((ts) => (
               <button
@@ -179,8 +179,8 @@ function SettingsContent({
                 onClick={() => update({ timeSignature: ts })}
                 className={`rounded-md px-3 py-1 text-xs transition-colors ${
                   settings.timeSignature === ts
-                    ? "bg-violet-500 text-white"
-                    : "bg-zinc-800 text-zinc-400 hover:bg-zinc-700"
+                    ? "bg-neon/20 text-neon ring-1 ring-neon/30"
+                    : "glass text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {ts}
@@ -194,33 +194,33 @@ function SettingsContent({
       <div className="flex flex-col gap-3">
         {!isPractice && (
           <>
-            <label className="flex items-center justify-between text-sm text-zinc-300">
+            <label className="flex items-center justify-between text-sm text-foreground/80">
               {t("metronomeAudio")}
               <input
                 type="checkbox"
                 checked={settings.metronomeAudioEnabled}
                 onChange={(e) => update({ metronomeAudioEnabled: e.target.checked })}
-                className="accent-violet-500"
+                className="accent-[oklch(0.75_0.08_195)]"
               />
             </label>
-            <label className="flex items-center justify-between text-sm text-zinc-300">
+            <label className="flex items-center justify-between text-sm text-foreground/80">
               {t("metronomeVisual")}
               <input
                 type="checkbox"
                 checked={settings.metronomeVisualEnabled}
                 onChange={(e) => update({ metronomeVisualEnabled: e.target.checked })}
-                className="accent-violet-500"
+                className="accent-[oklch(0.75_0.08_195)]"
               />
             </label>
           </>
         )}
-        <label className="flex items-center justify-between text-sm text-zinc-300">
+        <label className="flex items-center justify-between text-sm text-foreground/80">
           {t("showNextChord")}
           <input
             type="checkbox"
             checked={settings.showNextChord}
             onChange={(e) => update({ showNextChord: e.target.checked })}
-            className="accent-violet-500"
+            className="accent-[oklch(0.75_0.08_195)]"
           />
         </label>
       </div>
@@ -239,28 +239,26 @@ export function QuizSettingsPanel({
 
   if (!isOpen) return null;
 
-  // Inline mode: render settings directly without overlay
   if (inline) {
     return (
-      <div className="rounded-2xl border border-zinc-800 bg-zinc-900 p-6">
-        <h2 className="mb-4 text-lg font-semibold text-zinc-100">{t("settings")}</h2>
+      <div className="glass rounded-2xl p-6">
+        <h2 className="mb-4 text-lg font-semibold text-foreground">{t("settings")}</h2>
         <SettingsContent settings={settings} onChange={onChange} />
       </div>
     );
   }
 
-  // Slide-out mode
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
-      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
-      <div className="relative z-10 flex w-80 flex-col gap-6 overflow-y-auto bg-zinc-900 p-6 shadow-xl">
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
+      <div className="glass-strong relative z-10 flex w-80 flex-col gap-6 overflow-y-auto p-6 shadow-xl">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-zinc-100">{t("settings")}</h2>
-          <Button variant="ghost" size="icon-sm" onClick={onClose}>
+          <h2 className="text-lg font-semibold text-foreground">{t("settings")}</h2>
+          <button onClick={onClose} className="rounded-lg p-1.5 text-muted-foreground transition-colors hover:text-foreground">
             <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
-          </Button>
+          </button>
         </div>
         <SettingsContent settings={settings} onChange={onChange} />
       </div>

@@ -13,14 +13,14 @@ export function ChordDisplay({ activeNotes }: ChordDisplayProps) {
   if (!chord) {
     return (
       <div className="flex h-16 items-center justify-center">
-        <span className="text-lg text-zinc-600">-</span>
+        <span className="text-lg text-muted-foreground/40">-</span>
       </div>
     );
   }
 
   return (
     <div className="flex h-16 items-center justify-center">
-      <span className="text-3xl font-bold tracking-wide text-violet-400">
+      <span className="neon-text text-3xl font-bold tracking-wide">
         {chord}
       </span>
     </div>

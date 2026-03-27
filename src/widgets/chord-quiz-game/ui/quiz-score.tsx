@@ -15,22 +15,22 @@ export function QuizScore({ state }: QuizScoreProps) {
       : 0;
 
   return (
-    <div className="flex items-center gap-6 text-sm">
+    <div className="glass flex items-center gap-6 rounded-xl px-6 py-3 text-sm">
       <div className="text-center">
-        <div className="text-2xl font-bold text-zinc-100">{state.score}</div>
-        <div className="text-xs text-zinc-500">{t("score")}</div>
+        <div className="neon-text text-2xl font-bold">{state.score}</div>
+        <div className="text-xs text-muted-foreground">{t("score")}</div>
       </div>
       <div className="text-center">
-        <div className="text-2xl font-bold text-violet-400">{state.streak}</div>
-        <div className="text-xs text-zinc-500">{t("streak")}</div>
+        <div className="text-2xl font-bold text-neon">{state.streak}</div>
+        <div className="text-xs text-muted-foreground">{t("streak")}</div>
       </div>
       <div className="text-center">
-        <div className="text-2xl font-bold text-zinc-400">{state.bestStreak}</div>
-        <div className="text-xs text-zinc-500">{t("best")}</div>
+        <div className="text-2xl font-bold text-foreground/60">{state.bestStreak}</div>
+        <div className="text-xs text-muted-foreground">{t("best")}</div>
       </div>
       <div className="text-center">
-        <div className="text-2xl font-bold text-zinc-400">{accuracy}%</div>
-        <div className="text-xs text-zinc-500">{t("accuracy")}</div>
+        <div className="text-2xl font-bold text-foreground/60">{accuracy}%</div>
+        <div className="text-xs text-muted-foreground">{t("accuracy")}</div>
       </div>
     </div>
   );

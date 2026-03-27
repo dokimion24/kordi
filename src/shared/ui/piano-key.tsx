@@ -62,10 +62,12 @@ export const PianoKey = memo(function PianoKey({
         className={cn(
           "flex flex-col items-center justify-end",
           "h-[60%] w-full rounded-b-md",
-          "bg-zinc-900 border border-zinc-800",
-          "transition-all duration-50",
-          "hover:bg-zinc-800",
-          "data-[active]:bg-violet-500 data-[active]:shadow-[0_0_12px_rgba(139,92,246,0.5)]",
+          "bg-[oklch(0.22_0.01_260)] dark:bg-[oklch(0.13_0.01_260)]",
+          "border border-[oklch(0_0_0/10%)] dark:border-[oklch(1_0_0/6%)]",
+          "transition-all duration-75",
+          "hover:bg-[oklch(0.26_0.01_260)] dark:hover:bg-[oklch(0.17_0.01_260)]",
+          "data-[active]:bg-[oklch(0.35_0.08_195)] dark:data-[active]:bg-[oklch(0.3_0.06_195)]",
+          "data-[active]:shadow-[0_0_12px_var(--neon-glow)]",
           "touch-none select-none cursor-pointer"
         )}
         onPointerDown={handlePointerDown}
@@ -74,7 +76,7 @@ export const PianoKey = memo(function PianoKey({
         onPointerLeave={handlePointerLeave}
       >
         {keyboardShortcut && (
-          <span className="mb-1 text-[9px] font-mono text-zinc-500 data-[active]:text-white">
+          <span className="mb-1 text-[9px] font-mono text-[oklch(0.4_0.02_260)]">
             {keyboardShortcut}
           </span>
         )}
@@ -90,10 +92,12 @@ export const PianoKey = memo(function PianoKey({
       className={cn(
         "relative flex flex-col items-center justify-end",
         "h-full flex-1 rounded-b-lg",
-        "bg-zinc-100 border border-zinc-300",
-        "transition-all duration-50",
-        "hover:bg-zinc-200",
-        "data-[active]:bg-violet-200 data-[active]:shadow-[0_0_16px_rgba(139,92,246,0.3)]",
+        "bg-[oklch(0.97_0.003_260)] dark:bg-[oklch(0.92_0.005_260)]",
+        "border border-[oklch(0_0_0/8%)] dark:border-[oklch(0.8_0.01_260)]",
+        "transition-all duration-75",
+        "hover:bg-[oklch(0.94_0.005_260)] dark:hover:bg-[oklch(0.88_0.01_260)]",
+        "data-[active]:bg-[oklch(0.88_0.05_195)] dark:data-[active]:bg-[oklch(0.82_0.04_195)]",
+        "data-[active]:shadow-[0_0_16px_var(--neon-glow)]",
         "touch-none select-none cursor-pointer"
       )}
       onPointerDown={handlePointerDown}
@@ -102,7 +106,7 @@ export const PianoKey = memo(function PianoKey({
       onPointerLeave={handlePointerLeave}
     >
       {keyboardShortcut && (
-        <span className="mb-2 text-[10px] font-mono text-zinc-400">
+        <span className="mb-2 text-[10px] font-mono text-[oklch(0.5_0.02_260)]">
           {keyboardShortcut}
         </span>
       )}
