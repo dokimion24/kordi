@@ -45,7 +45,7 @@ function makeFMSynth(options: Record<string, unknown>): Tone.PolySynth {
   return s.toDestination();
 }
 
-const INSTRUMENT_REGISTRY: Record<InstrumentId, InstrumentFactory> = {
+const INSTRUMENT_STRATEGIES: Record<InstrumentId, InstrumentFactory> = {
   "grand-piano": () =>
     new Tone.Sampler({
       urls: SALAMANDER_URLS,
@@ -119,7 +119,7 @@ export async function loadInstrument(id: InstrumentId): Promise<void> {
       }).toDestination();
     });
   } else {
-    current = INSTRUMENT_REGISTRY[id]();
+    current = INSTRUMENT_STRATEGIES[id]();
     currentId = id;
   }
 }

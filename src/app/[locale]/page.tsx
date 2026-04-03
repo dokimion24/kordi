@@ -2,10 +2,11 @@ import { useTranslations } from "next-intl";
 import { Music, Lightbulb } from "lucide-react";
 import { Link } from "@/shared/config/i18n/navigation";
 import { AppHeader } from "@/widgets/app-header";
+import { ROUTES } from "@/shared/config/auth";
 
 const MENU_ITEMS = [
-  { href: "/piano", icon: Music, iconColor: "text-neon", bgColor: "bg-neon/10", titleKey: "freePlay", descKey: "freePlayDesc" },
-  { href: "/chord-quiz", icon: Lightbulb, iconColor: "text-success", bgColor: "bg-success/10", titleKey: "chordQuiz", descKey: "chordQuizDesc" },
+  { href: ROUTES.PIANO, icon: Music, iconColor: "text-neon", bgColor: "bg-neon/10", titleKey: "freePlay", descKey: "freePlayDesc" },
+  { href: ROUTES.CHORD_QUIZ, icon: Lightbulb, iconColor: "text-success", bgColor: "bg-success/10", titleKey: "chordQuiz", descKey: "chordQuizDesc" },
 ] as const;
 
 export default function LocaleHome() {
@@ -13,12 +14,9 @@ export default function LocaleHome() {
 
   return (
     <div className="flex min-h-screen flex-col items-center">
-      <AppHeader />
+      <AppHeader showLogout />
 
       <div className="flex flex-1 flex-col items-center justify-center">
-        <h1 className="neon-text mb-2 text-4xl font-bold tracking-tight">Kordi</h1>
-        <p className="mb-12 text-sm text-muted-foreground">{t("subtitle")}</p>
-
         <div className="grid w-full max-w-md gap-4 px-6">
           {MENU_ITEMS.map(({ href, icon: Icon, iconColor, bgColor, titleKey, descKey }) => (
             <Link
