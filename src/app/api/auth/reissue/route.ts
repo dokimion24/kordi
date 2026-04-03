@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import { AUTH_COOKIES, COOKIE_OPTIONS } from "@/shared/config/auth";
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
+import ky from "ky";
+import { AUTH_COOKIES, COOKIE_OPTIONS, TOKEN_TTL } from "@/shared/config/auth";
+import { API_BASE_URL } from "@/shared/config/api";
 
 export async function POST() {
   const cookieStore = await cookies();
@@ -12,12 +12,27 @@ export async function POST() {
     return NextResponse.json({ error: "No refresh token" }, { status: 401 });
   }
 
-  const res = await fetch(`${BASE_URL}/api/auth/reissue`, {
-    method: "POST",
-    headers: { Authorization: `Bearer ${refreshToken}` },
-  });
+  try {
+    const tokens = await ky
+      .post(`${API_BASE_URL}/api/auth/reissue`, {
+        headers: { Authorization: `Bearer ${refreshToken}` },
+      })
+      .json<{ accessToken: string; refreshToken: string }>();
 
-  if (!res.ok) {
+    const response = NextResponse.json({ success: true });
+
+    response.cookies.set(AUTH_COOKIES.ACCESS_TOKEN, tokens.accessToken, {
+      ...COOKIE_OPTIONS,
+      maxAge: TOKEN_TTL.ACCESS_TOKEN,
+    });
+
+    response.cookies.set(AUTH_COOKIES.REFRESH_TOKEN, tokens.refreshToken, {
+      ...COOKIE_OPTIONS,
+      maxAge: TOKEN_TTL.REFRESH_TOKEN,
+    });
+
+    return response;
+  } catch {
     const response = NextResponse.json(
       { error: "Refresh failed" },
       { status: 401 },
@@ -26,21 +41,4 @@ export async function POST() {
     response.cookies.delete(AUTH_COOKIES.REFRESH_TOKEN);
     return response;
   }
-
-  const data = await res.json();
-  const tokens = data.data;
-
-  const response = NextResponse.json({ success: true });
-
-  response.cookies.set(AUTH_COOKIES.ACCESS_TOKEN, tokens.accessToken, {
-    ...COOKIE_OPTIONS,
-    maxAge: 30 * 60,
-  });
-
-  response.cookies.set(AUTH_COOKIES.REFRESH_TOKEN, tokens.refreshToken, {
-    ...COOKIE_OPTIONS,
-    maxAge: 14 * 24 * 60 * 60,
-  });
-
-  return response;
 }

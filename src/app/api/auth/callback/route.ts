@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { AUTH_COOKIES, COOKIE_OPTIONS, ROUTES } from "@/shared/config/auth";
+import { AUTH_COOKIES, COOKIE_OPTIONS, TOKEN_TTL } from "@/shared/config/auth";
+import { ROUTES } from "@/shared/config/routes";
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -14,12 +15,12 @@ export async function GET(request: NextRequest) {
 
   response.cookies.set(AUTH_COOKIES.ACCESS_TOKEN, accessToken, {
     ...COOKIE_OPTIONS,
-    maxAge: 30 * 60, // 30 minutes
+    maxAge: TOKEN_TTL.ACCESS_TOKEN,
   });
 
   response.cookies.set(AUTH_COOKIES.REFRESH_TOKEN, refreshToken, {
     ...COOKIE_OPTIONS,
-    maxAge: 14 * 24 * 60 * 60, // 14 days
+    maxAge: TOKEN_TTL.REFRESH_TOKEN,
   });
 
   return response;

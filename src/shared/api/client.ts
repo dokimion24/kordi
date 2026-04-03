@@ -1,11 +1,14 @@
-import ky from "ky";
+import ky, { type KyInstance } from "ky";
 import { cookies } from "next/headers";
 import { AUTH_COOKIES } from "@/shared/config/auth";
+import { API_BASE_URL } from "@/shared/config/api";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8080";
-
-export const apiClient = ky.create({
-  prefixUrl: BASE_URL,
+/**
+ * Server-side API client (RSC, Route Handlers, Server Actions)
+ * Reads httpOnly cookies and forwards as Bearer token
+ */
+export const apiClient: KyInstance = ky.create({
+  prefixUrl: API_BASE_URL,
   hooks: {
     beforeRequest: [
       async (request) => {
