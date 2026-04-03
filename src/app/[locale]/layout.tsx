@@ -5,6 +5,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { ThemeProvider } from "next-themes";
 import { routing } from "@/shared/config/i18n/routing";
 import { RippleBackground } from "@/shared/ui/ripple-background";
+import { QueryProvider } from "@/shared/lib/react/query-provider";
 import "../globals.css";
 
 const geistMono = Geist_Mono({
@@ -39,7 +40,7 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <body className="relative min-h-full flex flex-col overflow-x-hidden">
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           {/* Background gradient blobs */}
           <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
             {/* Gradient blobs - visible through glass elements */}
@@ -47,11 +48,13 @@ export default async function LocaleLayout({
             <div className="absolute -bottom-32 -right-32 h-[600px] w-[600px] rounded-full bg-[oklch(0.72_0.08_280)] opacity-15 blur-[90px] dark:bg-[oklch(0.28_0.06_270)] dark:opacity-40" />
             <div className="absolute left-1/3 top-1/3 h-[500px] w-[500px] rounded-full bg-[oklch(0.8_0.06_165)] opacity-12 blur-[80px] dark:bg-[oklch(0.3_0.05_220)] dark:opacity-30" />
           </div>
-          <NextIntlClientProvider messages={messages}>
-            <RippleBackground>
-              {children}
-            </RippleBackground>
-          </NextIntlClientProvider>
+          <QueryProvider>
+            <NextIntlClientProvider messages={messages}>
+              <RippleBackground>
+                {children}
+              </RippleBackground>
+            </NextIntlClientProvider>
+          </QueryProvider>
         </ThemeProvider>
       </body>
     </html>

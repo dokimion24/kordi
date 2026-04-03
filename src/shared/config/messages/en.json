@@ -1,7 +1,21 @@
 {
   "common": {
     "appName": "Kordi",
-    "logout": "Log out"
+    "logout": "Log out",
+    "myProfile": "My Profile"
+  },
+  "me": {
+    "title": "My Profile",
+    "nickname": "Nickname",
+    "email": "Email",
+    "save": "Save",
+    "nicknamePlaceholder": "Enter your nickname",
+    "nicknameDuplicated": "This nickname is already taken",
+    "nicknameAvailable": "This nickname is available",
+    "nicknameTooShort": "Nickname must be at least 2 characters",
+    "nicknameTooLong": "Nickname must be 20 characters or less",
+    "nicknameInvalid": "Only letters, numbers, and underscores allowed",
+    "saveSuccess": "Profile updated successfully"
   },
   "login": {
     "subtitle": "Start your piano practice",

@@ -1,7 +1,21 @@
 {
   "common": {
     "appName": "Kordi",
-    "logout": "로그아웃"
+    "logout": "로그아웃",
+    "myProfile": "내 프로필"
+  },
+  "me": {
+    "title": "내 프로필",
+    "nickname": "닉네임",
+    "email": "이메일",
+    "save": "저장",
+    "nicknamePlaceholder": "닉네임을 입력하세요",
+    "nicknameDuplicated": "이미 사용 중인 닉네임입니다",
+    "nicknameAvailable": "사용 가능한 닉네임입니다",
+    "nicknameTooShort": "닉네임은 2자 이상이어야 합니다",
+    "nicknameTooLong": "닉네임은 20자 이하여야 합니다",
+    "nicknameInvalid": "한글, 영문, 숫자, 밑줄만 사용 가능합니다",
+    "saveSuccess": "프로필이 수정되었습니다"
   },
   "login": {
     "subtitle": "피아노 연습을 시작하세요",

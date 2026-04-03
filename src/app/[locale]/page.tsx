@@ -2,7 +2,7 @@ import { useTranslations } from "next-intl";
 import { Music, Lightbulb } from "lucide-react";
 import { Link } from "@/shared/config/i18n/navigation";
 import { AppHeader } from "@/widgets/app-header";
-import { ROUTES } from "@/shared/config/auth";
+import { ROUTES } from "@/shared/config/routes";
 
 const MENU_ITEMS = [
   { href: ROUTES.PIANO, icon: Music, iconColor: "text-neon", bgColor: "bg-neon/10", titleKey: "freePlay", descKey: "freePlayDesc" },
@@ -14,7 +14,7 @@ export default function LocaleHome() {
 
   return (
     <div className="flex min-h-screen flex-col items-center">
-      <AppHeader showLogout />
+      <AppHeader />
 
       <div className="flex flex-1 flex-col items-center justify-center">
         <div className="grid w-full max-w-md gap-4 px-6">
