@@ -1,31 +1,157 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
-import { DEFAULT_QUIZ_SETTINGS, type QuizSettings } from "@/entities/chord-quiz";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { usePianoInput } from "@/features/piano-player";
-import { useQuizGame } from "@/features/chord-quiz";
-import { PianoKeyboard } from "@/widgets/piano-keyboard";
 import {
-  ChordPrompt,
-  MetronomeDisplay,
-  QuizScore,
-  QuizControls,
-  QuizSettingsPanel,
-} from "@/widgets/chord-quiz-game";
+  useQuizGameState,
+  useQuizTimer,
+  useQuizChordCheck,
+  saveScore,
+} from "@/features/quiz-game";
+import { quizQueries, type QuizDifficulty } from "@/entities/quiz";
+import { PianoKeyboard } from "@/widgets/piano-keyboard";
+import { ChordPrompt } from "@/widgets/chord-quiz-game";
+import {
+  DifficultySelect,
+  QuizProgress,
+  QuizResult,
+} from "@/widgets/quiz-game-panel";
 import { AppHeader } from "@/widgets/app-header";
 import { cn } from "@/shared/lib/utils";
 
 export function ChordQuizPage() {
   const t = useTranslations("chordQuiz");
-  const [settings, setSettings] = useState<QuizSettings>(DEFAULT_QUIZ_SETTINGS);
-  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [selectedDifficulty, setSelectedDifficulty] =
+    useState<QuizDifficulty | null>(null);
+  const [feedbackState, setFeedbackState] = useState<
+    "correct" | "incorrect" | null
+  >(null);
+  const quizStartedRef = useRef(false);
 
-  const { activeNotes, isAudioStarted, isLoaded, startAudio, keyboard, midi, mouse } =
-    usePianoInput();
+  const {
+    activeNotes,
+    isAudioStarted,
+    isLoaded,
+    startAudio,
+    keyboard,
+    midi,
+    mouse,
+  } = usePianoInput();
 
-  const { state, feedbackState, metronome, start, stop, pause, resume } =
-    useQuizGame(settings, activeNotes);
+  const {
+    state,
+    startQuiz,
+    answerCorrect,
+    answerIncorrect,
+    answerTimeout,
+    tick,
+    reset,
+  } = useQuizGameState();
+
+  const { data: chords, isFetching } = useQuery({
+    ...quizQueries.chords(selectedDifficulty!),
+    enabled: selectedDifficulty !== null,
+  });
+
+  const scoreMutation = useMutation({
+    mutationFn: saveScore,
+  });
+
+  // Start quiz when chords loaded
+  useEffect(() => {
+    if (
+      chords &&
+      chords.length > 0 &&
+      selectedDifficulty &&
+      state.phase === "select" &&
+      !quizStartedRef.current
+    ) {
+      quizStartedRef.current = true;
+      startQuiz(selectedDifficulty, chords);
+    }
+  }, [chords, selectedDifficulty, state.phase, startQuiz]);
+
+  // Save score on result
+  const scoreSavedRef = useRef(false);
+  useEffect(() => {
+    if (state.phase === "result" && state.difficulty && !scoreSavedRef.current) {
+      scoreSavedRef.current = true;
+      scoreMutation.mutate({
+        difficulty: state.difficulty,
+        totalScore: state.totalScore,
+        correctCount: state.answers.filter((a) => a === "correct").length,
+        totalCount: state.questions.length,
+      });
+    }
+  }, [state.phase, state.difficulty, state.totalScore, state.answers, state.questions.length, scoreMutation]);
+
+  const currentChord =
+    state.phase === "playing" ? state.questions[state.currentIndex] : null;
+
+  const handleTimeout = useCallback(() => {
+    setFeedbackState("incorrect");
+    answerTimeout();
+    setTimeout(() => setFeedbackState(null), 500);
+  }, [answerTimeout]);
+
+  useQuizTimer({
+    duration: 10000,
+    enabled: state.phase === "playing",
+    onTick: tick,
+    onTimeout: handleTimeout,
+  });
+
+  const handleCorrect = useCallback(
+    (score: number) => {
+      setFeedbackState("correct");
+      answerCorrect(score);
+      setTimeout(() => setFeedbackState(null), 300);
+    },
+    [answerCorrect],
+  );
+
+  const handleIncorrect = useCallback(() => {
+    setFeedbackState("incorrect");
+    answerIncorrect();
+    setTimeout(() => setFeedbackState(null), 500);
+  }, [answerIncorrect]);
+
+  useQuizChordCheck({
+    currentChord,
+    activeNotes,
+    timeLeft: state.timeLeft,
+    enabled: state.phase === "playing",
+    onCorrect: handleCorrect,
+    onIncorrect: handleIncorrect,
+  });
+
+  const handleSelectDifficulty = useCallback(
+    (difficulty: QuizDifficulty) => {
+      setSelectedDifficulty(difficulty);
+    },
+    [],
+  );
+
+  const handleRetry = useCallback(() => {
+    scoreMutation.reset();
+    scoreSavedRef.current = false;
+    quizStartedRef.current = false;
+    reset();
+    if (selectedDifficulty) {
+      setSelectedDifficulty(null);
+      setTimeout(() => setSelectedDifficulty(selectedDifficulty), 0);
+    }
+  }, [selectedDifficulty, reset, scoreMutation]);
+
+  const handleBackToSelect = useCallback(() => {
+    scoreMutation.reset();
+    scoreSavedRef.current = false;
+    quizStartedRef.current = false;
+    setSelectedDifficulty(null);
+    reset();
+  }, [reset, scoreMutation]);
 
   if (!isAudioStarted) {
     return (
@@ -50,8 +176,12 @@ export function ChordQuizPage() {
             </svg>
           </div>
           <div className="text-center">
-            <p className="text-lg font-semibold text-foreground">{t("clickToStart")}</p>
-            <p className="mt-1 text-sm text-muted-foreground">{t("audioDescription")}</p>
+            <p className="text-lg font-semibold text-foreground">
+              {t("clickToStart")}
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {t("audioDescription")}
+            </p>
           </div>
         </button>
       </div>
@@ -62,7 +192,6 @@ export function ChordQuizPage() {
     <div className="flex min-h-screen flex-col items-center pt-6">
       <AppHeader showBack />
 
-      {/* MIDI Status */}
       <div className="mb-2 flex w-full max-w-4xl justify-end px-4">
         {midi.selectedDevice ? (
           <span className="glass flex items-center gap-1.5 rounded-full px-3 py-1 text-xs text-neon">
@@ -77,90 +206,77 @@ export function ChordQuizPage() {
         )}
       </div>
 
-      {/* Idle: show inline settings */}
-      {state.status === "idle" && (
-        <div className="mb-6 w-full max-w-md px-4">
-          <QuizSettingsPanel
-            settings={settings}
-            onChange={setSettings}
-            onClose={() => {}}
-            isOpen={true}
-            inline={true}
+      {state.phase === "select" && !isFetching && (
+        <div className="flex flex-1 items-center">
+          <DifficultySelect
+            onSelect={handleSelectDifficulty}
+            isLoading={isFetching}
           />
         </div>
       )}
 
-      {/* Playing/Paused */}
-      {state.status !== "idle" && (
+      {isFetching && (
+        <div className="flex flex-1 items-center">
+          <p className="text-sm text-muted-foreground">{t("loading")}</p>
+        </div>
+      )}
+
+      {state.phase === "playing" && currentChord && (
         <>
           <div className="mb-4">
+            <QuizProgress
+              currentIndex={state.currentIndex}
+              totalCount={state.questions.length}
+              timeLeft={state.timeLeft}
+              totalScore={state.totalScore}
+            />
+          </div>
+
+          <div className="mb-6">
             <ChordPrompt
-              currentChord={state.currentChord}
-              nextChord={state.nextChord}
-              showNext={settings.showNextChord}
+              currentChord={{ name: currentChord.name, rootIndex: 0, type: "", pitchClasses: [] }}
+              nextChord={null}
+              showNext={false}
               feedbackState={feedbackState}
             />
           </div>
 
-          {settings.metronomeVisualEnabled && (
-            <div className="mb-4">
-              <MetronomeDisplay
-                beatsPerBar={metronome.beatsPerBar}
-                currentBeat={metronome.currentBeat}
-                isPlaying={metronome.isPlaying}
-              />
+          {!isLoaded && (
+            <div className="mb-4 text-sm text-muted-foreground">
+              {t("loadingSamples")}
             </div>
           )}
 
-          <div className="mb-4">
-            <QuizScore state={state} />
+          <div
+            className={cn(
+              "w-full max-w-4xl rounded-lg px-4 transition-shadow duration-200",
+              feedbackState === "correct" &&
+                "shadow-[0_0_25px_oklch(0.72_0.1_165/20%)]",
+              feedbackState === "incorrect" &&
+                "shadow-[0_0_25px_oklch(0.65_0.12_20/20%)]",
+            )}
+          >
+            <PianoKeyboard
+              activeNotes={activeNotes}
+              onNoteOn={mouse.onNoteOn}
+              onNoteOff={mouse.onNoteOff}
+              showShortcuts={true}
+              octave={keyboard.octave}
+            />
           </div>
         </>
       )}
 
-      {/* Controls */}
-      <div className="mb-6">
-        <QuizControls
-          status={state.status}
-          bpm={settings.bpm}
-          onStart={start}
-          onStop={stop}
-          onPause={pause}
-          onResume={resume}
-          onSettingsOpen={() => setSettingsOpen(true)}
-        />
-      </div>
-
-      {/* Loading */}
-      {!isLoaded && (
-        <div className="mb-4 text-sm text-muted-foreground">{t("loadingSamples")}</div>
-      )}
-
-      {/* Piano Keyboard with feedback glow */}
-      <div
-        className={cn(
-          "w-full max-w-4xl rounded-lg px-4 transition-shadow duration-200",
-          feedbackState === "correct" && "shadow-[0_0_25px_oklch(0.72_0.1_165/20%)]",
-          feedbackState === "incorrect" && "shadow-[0_0_25px_oklch(0.65_0.12_20/20%)]"
-        )}
-      >
-        <PianoKeyboard
-          activeNotes={activeNotes}
-          onNoteOn={mouse.onNoteOn}
-          onNoteOff={mouse.onNoteOff}
-          showShortcuts={true}
-          octave={keyboard.octave}
-        />
-      </div>
-
-      {/* Settings Panel (slide-out, only when playing/paused) */}
-      {state.status !== "idle" && (
-        <QuizSettingsPanel
-          settings={settings}
-          onChange={setSettings}
-          onClose={() => setSettingsOpen(false)}
-          isOpen={settingsOpen}
-        />
+      {state.phase === "result" && (
+        <div className="flex flex-1 items-center">
+          <QuizResult
+            state={state}
+            isSaving={scoreMutation.isPending}
+            isSaved={scoreMutation.isSuccess}
+            onRetry={handleRetry}
+            onBackToSelect={handleBackToSelect}
+          />
+        </div>
       )}
     </div>
   );
