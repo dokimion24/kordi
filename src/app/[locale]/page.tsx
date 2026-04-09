@@ -1,12 +1,13 @@
 import { useTranslations } from "next-intl";
-import { Music, Lightbulb } from "lucide-react";
+import { Music, Lightbulb, Trophy } from "lucide-react";
 import { Link } from "@/shared/config/i18n/navigation";
 import { AppHeader } from "@/widgets/app-header";
 import { ROUTES } from "@/shared/config/routes";
 
 const MENU_ITEMS = [
   { href: ROUTES.PIANO, icon: Music, iconColor: "text-neon", bgColor: "bg-neon/10", titleKey: "freePlay", descKey: "freePlayDesc" },
-  { href: ROUTES.CHORD_QUIZ, icon: Lightbulb, iconColor: "text-success", bgColor: "bg-success/10", titleKey: "chordQuiz", descKey: "chordQuizDesc" },
+  { href: ROUTES.CHORD_PRACTICE, icon: Lightbulb, iconColor: "text-success", bgColor: "bg-success/10", titleKey: "chordPractice", descKey: "chordPracticeDesc" },
+  { href: ROUTES.CHORD_QUIZ, icon: Trophy, iconColor: "text-warning", bgColor: "bg-warning/10", titleKey: "chordQuiz", descKey: "chordQuizDesc" },
 ] as const;
 
 export default function LocaleHome() {

@@ -6,9 +6,15 @@
   },
   "me": {
     "title": "My Profile",
-    "nickname": "Nickname",
-    "email": "Email",
-    "save": "Save",
+    "identityDetails": "Identity Details",
+    "displayName": "Display Name",
+    "primaryEmail": "Primary Email",
+    "oauthProvider": "OAuth Provider",
+    "connected": "CONNECTED",
+    "userId": "USER ID",
+    "edit": "Edit",
+    "save": "Save Changes",
+    "discard": "Discard",
     "nicknamePlaceholder": "Enter your nickname",
     "nicknameDuplicated": "This nickname is already taken",
     "nicknameAvailable": "This nickname is available",
@@ -32,8 +38,10 @@
     "subtitle": "Piano practice web service",
     "freePlay": "Free Play",
     "freePlayDesc": "Play piano freely",
+    "chordPractice": "Chord Practice",
+    "chordPracticeDesc": "Practice with random chord flash cards",
     "chordQuiz": "Chord Quiz",
-    "chordQuizDesc": "Practice with random chord flash cards"
+    "chordQuizDesc": "Challenge yourself with timed chord quizzes"
   },
   "piano": {
     "title": "Piano",
@@ -43,8 +51,8 @@
     "noMidiDevice": "No MIDI Device",
     "instructions": "Use your keyboard (A-J, W/E/T/Y/U) or connect a MIDI device to play"
   },
-  "chordQuiz": {
-    "title": "Chord Quiz",
+  "chordPractice": {
+    "title": "Chord Practice",
     "clickToStart": "Click to Start",
     "audioDescription": "Audio requires user interaction to begin",
     "loadingSamples": "Loading piano samples...",
@@ -75,5 +83,29 @@
     "metronomeAudio": "Metronome Audio",
     "metronomeVisual": "Metronome Visual",
     "showNextChord": "Show Next Chord"
+  },
+  "chordQuiz": {
+    "title": "Chord Quiz",
+    "clickToStart": "Click to Start",
+    "audioDescription": "Audio requires user interaction to begin",
+    "loadingSamples": "Loading piano samples...",
+    "noMidiDevice": "No MIDI Device",
+    "selectDifficulty": "Select Difficulty",
+    "easy": "Easy",
+    "medium": "Medium",
+    "hard": "Hard",
+    "question": "Question",
+    "timeLeft": "Time Left",
+    "totalScore": "Total Score",
+    "maxScore": "Max Score",
+    "correct": "Correct!",
+    "incorrect": "Incorrect",
+    "timeout": "Time's Up",
+    "result": "Result",
+    "retry": "Try Again",
+    "backToSelect": "Select Difficulty",
+    "saving": "Saving score...",
+    "saved": "Score saved!",
+    "loading": "Loading questions..."
   }
 }
