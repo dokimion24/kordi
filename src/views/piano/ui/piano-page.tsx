@@ -44,7 +44,7 @@ export function PianoPage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center pt-8">
+    <div className="flex min-h-screen flex-col items-center">
       <AppHeader showBack />
 
       {/* MIDI Status */}

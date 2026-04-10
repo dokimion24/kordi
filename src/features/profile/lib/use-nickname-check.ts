@@ -1,18 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useDebounceValue } from "@/shared/lib/react/use-debounce-value";
 import { userQueries } from "@/entities/user/api/queries";
 
 const DEBOUNCE_MS = 500;
 
 export function useNicknameCheck(nickname: string, currentNickname: string) {
-  const [debounced, setDebounced] = useState("");
-
-  useEffect(() => {
-    const timer = setTimeout(() => setDebounced(nickname), DEBOUNCE_MS);
-    return () => clearTimeout(timer);
-  }, [nickname]);
+  const debounced = useDebounceValue(nickname, DEBOUNCE_MS);
 
   const shouldCheck = debounced.length >= 2 && debounced !== currentNickname;
 

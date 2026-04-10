@@ -12,6 +12,7 @@ import {
 } from "@/entities/chord-quiz";
 
 interface QuizSettingsPanelProps {
+  ns: string;
   settings: QuizSettings;
   onChange: (settings: QuizSettings) => void;
   onClose: () => void;
@@ -24,13 +25,15 @@ const TIME_SIGNATURES: TimeSignature[] = ["4/4", "3/4", "2/4", "6/8"];
 const ALL_CHORD_TYPES = Object.keys(CHORD_TEMPLATES) as ChordType[];
 
 function SettingsContent({
+  ns,
   settings,
   onChange,
 }: {
+  ns: string;
   settings: QuizSettings;
   onChange: (settings: QuizSettings) => void;
 }) {
-  const t = useTranslations("chordQuiz");
+  const t = useTranslations(ns);
 
   const update = (partial: Partial<QuizSettings>) => {
     onChange({ ...settings, ...partial });
@@ -229,13 +232,14 @@ function SettingsContent({
 }
 
 export function QuizSettingsPanel({
+  ns,
   settings,
   onChange,
   onClose,
   isOpen,
   inline = false,
 }: QuizSettingsPanelProps) {
-  const t = useTranslations("chordQuiz");
+  const t = useTranslations(ns);
 
   if (!isOpen) return null;
 
@@ -243,7 +247,7 @@ export function QuizSettingsPanel({
     return (
       <div className="glass rounded-2xl p-6">
         <h2 className="mb-4 text-lg font-semibold text-foreground">{t("settings")}</h2>
-        <SettingsContent settings={settings} onChange={onChange} />
+        <SettingsContent ns={ns} settings={settings} onChange={onChange} />
       </div>
     );
   }
@@ -260,7 +264,7 @@ export function QuizSettingsPanel({
             </svg>
           </button>
         </div>
-        <SettingsContent settings={settings} onChange={onChange} />
+        <SettingsContent ns={ns} settings={settings} onChange={onChange} />
       </div>
     </div>
   );

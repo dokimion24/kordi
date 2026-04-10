@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import type { QuizStatus } from "@/entities/chord-quiz";
 
 interface QuizControlsProps {
+  ns: string;
   status: QuizStatus;
   bpm: number;
   onStart: () => void;
@@ -14,6 +15,7 @@ interface QuizControlsProps {
 }
 
 export function QuizControls({
+  ns,
   status,
   bpm,
   onStart,
@@ -22,7 +24,7 @@ export function QuizControls({
   onResume,
   onSettingsOpen,
 }: QuizControlsProps) {
-  const t = useTranslations("chordQuiz");
+  const t = useTranslations(ns);
 
   return (
     <div className="flex items-center gap-3">

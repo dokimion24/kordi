@@ -21,12 +21,14 @@ import {
   QuizFeedbackOverlay,
 } from "@/widgets/quiz-game-panel";
 import { AppHeader } from "@/widgets/app-header";
+import { Countdown } from "@/shared/ui/countdown";
 import { cn } from "@/shared/lib/utils";
 
 export function ChordQuizPage() {
   const t = useTranslations("chordQuiz");
   const [selectedDifficulty, setSelectedDifficulty] =
     useState<QuizDifficulty | null>(null);
+  const [showCountdown, setShowCountdown] = useState(false);
   const quizStartedRef = useRef(false);
 
   const {
@@ -70,9 +72,16 @@ export function ChordQuizPage() {
       !quizStartedRef.current
     ) {
       quizStartedRef.current = true;
+      setShowCountdown(true);
+    }
+  }, [chords, selectedDifficulty, state.phase]);
+
+  const handleCountdownComplete = useCallback(() => {
+    setShowCountdown(false);
+    if (selectedDifficulty && chords) {
       startQuiz(selectedDifficulty, chords);
     }
-  }, [chords, selectedDifficulty, state.phase, startQuiz]);
+  }, [selectedDifficulty, chords, startQuiz]);
 
   const scoreSavedRef = useRef(false);
   useEffect(() => {
@@ -107,8 +116,9 @@ export function ChordQuizPage() {
   }, [answerTimeout, showTimeout]);
 
   useQuizTimer({
-    duration: 10000,
+    duration: 20000,
     enabled: state.phase === "playing",
+    resetKey: state.currentIndex,
     onTick: tick,
     onTimeout: handleTimeout,
   });
@@ -137,15 +147,17 @@ export function ChordQuizPage() {
 
   const handleSelectDifficulty = useCallback(
     (difficulty: QuizDifficulty) => {
+      if (!isAudioStarted) startAudio();
       setSelectedDifficulty(difficulty);
     },
-    [],
+    [isAudioStarted, startAudio],
   );
 
   const handleRetry = useCallback(() => {
     scoreMutation.reset();
     scoreSavedRef.current = false;
     quizStartedRef.current = false;
+    setShowCountdown(false);
     reset();
     if (selectedDifficulty) {
       setSelectedDifficulty(null);
@@ -157,47 +169,13 @@ export function ChordQuizPage() {
     scoreMutation.reset();
     scoreSavedRef.current = false;
     quizStartedRef.current = false;
+    setShowCountdown(false);
     setSelectedDifficulty(null);
     reset();
   }, [reset, scoreMutation]);
 
-  if (!isAudioStarted) {
-    return (
-      <div className="flex min-h-screen flex-col items-center justify-center">
-        <button
-          onClick={startAudio}
-          className="glass glass-hover group flex flex-col items-center gap-4 rounded-2xl px-12 py-10 transition-all duration-300 hover:neon-glow"
-        >
-          <div className="flex size-16 items-center justify-center rounded-full bg-neon/10">
-            <svg
-              className="size-8 text-neon transition-transform group-hover:scale-110"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={1.5}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
-              />
-            </svg>
-          </div>
-          <div className="text-center">
-            <p className="text-lg font-semibold text-foreground">
-              {t("clickToStart")}
-            </p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              {t("audioDescription")}
-            </p>
-          </div>
-        </button>
-      </div>
-    );
-  }
-
   return (
-    <div className="flex min-h-screen flex-col items-center pt-6">
+    <div className="flex min-h-screen flex-col items-center">
       <AppHeader showBack />
 
       <QuizFeedbackOverlay feedback={feedbackState} />
@@ -216,7 +194,7 @@ export function ChordQuizPage() {
         )}
       </div>
 
-      {state.phase === "select" && !isFetching && (
+      {state.phase === "select" && !isFetching && !showCountdown && (
         <div className="flex flex-1 items-center">
           <DifficultySelect
             onSelect={handleSelectDifficulty}
@@ -225,11 +203,13 @@ export function ChordQuizPage() {
         </div>
       )}
 
-      {isFetching && (
+      {isFetching && !showCountdown && (
         <div className="flex flex-1 items-center">
           <p className="text-sm text-muted-foreground">{t("loading")}</p>
         </div>
       )}
+
+      {showCountdown && <Countdown onComplete={handleCountdownComplete} />}
 
       {state.phase === "playing" && currentChord && (
         <>
@@ -266,7 +246,7 @@ export function ChordQuizPage() {
             className={cn(
               "w-full max-w-4xl rounded-lg px-4 transition-shadow duration-200",
               feedbackState === "correct" &&
-                "shadow-[0_0_25px_oklch(0.72_0.1_165/20%)]",
+                "shadow-[0_0_25px_oklch(0.72_0.1_155/20%)]",
               feedbackState === "incorrect" &&
                 "shadow-[0_0_25px_oklch(0.65_0.12_20/20%)]",
             )}

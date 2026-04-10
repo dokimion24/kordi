@@ -1,8 +1,10 @@
 import { useTranslations } from "next-intl";
-import { User as UserIcon, Lock } from "lucide-react";
+import { User as UserIcon, Lock, Trophy } from "lucide-react";
 import type { User } from "@/entities/user";
+import type { ScoreRecord } from "@/entities/quiz";
 import { ProfileForm } from "@/features/profile";
 import { LogoutButton } from "@/features/auth";
+import { MyScoresPanel } from "@/widgets/my-scores";
 import { AppHeader } from "@/widgets/app-header";
 import { Avatar, AvatarImage, AvatarFallback } from "@/shared/ui/avatar";
 import { Badge } from "@/shared/ui/badge";
@@ -10,9 +12,10 @@ import { Separator } from "@/shared/ui/separator";
 
 interface MePageProps {
   user: User;
+  scores: ScoreRecord[];
 }
 
-export function MePage({ user }: MePageProps) {
+export function MePage({ user, scores }: MePageProps) {
   const t = useTranslations("me");
   const tCommon = useTranslations("common");
 
@@ -85,6 +88,11 @@ export function MePage({ user }: MePageProps) {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Quiz Scores */}
+        <div className="mt-6">
+          <MyScoresPanel scores={scores} />
         </div>
       </div>
     </div>

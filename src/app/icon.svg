@@ -1,0 +1,44 @@
+<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Head -->
+  <circle cx="80" cy="85" r="55" fill="#FFD4B8" />
+
+  <!-- Left ear -->
+  <ellipse cx="45" cy="42" rx="14" ry="22" transform="rotate(-15 45 42)" fill="#FFD4B8" />
+  <ellipse cx="45" cy="42" rx="8" ry="14" transform="rotate(-15 45 42)" fill="#FFB0B0" />
+
+  <!-- Right ear -->
+  <ellipse cx="115" cy="42" rx="14" ry="22" transform="rotate(15 115 42)" fill="#FFD4B8" />
+  <ellipse cx="115" cy="42" rx="8" ry="14" transform="rotate(15 115 42)" fill="#FFB0B0" />
+
+  <!-- Eyes -->
+  <ellipse cx="60" cy="80" rx="12" ry="13" fill="#3D2C2C" />
+  <ellipse cx="60" cy="82" rx="8" ry="9" fill="#5C4033" />
+  <ellipse cx="64" cy="76" rx="5" ry="5.5" fill="#FFF" opacity="0.9" />
+  <ellipse cx="66" cy="74" rx="2" ry="2" fill="#FFF" />
+
+  <ellipse cx="100" cy="80" rx="12" ry="13" fill="#3D2C2C" />
+  <ellipse cx="100" cy="82" rx="8" ry="9" fill="#5C4033" />
+  <ellipse cx="104" cy="76" rx="5" ry="5.5" fill="#FFF" opacity="0.9" />
+  <ellipse cx="106" cy="74" rx="2" ry="2" fill="#FFF" />
+
+  <!-- Nose -->
+  <ellipse cx="80" cy="95" rx="5" ry="3.5" fill="#FFB0B0" />
+
+  <!-- Mouth -->
+  <path d="M74 100 Q80 107 86 100" stroke="#3D2C2C" stroke-width="2" stroke-linecap="round" fill="none" />
+  <line x1="80" y1="98" x2="80" y2="102" stroke="#3D2C2C" stroke-width="2" stroke-linecap="round" />
+
+  <!-- Cheeks -->
+  <ellipse cx="45" cy="96" rx="10" ry="7" fill="#FFB0B0" opacity="0.3" />
+  <ellipse cx="115" cy="96" rx="10" ry="7" fill="#FFB0B0" opacity="0.3" />
+
+  <!-- Whiskers -->
+  <line x1="25" y1="90" x2="48" y2="94" stroke="#D4A88C" stroke-width="1.5" />
+  <line x1="25" y1="98" x2="48" y2="98" stroke="#D4A88C" stroke-width="1.5" />
+  <line x1="135" y1="90" x2="112" y2="94" stroke="#D4A88C" stroke-width="1.5" />
+  <line x1="135" y1="98" x2="112" y2="98" stroke="#D4A88C" stroke-width="1.5" />
+
+  <!-- Music note -->
+  <circle cx="138" cy="30" r="5" fill="#A8D8A8" opacity="0.6" />
+  <rect x="143" y="18" width="2.5" height="12" rx="1.25" fill="#A8D8A8" opacity="0.6" />
+</svg>

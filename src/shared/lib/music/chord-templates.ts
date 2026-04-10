@@ -11,6 +11,15 @@ export const CHORD_TEMPLATES: Record<string, number[]> = {
   "dim7": [0, 3, 6, 9], // diminished 7th
   "m7b5": [0, 3, 6, 10], // half-diminished
   "aug7": [0, 4, 8, 10], // augmented 7th
+  "6": [0, 4, 7, 9], // major 6th
+  "m6": [0, 3, 7, 9], // minor 6th
+  "9": [0, 4, 7, 10, 2], // dominant 9th
+  "maj9": [0, 4, 7, 11, 2], // major 9th
+  "m9": [0, 3, 7, 10, 2], // minor 9th
+  "11": [0, 4, 7, 10, 2, 5], // dominant 11th
+  "m11": [0, 3, 7, 10, 2, 5], // minor 11th
+  "13": [0, 4, 7, 10, 2, 5, 9], // dominant 13th
+  "69": [0, 4, 7, 9, 2], // 6/9
 };
 
 export const NOTE_LABELS = [

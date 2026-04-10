@@ -66,7 +66,7 @@ export const PianoKey = memo(function PianoKey({
           "border border-[oklch(0_0_0/10%)] dark:border-[oklch(1_0_0/6%)]",
           "transition-all duration-75",
           "hover:bg-[oklch(0.26_0.01_260)] dark:hover:bg-[oklch(0.17_0.01_260)]",
-          "data-[active]:bg-[oklch(0.35_0.08_195)] dark:data-[active]:bg-[oklch(0.3_0.06_195)]",
+          "data-[active]:bg-[oklch(0.35_0.08_155)] dark:data-[active]:bg-[oklch(0.3_0.06_155)]",
           "data-[active]:shadow-[0_0_12px_var(--neon-glow)]",
           "touch-none select-none cursor-pointer"
         )}
@@ -96,7 +96,7 @@ export const PianoKey = memo(function PianoKey({
         "border border-[oklch(0_0_0/8%)] dark:border-[oklch(0.8_0.01_260)]",
         "transition-all duration-75",
         "hover:bg-[oklch(0.94_0.005_260)] dark:hover:bg-[oklch(0.88_0.01_260)]",
-        "data-[active]:bg-[oklch(0.88_0.05_195)] dark:data-[active]:bg-[oklch(0.82_0.04_195)]",
+        "data-[active]:bg-[oklch(0.88_0.05_155)] dark:data-[active]:bg-[oklch(0.82_0.04_155)]",
         "data-[active]:shadow-[0_0_16px_var(--neon-glow)]",
         "touch-none select-none cursor-pointer"
       )}

@@ -59,7 +59,7 @@ export function ChordPracticePage() {
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center pt-6">
+    <div className="flex min-h-screen flex-col items-center">
       <AppHeader showBack />
 
       {/* MIDI Status */}
@@ -81,6 +81,7 @@ export function ChordPracticePage() {
       {state.status === "idle" && (
         <div className="mb-6 w-full max-w-md px-4">
           <QuizSettingsPanel
+            ns="chordPractice"
             settings={settings}
             onChange={setSettings}
             onClose={() => {}}
@@ -121,6 +122,7 @@ export function ChordPracticePage() {
       {/* Controls */}
       <div className="mb-6">
         <QuizControls
+          ns="chordPractice"
           status={state.status}
           bpm={settings.bpm}
           onStart={start}
@@ -140,7 +142,7 @@ export function ChordPracticePage() {
       <div
         className={cn(
           "w-full max-w-4xl rounded-lg px-4 transition-shadow duration-200",
-          feedbackState === "correct" && "shadow-[0_0_25px_oklch(0.72_0.1_165/20%)]",
+          feedbackState === "correct" && "shadow-[0_0_25px_oklch(0.72_0.1_155/20%)]",
           feedbackState === "incorrect" && "shadow-[0_0_25px_oklch(0.65_0.12_20/20%)]"
         )}
       >
@@ -156,6 +158,7 @@ export function ChordPracticePage() {
       {/* Settings Panel (slide-out, only when playing/paused) */}
       {state.status !== "idle" && (
         <QuizSettingsPanel
+          ns="chordPractice"
           settings={settings}
           onChange={setSettings}
           onClose={() => setSettingsOpen(false)}

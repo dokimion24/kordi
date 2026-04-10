@@ -5,6 +5,7 @@ import { useEffect, useRef, useCallback } from "react";
 interface UseQuizTimerOptions {
   duration: number;
   enabled: boolean;
+  resetKey?: number;
   onTick: (remaining: number) => void;
   onTimeout: () => void;
 }
@@ -12,6 +13,7 @@ interface UseQuizTimerOptions {
 export function useQuizTimer({
   duration,
   enabled,
+  resetKey = 0,
   onTick,
   onTimeout,
 }: UseQuizTimerOptions) {
@@ -58,7 +60,7 @@ export function useQuizTimer({
       stop();
     }
     return stop;
-  }, [enabled, restart, stop]);
+  }, [enabled, resetKey, restart, stop]);
 
   return { restart, stop };
 }

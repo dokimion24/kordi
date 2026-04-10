@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { userServerQueries } from "@/entities/user/api/queries.server";
+import { getMyScores } from "@/entities/quiz/api/get-my-scores";
 import { MePage } from "@/views/me";
 import { ROUTES } from "@/shared/config/routes";
 
@@ -24,9 +25,11 @@ export default async function Page() {
     redirect(ROUTES.LOGIN);
   }
 
+  const scores = await getMyScores().catch(() => []);
+
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <MePage user={user} />
+      <MePage user={user} scores={scores} />
     </HydrationBoundary>
   );
 }
