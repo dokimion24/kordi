@@ -34,9 +34,9 @@ export function ChordPracticePage() {
           onClick={startAudio}
           className="glass glass-hover group flex flex-col items-center gap-4 rounded-2xl px-12 py-10 transition-all duration-300 hover:neon-glow"
         >
-          <div className="flex size-16 items-center justify-center rounded-full bg-neon/10">
+          <div className="flex size-16 items-center justify-center rounded-full bg-primary/10">
             <svg
-              className="size-8 text-neon transition-transform group-hover:scale-110"
+              className="size-8 text-primary transition-transform group-hover:scale-110"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -65,8 +65,8 @@ export function ChordPracticePage() {
       {/* MIDI Status */}
       <div className="mb-2 flex w-full max-w-4xl justify-end px-4">
         {midi.selectedDevice ? (
-          <span className="glass flex items-center gap-1.5 rounded-full px-3 py-1 text-xs text-neon">
-            <span className="size-1.5 rounded-full bg-neon" />
+          <span className="glass flex items-center gap-1.5 rounded-full px-3 py-1 text-xs text-primary">
+            <span className="size-1.5 rounded-full bg-primary" />
             {midi.selectedDevice.name}
           </span>
         ) : (
@@ -142,8 +142,8 @@ export function ChordPracticePage() {
       <div
         className={cn(
           "w-full max-w-4xl rounded-lg px-4 transition-shadow duration-200",
-          feedbackState === "correct" && "shadow-[0_0_25px_oklch(0.72_0.1_155/20%)]",
-          feedbackState === "incorrect" && "shadow-[0_0_25px_oklch(0.65_0.12_20/20%)]"
+          feedbackState === "correct" && "shadow-[0_0_20px_rgba(39,166,68,0.15)]",
+          feedbackState === "incorrect" && "shadow-[0_0_20px_rgba(229,72,77,0.15)]"
         )}
       >
         <PianoKeyboard

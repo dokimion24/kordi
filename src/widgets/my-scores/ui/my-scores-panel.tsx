@@ -36,7 +36,7 @@ export function MyScoresPanel({ scores }: MyScoresPanelProps) {
             onClick={() => setSelected(d)}
             className={`rounded-lg px-4 py-1.5 text-sm transition-colors ${
               selected === d
-                ? "bg-neon/20 text-neon ring-1 ring-neon/30"
+                ? "bg-primary/20 text-primary ring-1 ring-primary/30"
                 : "glass text-muted-foreground hover:text-foreground"
             }`}
           >
@@ -50,7 +50,7 @@ export function MyScoresPanel({ scores }: MyScoresPanelProps) {
         <div className="mb-6 glass rounded-xl px-4 py-4">
           <p className="mb-1 text-xs text-muted-foreground">{t("bestScore")}</p>
           <div className="flex items-baseline gap-2">
-            <span className="text-2xl font-bold text-neon">{best.totalScore}</span>
+            <span className="text-2xl font-bold text-primary">{best.totalScore}</span>
             <span className="text-sm text-muted-foreground">
               {best.correctCount}/{best.totalCount}
             </span>

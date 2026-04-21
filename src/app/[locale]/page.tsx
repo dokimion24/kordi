@@ -21,8 +21,8 @@ export default function LocaleHome() {
         <div className="mb-3 grid grid-cols-2 gap-3">
           {/* Piano - Free Play */}
           <Link href={ROUTES.PIANO}>
-            <div className="group relative h-40 overflow-hidden rounded-2xl bg-[#F3F4F5] p-4 transition-all duration-200 hover:bg-[#EDEEF0] active:scale-[0.98] dark:bg-[#1e1f24] dark:hover:bg-[#25262c]">
-              <h2 className="text-[15px] font-bold leading-snug text-foreground">
+            <div className="group relative h-40 overflow-hidden rounded-2xl border border-border bg-secondary p-4 transition-all duration-200 hover:bg-[rgba(255,255,255,0.05)] active:scale-[0.98]">
+              <h2 className="text-[15px] font-[510] leading-snug text-foreground">
                 {t("freePlay")}
               </h2>
               <Piano3D className="absolute -bottom-1 -right-1 w-20 transition-transform duration-200 group-hover:scale-105" />
@@ -31,8 +31,8 @@ export default function LocaleHome() {
 
           {/* Chord Practice */}
           <Link href={ROUTES.CHORD_PRACTICE}>
-            <div className="group relative h-40 overflow-hidden rounded-2xl bg-[#F3F4F5] p-4 transition-all duration-200 hover:bg-[#EDEEF0] active:scale-[0.98] dark:bg-[#1e1f24] dark:hover:bg-[#25262c]">
-              <h2 className="text-[15px] font-bold leading-snug text-foreground">
+            <div className="group relative h-40 overflow-hidden rounded-2xl border border-border bg-secondary p-4 transition-all duration-200 hover:bg-[rgba(255,255,255,0.05)] active:scale-[0.98]">
+              <h2 className="text-[15px] font-[510] leading-snug text-foreground">
                 {t("chordPractice")}
               </h2>
               <ChordPractice3D className="absolute -bottom-1 -right-1 w-20 transition-transform duration-200 group-hover:scale-105" />
@@ -42,8 +42,8 @@ export default function LocaleHome() {
 
         {/* Chord Quiz */}
         <Link href={ROUTES.CHORD_QUIZ}>
-          <div className="group relative h-28 overflow-hidden rounded-2xl bg-[#F3F4F5] p-4 transition-all duration-200 hover:bg-[#EDEEF0] active:scale-[0.98] dark:bg-[#1e1f24] dark:hover:bg-[#25262c]">
-            <h2 className="text-[15px] font-bold leading-snug text-foreground">
+          <div className="group relative h-28 overflow-hidden rounded-2xl border border-border bg-secondary p-4 transition-all duration-200 hover:bg-[rgba(255,255,255,0.05)] active:scale-[0.98]">
+            <h2 className="text-[15px] font-[510] leading-snug text-foreground">
               {t("chordQuiz")}
             </h2>
             <ChordQuiz3D className="absolute -bottom-1 -right-1 w-20 transition-transform duration-200 group-hover:scale-105" />

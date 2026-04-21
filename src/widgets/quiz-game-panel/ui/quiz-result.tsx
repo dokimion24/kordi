@@ -28,7 +28,7 @@ export function QuizResult({
 
       {/* Total score */}
       <div className="glass rounded-2xl px-10 py-6 text-center">
-        <div className="text-4xl font-bold text-neon">{state.totalScore}</div>
+        <div className="text-4xl font-bold text-primary">{state.totalScore}</div>
         <div className="mt-1 text-sm text-muted-foreground">
           / 1000 {t("maxScore")}
         </div>
@@ -90,7 +90,7 @@ export function QuizResult({
       <div className="flex gap-3">
         <button
           onClick={onRetry}
-          className="glass glass-hover rounded-xl px-6 py-3 font-medium text-neon transition-all hover:neon-glow-sm"
+          className="glass glass-hover rounded-xl px-6 py-3 font-medium text-primary transition-all hover:neon-glow-sm"
         >
           {t("retry")}
         </button>

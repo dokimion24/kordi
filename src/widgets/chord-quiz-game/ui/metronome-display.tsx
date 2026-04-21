@@ -24,7 +24,7 @@ export function MetronomeDisplay({
             "size-2.5 rounded-full transition-all duration-100",
             i === currentBeat
               ? i === 0
-                ? "scale-150 bg-neon shadow-[0_0_8px_var(--neon-glow)]"
+                ? "scale-150 bg-primary shadow-[0_0_8px_var(--neon-glow)]"
                 : "scale-125 bg-foreground/60"
               : "bg-muted-foreground/20"
           )}

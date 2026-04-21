@@ -6,4 +6,5 @@ export const ROUTES = {
   CHORD_QUIZ: "/chord-quiz",
   ME: "/me",
   RANKING: "/ranking",
+  FRIENDS: "/friends",
 } as const;

@@ -21,7 +21,7 @@ export function QuizScore({ state }: QuizScoreProps) {
         <div className="text-xs text-muted-foreground">{t("score")}</div>
       </div>
       <div className="text-center">
-        <div className="text-2xl font-bold text-neon">{state.streak}</div>
+        <div className="text-2xl font-bold text-primary">{state.streak}</div>
         <div className="text-xs text-muted-foreground">{t("streak")}</div>
       </div>
       <div className="text-center">

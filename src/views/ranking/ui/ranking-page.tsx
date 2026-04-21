@@ -12,7 +12,7 @@ export function RankingPage() {
 
       <div className="w-full max-w-3xl flex-1 px-4 py-8">
         <div className="mb-8 flex items-center gap-3">
-          <Trophy className="size-6 text-[oklch(0.8_0.12_85)]" strokeWidth={1.5} />
+          <Trophy className="size-6 text-brand-accent" strokeWidth={1.5} />
           <h2 className="text-xl font-bold text-foreground">{t("leaderboard")}</h2>
         </div>
         <RankingBoard />

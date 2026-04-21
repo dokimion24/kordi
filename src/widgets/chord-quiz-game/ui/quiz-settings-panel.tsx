@@ -53,7 +53,7 @@ function SettingsContent({
               onClick={() => update({ gameMode: mode })}
               className={`rounded-md px-3 py-1.5 text-xs transition-colors ${
                 settings.gameMode === mode
-                  ? "bg-neon/20 text-neon ring-1 ring-neon/30"
+                  ? "bg-primary/20 text-primary ring-1 ring-primary/30"
                   : "glass text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -76,7 +76,7 @@ function SettingsContent({
               }}
               className={`rounded-md px-2.5 py-1 text-xs transition-colors ${
                 settings.difficulty === d
-                  ? "bg-neon/20 text-neon ring-1 ring-neon/30"
+                  ? "bg-primary/20 text-primary ring-1 ring-primary/30"
                   : "glass text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -105,7 +105,7 @@ function SettingsContent({
                   }}
                   className={`rounded-md px-2 py-1 text-xs transition-colors ${
                     isSelected
-                      ? "bg-neon/15 text-neon ring-1 ring-neon/30"
+                      ? "bg-primary/15 text-primary ring-1 ring-primary/30"
                       : "glass text-muted-foreground/60 hover:text-muted-foreground"
                   }`}
                 >
@@ -144,7 +144,7 @@ function SettingsContent({
             max={200}
             value={settings.bpm}
             onChange={(e) => update({ bpm: Number(e.target.value) })}
-            className="w-full accent-[oklch(0.75_0.08_195)]"
+            className="w-full accent-primary"
           />
         </div>
       )}
@@ -160,7 +160,7 @@ function SettingsContent({
                 onClick={() => update({ barsPerChord: n })}
                 className={`rounded-md px-3 py-1 text-xs transition-colors ${
                   settings.barsPerChord === n
-                    ? "bg-neon/20 text-neon ring-1 ring-neon/30"
+                    ? "bg-primary/20 text-primary ring-1 ring-primary/30"
                     : "glass text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -182,7 +182,7 @@ function SettingsContent({
                 onClick={() => update({ timeSignature: ts })}
                 className={`rounded-md px-3 py-1 text-xs transition-colors ${
                   settings.timeSignature === ts
-                    ? "bg-neon/20 text-neon ring-1 ring-neon/30"
+                    ? "bg-primary/20 text-primary ring-1 ring-primary/30"
                     : "glass text-muted-foreground hover:text-foreground"
                 }`}
               >
@@ -203,7 +203,7 @@ function SettingsContent({
                 type="checkbox"
                 checked={settings.metronomeAudioEnabled}
                 onChange={(e) => update({ metronomeAudioEnabled: e.target.checked })}
-                className="accent-[oklch(0.75_0.08_195)]"
+                className="accent-primary"
               />
             </label>
             <label className="flex items-center justify-between text-sm text-foreground/80">
@@ -212,7 +212,7 @@ function SettingsContent({
                 type="checkbox"
                 checked={settings.metronomeVisualEnabled}
                 onChange={(e) => update({ metronomeVisualEnabled: e.target.checked })}
-                className="accent-[oklch(0.75_0.08_195)]"
+                className="accent-primary"
               />
             </label>
           </>
@@ -223,7 +223,7 @@ function SettingsContent({
             type="checkbox"
             checked={settings.showNextChord}
             onChange={(e) => update({ showNextChord: e.target.checked })}
-            className="accent-[oklch(0.75_0.08_195)]"
+            className="accent-primary"
           />
         </label>
       </div>

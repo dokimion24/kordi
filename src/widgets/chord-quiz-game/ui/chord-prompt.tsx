@@ -22,11 +22,11 @@ export function ChordPrompt({
         className={cn(
           "glass flex h-28 w-48 items-center justify-center rounded-2xl transition-all duration-200",
           feedbackState === "correct" &&
-            "border-success/40 bg-success/8 shadow-[0_0_25px_oklch(0.72_0.1_155/20%)]",
+            "border-success/40 bg-success/8 shadow-[0_0_20px_rgba(39,166,68,0.15)]",
           feedbackState === "incorrect" &&
-            "border-error/40 bg-error/8 shadow-[0_0_25px_oklch(0.65_0.12_20/20%)]",
+            "border-error/40 bg-error/8 shadow-[0_0_20px_rgba(229,72,77,0.15)]",
           feedbackState === "timeout" &&
-            "border-[oklch(0.7_0.08_80/30%)] bg-[oklch(0.7_0.08_80/5%)]"
+            "border-muted-foreground/30 bg-muted-foreground/5"
         )}
       >
         <span

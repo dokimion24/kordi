@@ -35,7 +35,7 @@ export function InstrumentSelector() {
           className={cn(
             "rounded-lg px-3 py-1.5 text-xs transition-all duration-200",
             id === activeId
-              ? "glass neon-border text-neon neon-glow-sm"
+              ? "glass neon-border text-primary neon-glow-sm"
               : "glass glass-hover text-muted-foreground",
             loading && "opacity-50 cursor-wait"
           )}

@@ -51,7 +51,7 @@ export function ProfileForm({ currentNickname }: ProfileFormProps) {
 
   return (
     <div>
-      <p className="mb-2 text-sm font-medium text-neon">{t("displayName")}</p>
+      <p className="mb-2 text-sm font-medium text-primary">{t("displayName")}</p>
 
       {!isEditing ? (
         <div className="flex items-center gap-3">
@@ -61,7 +61,7 @@ export function ProfileForm({ currentNickname }: ProfileFormProps) {
           <Button
             variant="outline"
             size="sm"
-            className="shrink-0 text-neon border-neon/30 hover:bg-neon/10"
+            className="shrink-0 text-primary border-primary/30 hover:bg-primary/10"
             onClick={() => setIsEditing(true)}
           >
             {t("edit")}

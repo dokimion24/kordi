@@ -10,7 +10,8 @@
     "navPiano": "Piano",
     "navPractice": "Practice",
     "navQuiz": "Quiz",
-    "navRanking": "Ranking"
+    "navRanking": "Ranking",
+    "navFriends": "Friends"
   },
   "me": {
     "title": "My Profile",
@@ -42,6 +43,46 @@
     "hard": "Hard",
     "loading": "Loading rankings...",
     "empty": "No records yet. Be the first challenger!"
+  },
+  "friends": {
+    "title": "Friends",
+    "add": "Add Friend",
+    "addDescription": "Find a friend by nickname and send a request",
+    "searchPlaceholder": "Enter nickname",
+    "searchHint": "Type at least 2 characters",
+    "searching": "Searching...",
+    "noResult": "No user found with that nickname",
+    "sendRequest": "Send Request",
+    "accept": "Accept",
+    "reject": "Reject",
+    "cancelRequest": "Cancel",
+    "delete": "Remove Friend",
+    "pending": "Pending",
+    "loading": "Loading...",
+    "tabs": {
+      "friends": "Friends",
+      "received": "Received",
+      "sent": "Sent"
+    },
+    "empty": {
+      "friends": "No friends yet",
+      "received": "No received requests",
+      "sent": "No sent requests"
+    },
+    "toast": {
+      "requestSent": "Friend request sent",
+      "accepted": "Friend request accepted",
+      "rejected": "Friend request rejected",
+      "cancelled": "Request cancelled",
+      "deleted": "Friend removed"
+    },
+    "error": {
+      "cannotAddSelf": "You cannot send a request to yourself",
+      "alreadyExists": "A friend request already exists",
+      "notFound": "Friend request not found",
+      "userNotFound": "User not found",
+      "invalid": "Invalid request"
+    }
   },
   "login": {
     "subtitle": "Start your piano practice",

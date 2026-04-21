@@ -64,7 +64,7 @@ export function RankingBoard() {
               key={`${entry.nickname}-${i}`}
               className={cn(
                 "glass flex items-center gap-4 rounded-xl px-4 py-3",
-                i < 3 && "border-neon/20",
+                i < 3 && "border-primary/20",
               )}
             >
               {/* Rank */}

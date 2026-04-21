@@ -31,7 +31,7 @@ export function QuizControls({
       {status === "idle" && (
         <button
           onClick={onStart}
-          className="rounded-xl bg-neon/15 px-6 py-2.5 text-sm font-medium text-neon transition-all duration-200 hover:bg-neon/25 hover:shadow-[0_0_15px_var(--neon-glow)]"
+          className="rounded-xl bg-primary/15 px-6 py-2.5 text-sm font-medium text-primary transition-all duration-200 hover:bg-primary/25 hover:shadow-[0_0_15px_var(--neon-glow)]"
         >
           {t("start")}
         </button>
@@ -56,7 +56,7 @@ export function QuizControls({
         <>
           <button
             onClick={onResume}
-            className="rounded-xl bg-neon/15 px-5 py-2 text-sm font-medium text-neon transition-all duration-200 hover:bg-neon/25"
+            className="rounded-xl bg-primary/15 px-5 py-2 text-sm font-medium text-primary transition-all duration-200 hover:bg-primary/25"
           >
             {t("resume")}
           </button>

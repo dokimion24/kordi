@@ -19,9 +19,9 @@ export function PianoPage() {
           onClick={startAudio}
           className="glass glass-hover group flex flex-col items-center gap-4 rounded-2xl px-12 py-10 transition-all duration-300 hover:neon-glow"
         >
-          <div className="flex size-16 items-center justify-center rounded-full bg-neon/10">
+          <div className="flex size-16 items-center justify-center rounded-full bg-primary/10">
             <svg
-              className="size-8 text-neon transition-transform group-hover:scale-110"
+              className="size-8 text-primary transition-transform group-hover:scale-110"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -50,8 +50,8 @@ export function PianoPage() {
       {/* MIDI Status */}
       <div className="mb-4 flex w-full max-w-4xl justify-end px-4">
         {midi.selectedDevice ? (
-          <span className="glass flex items-center gap-1.5 rounded-full px-3 py-1 text-xs text-neon">
-            <span className="size-1.5 rounded-full bg-neon" />
+          <span className="glass flex items-center gap-1.5 rounded-full px-3 py-1 text-xs text-primary">
+            <span className="size-1.5 rounded-full bg-primary" />
             {midi.selectedDevice.name}
           </span>
         ) : (
@@ -88,7 +88,7 @@ export function PianoPage() {
         <span
           className={`rounded-lg px-2.5 py-1 ${
             keyboard.sustain
-              ? "glass neon-border text-neon"
+              ? "glass neon-border text-primary"
               : "glass text-muted-foreground"
           }`}
         >

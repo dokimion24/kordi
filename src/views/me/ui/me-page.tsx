@@ -30,14 +30,14 @@ export function MePage({ user, scores }: MePageProps) {
           <div className="flex flex-col gap-6">
             {/* Avatar Card */}
             <div className="glass flex flex-col items-center rounded-2xl px-6 py-8">
-              <Avatar size="lg" className="mb-4 size-24 ring-2 ring-neon/20">
+              <Avatar size="lg" className="mb-4 size-24 ring-2 ring-primary/20">
                 <AvatarImage src={user.profileImageUrl ?? undefined} alt={user.nickname} />
                 <AvatarFallback className="text-3xl">
                   {user.nickname.charAt(0).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
               <h2 className="text-lg font-semibold text-foreground">{user.nickname}</h2>
-              <Badge variant="outline" className="mt-2 border-neon/30 text-xs text-neon">
+              <Badge variant="outline" className="mt-2 border-primary/30 text-xs text-primary">
                 {t("userId")}: #{user.id}
               </Badge>
             </div>
@@ -51,7 +51,7 @@ export function MePage({ user, scores }: MePageProps) {
           {/* Right Column - Identity Details */}
           <div className="glass rounded-2xl px-6 py-8">
             <div className="mb-6 flex items-center gap-2">
-              <UserIcon className="size-5 text-neon" strokeWidth={1.5} />
+              <UserIcon className="size-5 text-primary" strokeWidth={1.5} />
               <h2 className="text-lg font-semibold text-foreground">{t("identityDetails")}</h2>
             </div>
 
@@ -62,7 +62,7 @@ export function MePage({ user, scores }: MePageProps) {
 
             {/* Primary Email */}
             <div className="mb-6">
-              <p className="mb-2 text-sm font-medium text-neon">{t("primaryEmail")}</p>
+              <p className="mb-2 text-sm font-medium text-primary">{t("primaryEmail")}</p>
               <div className="glass flex items-center justify-between rounded-xl px-4 py-3">
                 <span className="text-sm text-foreground">{user.email}</span>
                 <Lock className="size-4 text-muted-foreground" strokeWidth={1.5} />
@@ -71,7 +71,7 @@ export function MePage({ user, scores }: MePageProps) {
 
             {/* OAuth Provider */}
             <div>
-              <p className="mb-2 text-sm font-medium text-neon">{t("oauthProvider")}</p>
+              <p className="mb-2 text-sm font-medium text-primary">{t("oauthProvider")}</p>
               <div className="glass flex items-center justify-between rounded-xl px-4 py-3">
                 <div className="flex items-center gap-3">
                   <svg className="size-5" viewBox="0 0 24 24">

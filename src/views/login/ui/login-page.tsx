@@ -6,8 +6,8 @@ export function LoginPage() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
-      <div className="glass w-full max-w-sm rounded-2xl p-8 text-center">
-        <h1 className="neon-text mb-2 text-3xl font-bold">Kordi</h1>
+      <div className="w-full max-w-sm rounded-xl border border-border bg-card p-8 text-center">
+        <h1 className="mb-2 text-3xl font-[590] tracking-tight text-foreground">Kordi</h1>
         <p className="mb-8 text-sm text-muted-foreground">{t("subtitle")}</p>
         <GoogleLoginButton label={t("googleLogin")} />
       </div>

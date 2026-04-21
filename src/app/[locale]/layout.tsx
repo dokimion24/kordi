@@ -39,14 +39,8 @@ export default async function LocaleLayout({
       className={`${geistMono.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="relative min-h-full flex flex-col overflow-x-hidden">
-        <ThemeProvider defaultTheme="light">
-          {/* Background gradient blobs */}
-          <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-            <div className="absolute -left-32 -top-32 h-[700px] w-[700px] rounded-full bg-[oklch(0.85_0.08_155)] opacity-15 blur-[100px] dark:bg-[oklch(0.35_0.06_155)] dark:opacity-30" />
-            <div className="absolute -bottom-32 -right-32 h-[600px] w-[600px] rounded-full bg-[oklch(0.85_0.06_280)] opacity-12 blur-[90px] dark:bg-[oklch(0.3_0.04_280)] dark:opacity-25" />
-            <div className="absolute left-1/3 top-1/3 h-[500px] w-[500px] rounded-full bg-[oklch(0.88_0.06_60)] opacity-10 blur-[80px] dark:bg-[oklch(0.32_0.04_40)] dark:opacity-20" />
-          </div>
+      <body className="relative min-h-full flex flex-col overflow-x-hidden bg-background">
+        <ThemeProvider defaultTheme="dark">
           <QueryProvider>
             <NextIntlClientProvider messages={messages}>
               <RippleBackground>

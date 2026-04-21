@@ -182,8 +182,8 @@ export function ChordQuizPage() {
 
       <div className="mb-2 flex w-full max-w-4xl justify-end px-4">
         {midi.selectedDevice ? (
-          <span className="glass flex items-center gap-1.5 rounded-full px-3 py-1 text-xs text-neon">
-            <span className="size-1.5 rounded-full bg-neon" />
+          <span className="glass flex items-center gap-1.5 rounded-full px-3 py-1 text-xs text-primary">
+            <span className="size-1.5 rounded-full bg-primary" />
             {midi.selectedDevice.name}
           </span>
         ) : (
@@ -246,9 +246,9 @@ export function ChordQuizPage() {
             className={cn(
               "w-full max-w-4xl rounded-lg px-4 transition-shadow duration-200",
               feedbackState === "correct" &&
-                "shadow-[0_0_25px_oklch(0.72_0.1_155/20%)]",
+                "shadow-[0_0_20px_rgba(39,166,68,0.15)]",
               feedbackState === "incorrect" &&
-                "shadow-[0_0_25px_oklch(0.65_0.12_20/20%)]",
+                "shadow-[0_0_20px_rgba(229,72,77,0.15)]",
             )}
           >
             <PianoKeyboard

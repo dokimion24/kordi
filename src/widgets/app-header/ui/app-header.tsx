@@ -10,6 +10,7 @@ import {
   Trophy,
   Menu,
   User,
+  Users,
   Globe,
   Sun,
   Moon,
@@ -34,6 +35,7 @@ const NAV_ITEMS = [
   { href: ROUTES.CHORD_PRACTICE, icon: BookOpen, labelKey: "navPractice" },
   { href: ROUTES.CHORD_QUIZ, icon: Trophy, labelKey: "navQuiz" },
   { href: ROUTES.RANKING, icon: Trophy, labelKey: "navRanking" },
+  { href: ROUTES.FRIENDS, icon: Users, labelKey: "navFriends" },
 ] as const;
 
 interface AppHeaderProps {
@@ -65,7 +67,7 @@ export function AppHeader({ title, showBack = false }: AppHeaderProps) {
   }, [router]);
 
   return (
-    <header className="w-full border-b border-border/40">
+    <header className="sticky top-0 z-40 w-full border-b border-border bg-surface/80 backdrop-blur-sm">
       <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
         {/* Left - Logo */}
         <div className="flex items-center gap-2">
@@ -81,7 +83,7 @@ export function AppHeader({ title, showBack = false }: AppHeaderProps) {
           ) : (
             <Link href={ROUTES.HOME} className="flex items-center gap-2">
               <KordiMascot size="xs" />
-              <span className="neon-text text-lg font-bold">Kordi</span>
+              <span className="text-lg font-[590] text-foreground">Kordi</span>
             </Link>
           )}
         </div>
@@ -94,10 +96,10 @@ export function AppHeader({ title, showBack = false }: AppHeaderProps) {
                 key={href}
                 href={href}
                 className={cn(
-                  "rounded-lg px-3 py-1.5 text-sm transition-colors",
+                  "rounded-md px-3 py-1.5 text-[13px] font-[510] transition-colors",
                   pathname === href
-                    ? "bg-accent text-foreground font-medium"
-                    : "text-muted-foreground hover:bg-accent/50 hover:text-foreground",
+                    ? "bg-[rgba(255,255,255,0.05)] text-foreground"
+                    : "text-muted-foreground hover:text-foreground",
                 )}
               >
                 {t(labelKey)}

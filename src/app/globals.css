@@ -1,4 +1,4 @@
-@import "https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css";
+@import url("https://rsms.me/inter/inter.css");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
@@ -8,9 +8,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  --font-sans: "Inter Variable", "Inter", "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
   --font-mono: var(--font-geist-mono);
-  --font-heading: "Pretendard Variable", "Pretendard", sans-serif;
+  --font-heading: "Inter Variable", "Inter", "Pretendard Variable", "Pretendard", sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -48,100 +48,110 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
 
-  /* Glassmorphism design tokens */
-  --color-neon: var(--neon);
-  --color-neon-muted: var(--neon-muted);
+  /* Linear design tokens */
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-accent: var(--brand-accent);
+  --color-surface: var(--surface);
+  --color-success: var(--success);
+  --color-error: var(--error);
+
+  /* Backward-compatible: neon → brand */
+  --color-neon: var(--brand-accent);
+  --color-neon-muted: var(--brand);
   --color-neon-glow: var(--neon-glow);
   --color-glass: var(--glass);
   --color-glass-border: var(--glass-border);
   --color-glass-hover: var(--glass-hover);
-  --color-success: var(--success);
-  --color-error: var(--error);
 }
 
+/* Linear: light mode = :root, dark mode = .dark */
 :root {
-  --background: oklch(0.97 0.008 90);
-  --foreground: oklch(0.25 0.02 270);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.25 0.02 270);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.25 0.02 270);
-  --primary: oklch(0.55 0.12 155);
-  --primary-foreground: oklch(0.98 0 0);
-  --secondary: oklch(0.94 0.02 280);
-  --secondary-foreground: oklch(0.25 0.02 270);
-  --muted: oklch(0.95 0.01 90);
-  --muted-foreground: oklch(0.55 0.02 270);
-  --accent: oklch(0.92 0.03 155);
-  --accent-foreground: oklch(0.25 0.02 270);
-  --destructive: oklch(0.65 0.14 25);
-  --border: oklch(0.91 0.01 90);
-  --input: oklch(0.91 0.01 90);
-  --ring: oklch(0.55 0.12 155 / 40%);
-  --chart-1: oklch(0.55 0.12 155);
-  --chart-2: oklch(0.6 0.08 280);
-  --chart-3: oklch(0.65 0.1 55);
-  --chart-4: oklch(0.5 0.08 200);
-  --chart-5: oklch(0.45 0.06 320);
-  --radius: 0.875rem;
-  --sidebar: oklch(0.97 0.008 90);
-  --sidebar-foreground: oklch(0.25 0.02 270);
-  --sidebar-primary: oklch(0.55 0.12 155);
-  --sidebar-primary-foreground: oklch(0.98 0 0);
-  --sidebar-accent: oklch(0.92 0.03 155);
-  --sidebar-accent-foreground: oklch(0.25 0.02 270);
-  --sidebar-border: oklch(0.91 0.01 90);
-  --sidebar-ring: oklch(0.55 0.12 155 / 40%);
-  --neon: oklch(0.55 0.12 155);
-  --neon-muted: oklch(0.6 0.08 155);
-  --neon-glow: oklch(0.55 0.12 155 / 12%);
-  --glass: oklch(1 0 0 / 80%);
-  --glass-border: oklch(0 0 0 / 6%);
-  --glass-hover: oklch(1 0 0 / 92%);
-  --success: oklch(0.6 0.13 155);
-  --error: oklch(0.65 0.14 25);
+  --background: #f7f8f8;
+  --foreground: #1a1a1e;
+  --card: #ffffff;
+  --card-foreground: #1a1a1e;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a1e;
+  --primary: #5e6ad2;
+  --primary-foreground: #ffffff;
+  --secondary: #f3f4f5;
+  --secondary-foreground: #1a1a1e;
+  --muted: #f3f4f5;
+  --muted-foreground: #62666d;
+  --accent: #5e6ad2;
+  --accent-foreground: #ffffff;
+  --destructive: #e5484d;
+  --border: #d0d6e0;
+  --input: #d0d6e0;
+  --ring: rgba(94, 106, 210, 0.3);
+  --chart-1: #5e6ad2;
+  --chart-2: #7170ff;
+  --chart-3: #828fff;
+  --chart-4: #27a644;
+  --chart-5: #10b981;
+  --radius: 0.5rem;
+  --sidebar: #f3f4f5;
+  --sidebar-foreground: #1a1a1e;
+  --sidebar-primary: #5e6ad2;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f3f4f5;
+  --sidebar-accent-foreground: #1a1a1e;
+  --sidebar-border: #d0d6e0;
+  --sidebar-ring: rgba(94, 106, 210, 0.3);
+  --brand: #5e6ad2;
+  --brand-hover: #4f5bc4;
+  --brand-accent: #7170ff;
+  --surface: #ffffff;
+  --success: #27a644;
+  --error: #e5484d;
+  --neon: #5e6ad2;
+  --neon-muted: #4f5bc4;
+  --neon-glow: rgba(94, 106, 210, 0.1);
+  --glass: #ffffff;
+  --glass-border: #d0d6e0;
+  --glass-hover: #f3f4f5;
 }
 
 .dark {
-  --background: oklch(0.17 0.015 270);
-  --foreground: oklch(0.92 0.01 90);
-  --card: oklch(0.21 0.015 270);
-  --card-foreground: oklch(0.92 0.01 90);
-  --popover: oklch(0.21 0.015 270);
-  --popover-foreground: oklch(0.92 0.01 90);
-  --primary: oklch(0.7 0.1 155);
-  --primary-foreground: oklch(0.15 0.015 270);
-  --secondary: oklch(0.24 0.02 270);
-  --secondary-foreground: oklch(0.92 0.01 90);
-  --muted: oklch(0.24 0.02 270);
-  --muted-foreground: oklch(0.6 0.02 270);
-  --accent: oklch(0.24 0.02 270);
-  --accent-foreground: oklch(0.92 0.01 90);
-  --destructive: oklch(0.65 0.14 25);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 12%);
-  --ring: oklch(0.7 0.1 155 / 40%);
-  --chart-1: oklch(0.7 0.1 155);
-  --chart-2: oklch(0.65 0.08 280);
-  --chart-3: oklch(0.6 0.06 55);
-  --chart-4: oklch(0.5 0.04 200);
-  --chart-5: oklch(0.4 0.03 320);
-  --sidebar: oklch(0.19 0.015 270);
-  --sidebar-foreground: oklch(0.92 0.01 90);
-  --sidebar-primary: oklch(0.7 0.1 155);
-  --sidebar-primary-foreground: oklch(0.15 0.015 270);
-  --sidebar-accent: oklch(0.24 0.02 270);
-  --sidebar-accent-foreground: oklch(0.92 0.01 90);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.7 0.1 155 / 40%);
-  --neon: oklch(0.7 0.1 155);
-  --neon-muted: oklch(0.55 0.06 155);
-  --neon-glow: oklch(0.6 0.1 155 / 20%);
-  --glass: oklch(1 0 0 / 8%);
-  --glass-border: oklch(1 0 0 / 12%);
-  --glass-hover: oklch(1 0 0 / 15%);
-  --success: oklch(0.72 0.1 155);
-  --error: oklch(0.65 0.14 25);
+  --background: #08090a;
+  --foreground: #f7f8f8;
+  --card: rgba(255, 255, 255, 0.02);
+  --card-foreground: #f7f8f8;
+  --popover: #191a1b;
+  --popover-foreground: #f7f8f8;
+  --primary: #5e6ad2;
+  --primary-foreground: #ffffff;
+  --secondary: #191a1b;
+  --secondary-foreground: #d0d6e0;
+  --muted: #191a1b;
+  --muted-foreground: #8a8f98;
+  --accent: #7170ff;
+  --accent-foreground: #f7f8f8;
+  --destructive: #e5484d;
+  --border: rgba(255, 255, 255, 0.08);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: rgba(94, 106, 210, 0.4);
+  --sidebar: #0f1011;
+  --sidebar-foreground: #f7f8f8;
+  --sidebar-primary: #5e6ad2;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #191a1b;
+  --sidebar-accent-foreground: #f7f8f8;
+  --sidebar-border: rgba(255, 255, 255, 0.05);
+  --sidebar-ring: rgba(94, 106, 210, 0.4);
+  --brand: #5e6ad2;
+  --brand-hover: #828fff;
+  --brand-accent: #7170ff;
+  --surface: #0f1011;
+  --success: #27a644;
+  --error: #e5484d;
+  --neon: #7170ff;
+  --neon-muted: #5e6ad2;
+  --neon-glow: rgba(94, 106, 210, 0.15);
+  --glass: rgba(255, 255, 255, 0.02);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-hover: rgba(255, 255, 255, 0.04);
 }
 
 @layer base {
@@ -150,19 +160,17 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "cv01", "ss03";
   }
   html {
     @apply font-sans;
   }
 }
 
-/* Glassmorphism utilities - Tailwind v4 @utility syntax */
+/* Linear-style glass (backward-compatible) */
 @utility glass {
   background: var(--glass);
-  -webkit-backdrop-filter: blur(12px) saturate(120%);
-  backdrop-filter: blur(12px) saturate(120%);
   border: 1px solid var(--glass-border);
-  box-shadow: 0 2px 8px oklch(0 0 0 / 4%), 0 1px 2px oklch(0 0 0 / 2%);
 }
 
 @utility glass-hover {
@@ -173,26 +181,24 @@
 
 @utility glass-strong {
   background: var(--glass);
-  -webkit-backdrop-filter: blur(24px) saturate(130%);
-  backdrop-filter: blur(24px) saturate(130%);
   border: 1px solid var(--glass-border);
 }
 
+/* Linear-style neon (backward-compatible → brand accent) */
 @utility neon-text {
-  color: var(--neon);
-  text-shadow: none;
+  color: var(--brand-accent);
 }
 
 @utility neon-glow {
-  box-shadow: 0 4px 16px var(--neon-glow), 0 2px 8px oklch(0 0 0 / 4%);
+  box-shadow: 0 0 0 1px rgba(94, 106, 210, 0.2);
 }
 
 @utility neon-glow-sm {
-  box-shadow: 0 2px 8px var(--neon-glow);
+  box-shadow: 0 0 0 1px rgba(94, 106, 210, 0.15);
 }
 
 @utility neon-border {
-  border-color: oklch(0.55 0.12 155 / 25%);
+  border-color: rgba(94, 106, 210, 0.3);
 }
 
 /* Countdown pop */
@@ -262,12 +268,4 @@
   80% {
     transform: translateX(4px);
   }
-}
-
-/* Light mode overrides */
-:root .neon-glow {
-  box-shadow: 0 4px 14px var(--neon-glow), 0 2px 8px oklch(0 0 0 / 5%);
-}
-:root .neon-glow-sm {
-  box-shadow: 0 2px 6px var(--neon-glow), 0 1px 4px oklch(0 0 0 / 3%);
 }
