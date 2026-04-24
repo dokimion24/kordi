@@ -9,6 +9,7 @@ import {
   type TimeSignature,
   type GameMode,
 } from "@/entities/chord-quiz";
+import { MonoPill } from "@/shared/ui/mono-button";
 
 const DIFFICULTIES: Difficulty[] = ["beginner", "intermediate", "advanced", "custom"];
 const TIME_SIGNATURES: TimeSignature[] = ["4/4", "3/4", "2/4", "6/8"];
@@ -104,14 +105,9 @@ function Pill({
   children: React.ReactNode;
 }) {
   return (
-    <button
-      onClick={onClick}
-      className={`rounded-lg border border-black px-3 py-1.5 text-xs font-bold uppercase tracking-wider transition-colors ${
-        selected ? "bg-black text-white" : "bg-white text-black hover:bg-black/5"
-      }`}
-    >
+    <MonoPill active={selected} onClick={onClick}>
       {children}
-    </button>
+    </MonoPill>
   );
 }
 

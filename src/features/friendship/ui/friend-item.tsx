@@ -46,11 +46,12 @@ export function FriendItem({ friendship, currentUserId }: FriendItemProps) {
               <Button
                 variant="ghost"
                 size="icon-sm"
+                aria-label={t("delete")}
                 className="text-muted-foreground hover:text-foreground"
               />
             }
           >
-            <MoreVertical className="size-4" strokeWidth={1.75} />
+            <MoreVertical className="size-4" strokeWidth={1.75} aria-hidden />
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem

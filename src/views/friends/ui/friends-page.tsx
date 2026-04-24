@@ -3,6 +3,7 @@ import { Search } from "lucide-react";
 import type { User } from "@/entities/user";
 import { FriendsPanel } from "@/widgets/friends-panel";
 import { AddFriendDialog } from "@/features/friendship";
+import { SectionHeader } from "@/shared/ui/section-header";
 
 interface FriendsPageProps {
   user: User;
@@ -16,15 +17,16 @@ export function FriendsPage({ user }: FriendsPageProps) {
       <div className="mx-auto w-full max-w-5xl">
         <header className="mb-6 flex flex-col gap-4">
           <div className="flex items-start justify-between gap-4">
-            <h1 className="font-heading text-[28px] font-extrabold uppercase -tracking-[0.02em] text-black">
+            <SectionHeader as="h1" size="lg">
               {t("title")}
-            </h1>
+            </SectionHeader>
             <AddFriendDialog currentUserId={user.id} />
           </div>
           <div className="relative max-w-md">
             <Search
               className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-black opacity-60"
               strokeWidth={1.75}
+              aria-hidden
             />
             <input
               type="text"

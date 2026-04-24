@@ -4,7 +4,6 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { ThemeProvider } from "@/shared/lib/react/theme-provider";
 import { routing } from "@/shared/config/i18n/routing";
-import { RippleBackground } from "@/shared/ui/ripple-background";
 import { QueryProvider } from "@/shared/lib/react/query-provider";
 import "../globals.css";
 
@@ -43,9 +42,7 @@ export default async function LocaleLayout({
         <ThemeProvider defaultTheme="light">
           <QueryProvider>
             <NextIntlClientProvider messages={messages}>
-              <RippleBackground>
-                {children}
-              </RippleBackground>
+              {children}
             </NextIntlClientProvider>
           </QueryProvider>
         </ThemeProvider>

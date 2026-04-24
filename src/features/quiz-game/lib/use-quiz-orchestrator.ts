@@ -45,7 +45,8 @@ export function useQuizOrchestrator({
     useQuizFeedback();
 
   const { data: chords, isFetching } = useQuery({
-    ...quizQueries.chords(selectedDifficulty!),
+    // Fallback key when null; gated by `enabled` so no network request fires.
+    ...quizQueries.chords(selectedDifficulty ?? "EASY"),
     enabled: selectedDifficulty !== null,
   });
 

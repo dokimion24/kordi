@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Piano } from "lucide-react";
 import { GoogleLoginButton } from "@/features/auth";
+import { MonoCard } from "@/shared/ui/mono-card";
 
 export function LoginPage() {
   const t = useTranslations("login");
@@ -13,10 +14,10 @@ export function LoginPage() {
       style={{ width: "100%", alignItems: "center", justifyContent: "center" }}
     >
       <div style={{ width: "100%", maxWidth: "24rem" }}>
-        <div className="rounded-lg border border-black bg-white p-10 text-center">
+        <MonoCard className="p-10 text-center">
           <div className="mb-6 flex justify-center">
             <div className="flex size-16 items-center justify-center rounded-lg border border-black bg-black text-white">
-              <Piano className="size-8" strokeWidth={1.75} />
+              <Piano className="size-8" strokeWidth={1.75} aria-hidden />
             </div>
           </div>
           <h1 className="font-heading mb-2 text-4xl font-black uppercase tracking-tighter">
@@ -24,7 +25,7 @@ export function LoginPage() {
           </h1>
           <p className="mb-8 text-sm leading-relaxed">{t("subtitle")}</p>
           <GoogleLoginButton label={t("googleLogin")} />
-        </div>
+        </MonoCard>
         <p className="mt-6 text-center text-[11px] font-bold uppercase opacity-60">
           {t("tagline")}
         </p>

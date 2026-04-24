@@ -86,7 +86,7 @@ function KeyboardStatusBar({
         <span className="ml-1 opacity-40">[C/V]</span>
       </span>
       <span
-        className={`rounded-lg border border-black px-2.5 py-1 font-bold uppercase ${
+        className={`rounded-lg border border-black px-2.5 py-1 font-bold uppercase transition-colors ${
           sustain ? "bg-black text-white" : "bg-white text-black"
         }`}
       >

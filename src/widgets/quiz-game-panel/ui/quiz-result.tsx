@@ -2,6 +2,9 @@
 
 import { useTranslations } from "next-intl";
 import type { QuizGameState } from "@/entities/quiz";
+import { MonoCard } from "@/shared/ui/mono-card";
+import { MonoButton } from "@/shared/ui/mono-button";
+import { SectionHeader } from "@/shared/ui/section-header";
 
 interface QuizResultProps {
   state: QuizGameState;
@@ -20,14 +23,14 @@ export function QuizResult({
 }: QuizResultProps) {
   const t = useTranslations("chordQuiz");
   const correctCount = state.answers.filter((a) => a === "correct").length;
+  const incorrectCount = state.questions.length - correctCount;
 
   return (
     <div className="flex w-full max-w-md flex-col items-center gap-6 p-6">
-      <h2 className="font-heading text-2xl font-extrabold uppercase -tracking-[0.02em] text-black">
+      <SectionHeader as="h2" size="md">
         {t("result")}
-      </h2>
+      </SectionHeader>
 
-      {/* Total score */}
       <div className="rounded-lg border border-black bg-black px-10 py-6 text-center text-white">
         <div className="font-heading text-5xl font-black tabular-nums">
           {state.totalScore}
@@ -37,27 +40,11 @@ export function QuizResult({
         </div>
       </div>
 
-      {/* Stats */}
       <div className="flex w-full gap-4">
-        <div className="flex-1 rounded-lg border border-black bg-white px-4 py-3 text-center">
-          <div className="font-heading text-2xl font-black tabular-nums">
-            {correctCount}
-          </div>
-          <div className="text-[11px] font-bold uppercase tracking-widest opacity-70">
-            {t("correct")}
-          </div>
-        </div>
-        <div className="flex-1 rounded-lg border border-black bg-white px-4 py-3 text-center">
-          <div className="font-heading text-2xl font-black tabular-nums">
-            {state.questions.length - correctCount}
-          </div>
-          <div className="text-[11px] font-bold uppercase tracking-widest opacity-70">
-            {t("incorrect")}
-          </div>
-        </div>
+        <StatBlock value={correctCount} label={t("correct")} />
+        <StatBlock value={incorrectCount} label={t("incorrect")} />
       </div>
 
-      {/* Per-question results */}
       <div className="w-full overflow-hidden rounded-lg border border-black">
         {state.questions.map((q, i) => (
           <div
@@ -80,7 +67,6 @@ export function QuizResult({
         ))}
       </div>
 
-      {/* Save status */}
       {isSaving && <p className="text-sm opacity-60">{t("saving")}</p>}
       {isSaved && (
         <p className="text-xs font-bold uppercase tracking-widest text-black">
@@ -88,21 +74,27 @@ export function QuizResult({
         </p>
       )}
 
-      {/* Actions */}
       <div className="flex gap-3">
-        <button
-          onClick={onRetry}
-          className="rounded-lg border border-black bg-black px-6 py-3 text-xs font-bold uppercase tracking-widest text-white transition-all hover:bg-white hover:text-black"
-        >
+        <MonoButton variant="solid" size="lg" onClick={onRetry}>
           {t("retry")}
-        </button>
-        <button
-          onClick={onBackToSelect}
-          className="rounded-lg border border-black bg-white px-6 py-3 text-xs font-bold uppercase tracking-widest text-black transition-all hover:bg-black hover:text-white"
-        >
+        </MonoButton>
+        <MonoButton variant="outline" size="lg" onClick={onBackToSelect}>
           {t("backToSelect")}
-        </button>
+        </MonoButton>
       </div>
     </div>
+  );
+}
+
+function StatBlock({ value, label }: { value: number; label: string }) {
+  return (
+    <MonoCard className="flex-1 px-4 py-3 text-center">
+      <div className="font-heading text-2xl font-black tabular-nums">
+        {value}
+      </div>
+      <div className="text-[11px] font-bold uppercase tracking-widest opacity-70">
+        {label}
+      </div>
+    </MonoCard>
   );
 }

@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { Trophy } from "lucide-react";
 import { RankingBoard } from "@/widgets/ranking-board";
+import { SectionHeader } from "@/shared/ui/section-header";
 
 export function RankingPage() {
   const t = useTranslations("ranking");
@@ -9,10 +10,10 @@ export function RankingPage() {
     <main className="flex-1 overflow-y-auto p-6 md:p-8">
       <div className="mx-auto w-full max-w-5xl">
         <header className="mb-8 flex items-center gap-3">
-          <Trophy className="size-6 text-black" strokeWidth={1.75} />
-          <h1 className="font-heading text-[28px] font-extrabold uppercase -tracking-[0.02em] text-black">
+          <Trophy className="size-6 text-black" strokeWidth={1.75} aria-hidden />
+          <SectionHeader as="h1" size="lg">
             {t("leaderboard")}
-          </h1>
+          </SectionHeader>
         </header>
         <RankingBoard />
       </div>
