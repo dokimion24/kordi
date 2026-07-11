@@ -19,7 +19,7 @@ function matchTemplate(
 }
 
 export function detectChord(midiNotes: number[]): string | null {
-  if (midiNotes.length < 2) return null;
+  if (midiNotes.length < 1) return null;
 
   const pitchClasses = toPitchClasses(midiNotes);
 

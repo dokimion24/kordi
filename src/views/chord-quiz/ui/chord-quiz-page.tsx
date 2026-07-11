@@ -32,89 +32,100 @@ export function ChordQuizPage() {
     handleBackToSelect,
   } = useQuizOrchestrator({ activeNotes, isAudioStarted, startAudio });
 
+  const isPlaying = state.phase === "playing";
+
   return (
-    <main className="flex flex-1 flex-col items-center overflow-y-auto p-6">
+    <>
       <QuizFeedbackOverlay feedback={feedbackState} />
 
-      <MidiStatus
-        midiName={midi.selectedDevice?.name}
-        fallback={t("noMidiDevice")}
-      />
+      {/* Centered phases: select / loading / countdown / result */}
+      {!isPlaying && (
+        <div className="flex w-full flex-1 flex-col items-center justify-center gap-8 p-6">
+          {state.phase === "select" && !isFetching && !showCountdown && (
+            <DifficultySelect
+              onSelect={handleSelectDifficulty}
+              isLoading={isFetching}
+            />
+          )}
 
-      {state.phase === "select" && !isFetching && !showCountdown && (
-        <div className="flex flex-1 items-center">
-          <DifficultySelect onSelect={handleSelectDifficulty} isLoading={isFetching} />
+          {isFetching && !showCountdown && (
+            <p className="text-sm opacity-60">{t("loading")}</p>
+          )}
+
+          {showCountdown && <Countdown onComplete={handleCountdownComplete} />}
+
+          {state.phase === "result" && (
+            <QuizResult
+              state={state}
+              isSaving={scoreMutation.isPending}
+              isSaved={scoreMutation.isSuccess}
+              onRetry={handleRetry}
+              onBackToSelect={handleBackToSelect}
+            />
+          )}
         </div>
       )}
 
-      {isFetching && !showCountdown && (
-        <div className="flex flex-1 items-center">
-          <p className="text-sm opacity-60">{t("loading")}</p>
-        </div>
-      )}
+      {/* Playing phase: chord-practice-style top-aligned layout */}
+      {isPlaying && currentChord && (
+        <div className="w-full p-6">
+          <div className="mx-auto w-full max-w-4xl space-y-6">
+            <MidiStatus
+              midiName={midi.selectedDevice?.name}
+              fallback={t("noMidiDevice")}
+            />
 
-      {showCountdown && <Countdown onComplete={handleCountdownComplete} />}
-
-      {state.phase === "playing" && currentChord && (
-        <>
-          <div className="mb-4">
             <QuizProgress
               currentIndex={state.currentIndex}
               totalCount={state.questions.length}
               timeLeft={state.timeLeft}
               totalScore={state.totalScore}
             />
+
+            <div className="flex flex-col items-center gap-6">
+              <ChordPrompt
+                ns="chordQuiz"
+                currentChord={{
+                  name: currentChord.name,
+                  rootIndex: 0,
+                  type: "",
+                  pitchClasses: [],
+                }}
+                nextChord={null}
+                showNext={false}
+                feedbackState={feedbackState}
+              />
+            </div>
+
+            <div
+              className={cn(
+                "h-5 text-center text-sm transition-opacity duration-300",
+                isLoaded ? "opacity-0" : "opacity-60",
+              )}
+              aria-hidden={isLoaded}
+            >
+              {t("loadingSamples")}
+            </div>
+
+            <div
+              className={cn(
+                "w-full rounded-lg transition-all duration-200",
+                feedbackState === "correct" && "ring-2 ring-black",
+                feedbackState === "incorrect" &&
+                  "ring-2 ring-black ring-offset-2 ring-offset-white",
+              )}
+            >
+              <PianoKeyboard
+                activeNotes={activeNotes}
+                onNoteOn={mouse.onNoteOn}
+                onNoteOff={mouse.onNoteOff}
+                showShortcuts
+                octave={keyboard.octave}
+              />
+            </div>
           </div>
-
-          <div className="mb-6">
-            <ChordPrompt
-              currentChord={{
-                name: currentChord.name,
-                rootIndex: 0,
-                type: "",
-                pitchClasses: [],
-              }}
-              nextChord={null}
-              showNext={false}
-              feedbackState={feedbackState}
-            />
-          </div>
-
-          {!isLoaded && (
-            <div className="mb-4 text-sm opacity-60">{t("loadingSamples")}</div>
-          )}
-
-          <div
-            className={cn(
-              "w-full max-w-4xl rounded-lg transition-all duration-200",
-              feedbackState === "correct" && "ring-2 ring-black",
-              feedbackState === "incorrect" &&
-                "ring-2 ring-black ring-offset-2 ring-offset-white",
-            )}
-          >
-            <PianoKeyboard
-              activeNotes={activeNotes}
-              onNoteOn={mouse.onNoteOn}
-              onNoteOff={mouse.onNoteOff}
-              showShortcuts
-              octave={keyboard.octave}
-            />
-          </div>
-        </>
-      )}
-
-      {state.phase === "result" && (
-        <div className="flex flex-1 items-center">
-          <QuizResult
-            state={state}
-            isSaving={scoreMutation.isPending}
-            isSaved={scoreMutation.isSuccess}
-            onRetry={handleRetry}
-            onBackToSelect={handleBackToSelect}
-          />
         </div>
       )}
-    </main>
+    </>
   );
 }
-

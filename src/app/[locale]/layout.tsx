@@ -35,10 +35,13 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${geistMono.variable} h-full antialiased`}
+      className={`${geistMono.variable} h-full overflow-hidden antialiased`}
       suppressHydrationWarning
     >
-      <body className="relative min-h-full flex flex-col overflow-x-hidden bg-background">
+      <body
+        className="relative h-full flex flex-col overflow-hidden bg-background"
+        suppressHydrationWarning
+      >
         <ThemeProvider defaultTheme="light">
           <QueryProvider>
             <NextIntlClientProvider messages={messages}>

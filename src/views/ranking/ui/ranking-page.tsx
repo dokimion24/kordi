@@ -7,7 +7,7 @@ export function RankingPage() {
   const t = useTranslations("ranking");
 
   return (
-    <main className="flex-1 overflow-y-auto p-6 md:p-8">
+    <main className="p-6 md:p-8">
       <div className="mx-auto w-full max-w-5xl">
         <header className="mb-8 flex items-center gap-3">
           <Trophy className="size-6 text-black" strokeWidth={1.75} aria-hidden />

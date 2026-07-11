@@ -20,7 +20,7 @@
       "account": "계정"
     },
     "nav": {
-      "piano": "가상 피아노",
+      "piano": "자유 연주",
       "practice": "코드 연습",
       "quiz": "코드 퀴즈",
       "ranking": "랭킹",
@@ -167,7 +167,7 @@
       "item2": "주간 스피드 퀴즈"
     },
     "nav": {
-      "piano": "가상 피아노",
+      "piano": "자유 연주",
       "practice": "코드 연습",
       "quiz": "코드 퀴즈",
       "profile": "내 프로필",
@@ -272,7 +272,8 @@
     "timeSignature": "박자",
     "metronomeAudio": "메트로놈 소리",
     "metronomeVisual": "메트로놈 시각표시",
-    "showNextChord": "다음 코드 미리보기"
+    "showNextChord": "다음 코드 미리보기",
+    "upNext": "다음"
   },
   "chordQuiz": {
     "title": "코드 퀴즈",
@@ -296,6 +297,7 @@
     "backToSelect": "난이도 선택",
     "saving": "점수 저장 중...",
     "saved": "점수가 저장되었습니다",
-    "loading": "문제를 불러오는 중..."
+    "loading": "문제를 불러오는 중...",
+    "upNext": "다음"
   }
 }

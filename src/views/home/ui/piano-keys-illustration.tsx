@@ -5,7 +5,9 @@ export function PianoKeysIllustration() {
   return (
     <svg
       viewBox="0 0 280 160"
-      className="h-full w-full"
+      width="100%"
+      height="100%"
+      className="block h-full w-full"
       aria-hidden="true"
       preserveAspectRatio="xMidYMid meet"
     >

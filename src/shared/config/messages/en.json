@@ -20,7 +20,7 @@
       "account": "Account"
     },
     "nav": {
-      "piano": "Virtual Piano",
+      "piano": "Free Play",
       "practice": "Chord Practice",
       "quiz": "Chord Quiz",
       "ranking": "Ranking",
@@ -167,7 +167,7 @@
       "item2": "Weekly Speed Quiz"
     },
     "nav": {
-      "piano": "Virtual Piano",
+      "piano": "Free Play",
       "practice": "Chord Practice",
       "quiz": "Chord Quiz",
       "profile": "My Profile",
@@ -271,7 +271,8 @@
     "timeSignature": "Time Signature",
     "metronomeAudio": "Metronome Audio",
     "metronomeVisual": "Metronome Visual",
-    "showNextChord": "Show Next Chord"
+    "showNextChord": "Show Next Chord",
+    "upNext": "Up next"
   },
   "chordQuiz": {
     "title": "Chord Quiz",
@@ -295,6 +296,7 @@
     "backToSelect": "Select Difficulty",
     "saving": "Saving score...",
     "saved": "Score saved!",
-    "loading": "Loading questions..."
+    "loading": "Loading questions...",
+    "upNext": "Up next"
   }
 }

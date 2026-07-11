@@ -24,8 +24,15 @@ export function ChordPracticePage() {
   const [settings, setSettings] = useState<QuizSettings>(DEFAULT_QUIZ_SETTINGS);
   const [settingsOpen, setSettingsOpen] = useState(false);
 
-  const { activeNotes, isAudioStarted, isLoaded, startAudio, keyboard, midi, mouse } =
-    usePianoInput();
+  const {
+    activeNotes,
+    isAudioStarted,
+    isLoaded,
+    startAudio,
+    keyboard,
+    midi,
+    mouse,
+  } = usePianoInput();
 
   const { state, feedbackState, metronome, start, stop, pause, resume } =
     useQuizGame(settings, activeNotes);
@@ -43,84 +50,85 @@ export function ChordPracticePage() {
   const isIdle = state.status === "idle";
 
   return (
-    <main className="flex flex-1 flex-col items-center overflow-y-auto p-6">
-      <MidiStatus
-        midiName={midi.selectedDevice?.name}
-        fallback={t("noMidiDevice")}
-      />
+    <div className="w-full p-6">
+      <div className="mx-auto w-full max-w-4xl space-y-6">
+        <MidiStatus
+          midiName={midi.selectedDevice?.name}
+          fallback={t("noMidiDevice")}
+        />
 
-      {isIdle && (
-        <div className="mb-6 w-full max-w-md">
-          <QuizSettingsPanel
-            ns="chordPractice"
-            settings={settings}
-            onChange={setSettings}
-            onClose={() => {}}
-            isOpen
-            inline
-          />
-        </div>
-      )}
-
-      {!isIdle && (
-        <>
-          <div className="mb-4">
+        {isIdle ? (
+          <div className="mx-auto w-full max-w-2xl">
+            <QuizSettingsPanel
+              ns="chordPractice"
+              settings={settings}
+              onChange={setSettings}
+              onClose={() => {}}
+              isOpen
+              inline
+            />
+          </div>
+        ) : (
+          <div className="flex flex-col items-center gap-6">
             <ChordPrompt
+              ns="chordPractice"
               currentChord={state.currentChord}
               nextChord={state.nextChord}
               showNext={settings.showNextChord}
               feedbackState={feedbackState}
             />
-          </div>
 
-          {settings.metronomeVisualEnabled && (
-            <div className="mb-4">
+            {settings.metronomeVisualEnabled && (
               <MetronomeDisplay
                 beatsPerBar={metronome.beatsPerBar}
                 currentBeat={metronome.currentBeat}
                 isPlaying={metronome.isPlaying}
               />
-            </div>
-          )}
+            )}
 
-          <div className="mb-4">
             <QuizScore state={state} />
           </div>
-        </>
-      )}
-
-      <div className="mb-6">
-        <QuizControls
-          ns="chordPractice"
-          status={state.status}
-          bpm={settings.bpm}
-          onStart={start}
-          onStop={stop}
-          onPause={pause}
-          onResume={resume}
-          onSettingsOpen={() => setSettingsOpen(true)}
-        />
-      </div>
-
-      {!isLoaded && (
-        <div className="mb-4 text-sm opacity-60">{t("loadingSamples")}</div>
-      )}
-
-      <div
-        className={cn(
-          "w-full max-w-4xl rounded-lg transition-all duration-200",
-          feedbackState === "correct" && "ring-2 ring-black",
-          feedbackState === "incorrect" &&
-            "ring-2 ring-black ring-offset-2 ring-offset-white",
         )}
-      >
-        <PianoKeyboard
-          activeNotes={activeNotes}
-          onNoteOn={mouse.onNoteOn}
-          onNoteOff={mouse.onNoteOff}
-          showShortcuts
-          octave={keyboard.octave}
-        />
+
+        <div className="flex justify-center">
+          <QuizControls
+            ns="chordPractice"
+            status={state.status}
+            bpm={settings.bpm}
+            onStart={start}
+            onStop={stop}
+            onPause={pause}
+            onResume={resume}
+            onSettingsOpen={() => setSettingsOpen(true)}
+          />
+        </div>
+
+        <div
+          className={cn(
+            "h-5 text-center text-sm transition-opacity duration-300",
+            isLoaded ? "opacity-0" : "opacity-60",
+          )}
+          aria-hidden={isLoaded}
+        >
+          {t("loadingSamples")}
+        </div>
+
+        <div
+          className={cn(
+            "w-full rounded-lg transition-all duration-200",
+            feedbackState === "correct" && "ring-2 ring-black",
+            feedbackState === "incorrect" &&
+              "ring-2 ring-black ring-offset-2 ring-offset-white",
+          )}
+        >
+          <PianoKeyboard
+            activeNotes={activeNotes}
+            onNoteOn={mouse.onNoteOn}
+            onNoteOff={mouse.onNoteOff}
+            showShortcuts
+            octave={keyboard.octave}
+          />
+        </div>
       </div>
 
       {!isIdle && (
@@ -132,6 +140,6 @@ export function ChordPracticePage() {
           isOpen={settingsOpen}
         />
       )}
-    </main>
+    </div>
   );
 }

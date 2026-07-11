@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import * as Tone from "tone";
 import { useCallbackRef } from "@/shared/lib/react/use-callback-ref";
 import { TIME_SIGNATURE_CONFIGS } from "@/shared/lib/music/time-signature";
@@ -91,6 +91,15 @@ export function useMetronome({
     barCountRef.current = 0;
     setCurrentBeat(-1);
     setIsPlaying(false);
+  }, []);
+
+  const stopRef = useRef(stop);
+  stopRef.current = stop;
+
+  useEffect(() => {
+    return () => {
+      stopRef.current();
+    };
   }, []);
 
   const beatsPerBar = TIME_SIGNATURE_CONFIGS[timeSignature].beatsPerBar;

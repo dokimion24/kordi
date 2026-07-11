@@ -5,15 +5,16 @@ import { ROUTES } from "@/shared/config/routes";
 import { MonoCard } from "@/shared/ui/mono-card";
 import { MonoButton } from "@/shared/ui/mono-button";
 import { SectionHeader } from "@/shared/ui/section-header";
-import { PianoKeysIllustration } from "./piano-keys-illustration";
+import { KordiMascot } from "@/shared/ui/illustrations/kordi-mascot";
 import { ChordDiagramCmaj7 } from "./chord-diagram-cmaj7";
 import { QuickAccessCard } from "./quick-access-card";
+import { TypingBubble } from "./typing-bubble";
 
 export function HomePage() {
   const t = useTranslations("home");
 
   return (
-    <main className="flex-1 overflow-y-auto p-6 md:p-8">
+    <main className="p-6 md:p-8">
       <div className="mx-auto max-w-6xl space-y-6">
         <MonoCard className="grid grid-cols-1 items-center gap-8 p-8 md:grid-cols-2 md:gap-10 md:p-10">
           <div className="min-w-0 space-y-5">
@@ -29,10 +30,9 @@ export function HomePage() {
               </MonoButton>
             </Link>
           </div>
-          <div className="flex min-w-0 justify-center md:justify-end">
-            <MonoCard className="flex h-56 w-full max-w-md items-center justify-center overflow-hidden md:h-64">
-              <PianoKeysIllustration />
-            </MonoCard>
+          <div className="flex min-w-0 items-center justify-center gap-3 md:justify-end md:gap-4">
+            <TypingBubble />
+            <KordiMascot size="lg" interactive mood="idle" />
           </div>
         </MonoCard>
 
@@ -64,7 +64,7 @@ export function HomePage() {
                   Cmaj7
                 </div>
                 <p className="text-sm">{t("daily.subtitle")}</p>
-                <MonoCard className="mt-2 flex h-24 items-center justify-center overflow-hidden">
+                <MonoCard className="mt-2 grid h-24 overflow-hidden">
                   <ChordDiagramCmaj7 />
                 </MonoCard>
               </div>
@@ -77,7 +77,11 @@ export function HomePage() {
               <ul className="space-y-1">
                 <li className="flex items-center justify-between border-b border-black py-1.5 last:border-0">
                   <div className="flex items-center gap-2">
-                    <Dumbbell className="size-4" strokeWidth={1.75} aria-hidden />
+                    <Dumbbell
+                      className="size-4"
+                      strokeWidth={1.75}
+                      aria-hidden
+                    />
                     <span className="text-sm">{t("activity.item1")}</span>
                   </div>
                   <span className="text-sm font-bold tabular-nums">85%</span>

@@ -13,7 +13,7 @@ export function FriendsPage({ user }: FriendsPageProps) {
   const t = useTranslations("friends");
 
   return (
-    <main className="flex-1 overflow-y-auto p-6 md:p-8">
+    <main className="p-6 md:p-8">
       <div className="mx-auto w-full max-w-5xl">
         <header className="mb-6 flex flex-col gap-4">
           <div className="flex items-start justify-between gap-4">

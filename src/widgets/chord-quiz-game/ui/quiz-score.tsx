@@ -8,7 +8,7 @@ interface QuizScoreProps {
 }
 
 export function QuizScore({ state }: QuizScoreProps) {
-  const t = useTranslations("chordQuiz");
+  const t = useTranslations("chordPractice");
   const accuracy =
     state.totalAttempted > 0
       ? Math.round((state.totalCorrect / state.totalAttempted) * 100)
@@ -34,7 +34,7 @@ function Stat({
   accent?: boolean;
 }) {
   return (
-    <div className="text-center">
+    <div className="min-w-16 text-center">
       <div
         className={`font-heading text-2xl font-black tabular-nums ${accent ? "text-black" : "text-black opacity-70"}`}
       >

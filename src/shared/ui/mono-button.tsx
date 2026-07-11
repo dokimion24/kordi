@@ -17,9 +17,9 @@ const monoButton = cva(
         "pill-inactive": "bg-white text-black hover:bg-black/5",
       },
       size: {
-        sm: "px-3 py-1.5 text-xs tracking-wider",
-        md: "px-4 py-2 text-xs tracking-widest",
-        lg: "px-6 py-3.5 text-xs tracking-widest",
+        sm: "px-3 py-1.5 text-sm tracking-wider",
+        md: "px-4 py-2 text-sm tracking-widest",
+        lg: "px-6 py-3.5 text-base tracking-widest",
       },
     },
     defaultVariants: { variant: "outline", size: "md" },

@@ -19,9 +19,9 @@ const SIZE_PX = {
 } as const;
 
 const MOOD_SRC = {
-  idle: "/chordy/chordy-idle.png",
-  correct: "/chordy/chordy-correct.png",
-  wrong: "/chordy/chordy-wrong.png",
+  idle: "/kordi/kordi-idle.png",
+  correct: "/kordi/kordi-correct.png",
+  wrong: "/kordi/kordi-wrong.png",
 } as const;
 
 export function KordiMascot({ className, size = "md", interactive = false, mood = "idle" }: KordiMascotProps) {
@@ -47,7 +47,7 @@ export function KordiMascot({ className, size = "md", interactive = false, mood 
     >
       <Image
         src={src}
-        alt="Chordy"
+        alt="Kordi"
         width={px}
         height={px}
         className="object-contain"

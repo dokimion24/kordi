@@ -20,7 +20,7 @@ export function MePage({ user, scores }: MePageProps) {
   const tCommon = useTranslations("common");
 
   return (
-    <main className="flex-1 overflow-y-auto p-6 md:p-8">
+    <main className="p-6 md:p-8">
       <div className="mx-auto w-full max-w-5xl">
         <SectionHeader as="h1" size="lg" className="mb-6">
           {t("title")}

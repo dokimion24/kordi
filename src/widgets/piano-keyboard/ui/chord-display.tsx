@@ -20,7 +20,7 @@ export function ChordDisplay({ activeNotes }: ChordDisplayProps) {
 
   return (
     <div className="flex h-16 items-center justify-center">
-      <span className="font-heading text-3xl font-black tabular-nums text-black">
+      <span className="font-heading text-6xl font-black tabular-nums text-black">
         {chord}
       </span>
     </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { ChevronDown } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { CHORD_TEMPLATES, ALL_KEYS, type ChordType } from "@/shared/lib/music";
 import {
@@ -10,6 +11,13 @@ import {
   type GameMode,
 } from "@/entities/chord-quiz";
 import { MonoPill } from "@/shared/ui/mono-button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "@/shared/ui/dropdown-menu";
 
 const DIFFICULTIES: Difficulty[] = ["beginner", "intermediate", "advanced", "custom"];
 const TIME_SIGNATURES: TimeSignature[] = ["4/4", "3/4", "2/4", "6/8"];
@@ -99,13 +107,15 @@ function Pill({
   selected,
   onClick,
   children,
+  className,
 }: {
   selected: boolean;
   onClick: () => void;
   children: React.ReactNode;
+  className?: string;
 }) {
   return (
-    <MonoPill active={selected} onClick={onClick}>
+    <MonoPill active={selected} onClick={onClick} className={className}>
       {children}
     </MonoPill>
   );
@@ -172,12 +182,13 @@ function CustomChordTypesSection({
       <Label>{t("chordTypes")}</Label>
       <div className="flex flex-wrap gap-1.5">
         {ALL_CHORD_TYPES.map((type) => {
-          const label = type === "" ? "Major" : type;
+          const label = type === "" ? "Maj" : type;
           const isSelected = selected.includes(type);
           return (
             <Pill
               key={type || "major"}
               selected={isSelected}
+              className="normal-case tracking-normal"
               onClick={() => {
                 const next = isSelected
                   ? selected.filter((ct) => ct !== type)
@@ -203,21 +214,28 @@ function KeySection({
   value: string;
   onChange: (v: string) => void;
 }) {
+  const displayLabel = value === "any" ? t("anyKey") : value;
   return (
     <div>
       <Label>{t("key")}</Label>
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full rounded-lg border border-black bg-white px-3 py-1.5 text-sm text-black"
-      >
-        <option value="any">{t("anyKey")}</option>
-        {ALL_KEYS.map((k) => (
-          <option key={k.name} value={k.name}>
-            {k.name}
-          </option>
-        ))}
-      </select>
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          className="flex w-full cursor-pointer items-center justify-between rounded-lg border border-black bg-white px-3 py-1.5 text-sm text-black transition-colors hover:bg-black hover:text-white data-[popup-open]:bg-black data-[popup-open]:text-white"
+        >
+          <span>{displayLabel}</span>
+          <ChevronDown className="size-4 shrink-0" strokeWidth={2} />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="start" className="max-h-72 w-(--anchor-width) overflow-y-auto">
+          <DropdownMenuRadioGroup value={value} onValueChange={onChange}>
+            <DropdownMenuRadioItem value="any">{t("anyKey")}</DropdownMenuRadioItem>
+            {ALL_KEYS.map((k) => (
+              <DropdownMenuRadioItem key={k.name} value={k.name}>
+                {k.name}
+              </DropdownMenuRadioItem>
+            ))}
+          </DropdownMenuRadioGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </div>
   );
 }

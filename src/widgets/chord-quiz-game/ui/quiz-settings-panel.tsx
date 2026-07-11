@@ -28,7 +28,11 @@ export function QuizSettingsPanel({
 
   if (inline) {
     return (
-      <div className="rounded-lg border border-black bg-white p-6">
+      <div
+        className="rounded-lg border border-black bg-white p-6"
+        style={{ width: "100%", display: "block" }}
+        data-debug="quiz-settings-inline-v2"
+      >
         <h2 className="mb-4 font-heading text-lg font-bold uppercase text-black">
           {t("settings")}
         </h2>

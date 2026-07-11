@@ -41,6 +41,6 @@ export interface QuizState {
 export const DIFFICULTY_CHORD_TYPES: Record<Difficulty, ChordType[]> = {
   beginner: ["", "m"],
   intermediate: ["", "m", "7", "m7", "maj7", "sus2", "sus4"],
-  advanced: ["", "m", "7", "m7", "maj7", "sus2", "sus4", "dim", "aug", "dim7", "m7b5", "aug7"],
+  advanced: ["", "m", "7", "m7", "maj7", "sus2", "sus4", "dim", "aug", "dim7", "m7b5", "7#5"],
   custom: [],
 };
