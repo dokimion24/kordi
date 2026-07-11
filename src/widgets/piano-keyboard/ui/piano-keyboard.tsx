@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { PianoKey } from "@/shared/ui/piano-key";
+import { cn } from "@/shared/lib/utils";
 import { isBlackKey, midiToNoteName, buildKeyboardLabelMap } from "@/shared/lib/music";
 import type { ActiveNote } from "@/entities/note";
 
@@ -13,6 +14,7 @@ interface PianoKeyboardProps {
   onNoteOff: (midi: number) => void;
   showShortcuts?: boolean;
   octave?: number;
+  className?: string;
 }
 
 // Black key offsets relative to the white key on the left (percentage of white key width)
@@ -32,6 +34,7 @@ export function PianoKeyboard({
   onNoteOff,
   showShortcuts = true,
   octave = 3,
+  className,
 }: PianoKeyboardProps) {
   const keyboardLabelMap = useMemo(
     () => buildKeyboardLabelMap(octave),
@@ -64,7 +67,10 @@ export function PianoKeyboard({
     <div
       role="group"
       aria-label="Piano keyboard"
-      className="relative flex h-48 w-full max-w-4xl select-none sm:h-56 md:h-64"
+      className={cn(
+        "relative flex h-48 w-full max-w-4xl select-none sm:h-56 md:h-64",
+        className,
+      )}
     >
       {/* White keys */}
       {whiteKeys.map(({ midi }) => (

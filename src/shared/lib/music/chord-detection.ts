@@ -29,6 +29,12 @@ const DETECTION_ORDER: [ChordType, number[]][] = [
   ),
 ].map((k) => [k, CHORD_TEMPLATES[k]]);
 
+// Omitted-fifth variants (jazz shell voicings: 1-3-7, rootful 9ths without the 5th, …).
+// Checked only when no full template matches, so they never override an exact match.
+const OMITTED_FIFTH_ORDER: [ChordType, number[]][] = DETECTION_ORDER.filter(
+  ([, template]) => template.length >= 4 && template.includes(7),
+).map(([suffix, template]) => [suffix, template.filter((iv) => iv !== 7)]);
+
 function matchRoots(pitchClasses: number[], template: number[]): number[] {
   if (pitchClasses.length !== template.length) return [];
 
@@ -44,25 +50,38 @@ function matchRoots(pitchClasses: number[], template: number[]): number[] {
   return roots;
 }
 
+function collectCandidates(
+  pitchClasses: number[],
+  order: [ChordType, number[]][],
+): { root: number; suffix: ChordType }[] {
+  const candidates: { root: number; suffix: ChordType }[] = [];
+  for (const [suffix, template] of order) {
+    for (const root of matchRoots(pitchClasses, template)) {
+      candidates.push({ root, suffix });
+    }
+  }
+  return candidates;
+}
+
 export function detectChord(midiNotes: number[]): string | null {
   if (midiNotes.length < 1) return null;
 
   const pitchClasses = toPitchClasses(midiNotes);
   const bass = Math.min(...midiNotes) % 12;
 
-  const candidates: { root: number; suffix: ChordType }[] = [];
-  for (const [suffix, template] of DETECTION_ORDER) {
-    for (const root of matchRoots(pitchClasses, template)) {
-      candidates.push({ root, suffix });
-    }
-  }
-  if (candidates.length === 0) return null;
+  const fullCandidates = collectCandidates(pitchClasses, DETECTION_ORDER);
 
   // The bass note decides between enharmonic sets (C6 vs Am7, Csus2 vs Gsus4, …)
-  const rooted = candidates.find((c) => c.root === bass);
-  if (rooted) return `${NOTE_LABELS[rooted.root]}${rooted.suffix}`;
+  const rootedFull = fullCandidates.find((c) => c.root === bass);
+  if (rootedFull) return `${NOTE_LABELS[rootedFull.root]}${rootedFull.suffix}`;
+
+  // Omitted-fifth reading rooted at the bass (e.g. C-E-Bb → C7)
+  const no5Candidates = collectCandidates(pitchClasses, OMITTED_FIFTH_ORDER);
+  const rootedNo5 = no5Candidates.find((c) => c.root === bass);
+  if (rootedNo5) return `${NOTE_LABELS[rootedNo5.root]}${rootedNo5.suffix}`;
 
   // Bass isn't any candidate's root → inversion, shown as a slash chord
-  const best = candidates[0];
+  const best = fullCandidates[0] ?? no5Candidates[0];
+  if (!best) return null;
   return `${NOTE_LABELS[best.root]}${best.suffix}/${NOTE_LABELS[bass]}`;
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useActiveNotes, type ActiveNote } from "@/entities/note";
 import { useKeyboardInput } from "./use-keyboard-input";
 import { useMidiInput } from "./use-midi-input";
@@ -20,7 +20,35 @@ export function usePianoInput() {
     handleNoteOn,
     handleNoteOff,
     setSustain,
+    isMuted,
+    toggleMute,
   } = useSoundEngine({ noteOn, noteOff });
+
+  // Sustain is active while either the Tab toggle or the MIDI pedal holds it
+  const keySustainRef = useRef(false);
+  const pedalSustainRef = useRef(false);
+  const [pedalSustain, setPedalSustain] = useState(false);
+
+  const applySustain = useCallback(() => {
+    setSustain(keySustainRef.current || pedalSustainRef.current);
+  }, [setSustain]);
+
+  const handleKeySustain = useCallback(
+    (on: boolean) => {
+      keySustainRef.current = on;
+      applySustain();
+    },
+    [applySustain]
+  );
+
+  const handlePedalSustain = useCallback(
+    (on: boolean) => {
+      pedalSustainRef.current = on;
+      setPedalSustain(on);
+      applySustain();
+    },
+    [applySustain]
+  );
 
   // Source-specific handlers (Factory pattern)
   const keyboardNoteOn = useCallback(
@@ -35,7 +63,7 @@ export function usePianoInput() {
   const { octave, velocity, sustain } = useKeyboardInput({
     onNoteOn: keyboardNoteOn,
     onNoteOff: keyboardNoteOff,
-    onSustainChange: setSustain,
+    onSustainChange: handleKeySustain,
     enabled: isAudioStarted,
   });
 
@@ -48,9 +76,10 @@ export function usePianoInput() {
     [handleNoteOff]
   );
 
-  const { devices, selectedDeviceId } = useMidiInput({
+  const { devices, selectedDeviceId, selectDevice } = useMidiInput({
     onNoteOn: midiNoteOn,
     onNoteOff: midiNoteOff,
+    onSustainChange: handlePedalSustain,
     enabled: isAudioStarted,
   });
 
@@ -70,8 +99,9 @@ export function usePianoInput() {
     isAudioStarted,
     isLoaded,
     startAudio,
-    keyboard: { octave, velocity, sustain },
-    midi: { devices, selectedDevice, selectedDeviceId },
+    keyboard: { octave, velocity, sustain: sustain || pedalSustain },
+    midi: { devices, selectedDevice, selectedDeviceId, selectDevice },
     mouse: { onNoteOn: mouseNoteOn, onNoteOff: mouseNoteOff },
+    sound: { isMuted, toggleMute },
   };
 }

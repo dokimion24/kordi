@@ -4,15 +4,19 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useCallbackRef } from "@/shared/lib/react/use-callback-ref";
 import type { MidiDeviceInfo } from "../model/types";
 
+const CC_SUSTAIN_PEDAL = 64;
+
 interface UseMidiInputOptions {
   onNoteOn: (midi: number, velocity: number) => void;
   onNoteOff: (midi: number) => void;
+  onSustainChange?: (on: boolean) => void;
   enabled?: boolean;
 }
 
 export function useMidiInput({
   onNoteOn,
   onNoteOff,
+  onSustainChange,
   enabled = true,
 }: UseMidiInputOptions) {
   const [devices, setDevices] = useState<MidiDeviceInfo[]>([]);
@@ -20,6 +24,7 @@ export function useMidiInput({
   const midiAccessRef = useRef<MIDIAccess | null>(null);
   const onNoteOnRef = useCallbackRef(onNoteOn);
   const onNoteOffRef = useCallbackRef(onNoteOff);
+  const onSustainChangeRef = useCallbackRef(onSustainChange);
 
   const updateDevices = useCallback((access: MIDIAccess) => {
     const infos: MidiDeviceInfo[] = [];
@@ -73,13 +78,15 @@ export function useMidiInput({
     if (!input) return;
 
     function handleMessage(e: MIDIMessageEvent) {
-      const [status, note, velocity] = e.data!;
+      const [status, data1, data2] = e.data!;
       const command = status & 0xf0;
 
-      if (command === 0x90 && velocity > 0) {
-        onNoteOnRef.current(note, velocity / 127);
-      } else if (command === 0x80 || (command === 0x90 && velocity === 0)) {
-        onNoteOffRef.current(note);
+      if (command === 0x90 && data2 > 0) {
+        onNoteOnRef.current(data1, data2 / 127);
+      } else if (command === 0x80 || (command === 0x90 && data2 === 0)) {
+        onNoteOffRef.current(data1);
+      } else if (command === 0xb0 && data1 === CC_SUSTAIN_PEDAL) {
+        onSustainChangeRef.current?.(data2 >= 64);
       }
     }
 
