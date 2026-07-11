@@ -7,7 +7,7 @@ import {
   type ChordType,
   type GeneratedChord,
 } from "@/shared/lib/music";
-import { DIFFICULTY_CHORD_TYPES, type QuizSettings } from "@/entities/chord-quiz";
+import { DIFFICULTY_CHORD_TYPES, type QuizSettings } from "@/entities/chord-practice";
 
 function getChordTypes(settings: QuizSettings): ChordType[] {
   if (settings.difficulty === "custom") {

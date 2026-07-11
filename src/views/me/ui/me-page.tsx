@@ -1,7 +1,7 @@
 import { useTranslations } from "next-intl";
 import { User as UserIcon, Lock, CircleCheck } from "lucide-react";
 import type { User } from "@/entities/user";
-import type { ScoreRecord } from "@/entities/quiz";
+import type { ScoreRecord } from "@/entities/chord-quiz";
 import { ProfileForm } from "@/features/profile";
 import { LogoutButton } from "@/features/auth";
 import { MyScoresPanel } from "@/widgets/my-scores";

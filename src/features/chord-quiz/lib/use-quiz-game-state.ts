@@ -5,7 +5,7 @@ import type {
   QuizGameState,
   QuizChordItem,
   QuizDifficulty,
-} from "@/entities/quiz";
+} from "@/entities/chord-quiz";
 
 const INITIAL_STATE: QuizGameState = {
   phase: "select",

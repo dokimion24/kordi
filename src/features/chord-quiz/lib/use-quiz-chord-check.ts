@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { validateChord } from "@/shared/lib/music";
 import type { ActiveNote } from "@/entities/note";
-import type { QuizChordItem } from "@/entities/quiz";
+import type { QuizChordItem } from "@/entities/chord-quiz";
 
 interface UseQuizChordCheckOptions {
   currentChord: QuizChordItem | null;

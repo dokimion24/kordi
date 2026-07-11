@@ -1,5 +1,5 @@
 import ky from "ky";
-import type { SaveScoreRequest, ScoreRecord } from "@/entities/quiz";
+import type { SaveScoreRequest, ScoreRecord } from "@/entities/chord-quiz";
 
 interface ApiResponse<T> {
   data: T;

@@ -3,7 +3,7 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import type { ActiveNote } from "@/entities/note";
-import { quizQueries, type QuizDifficulty } from "@/entities/quiz";
+import { quizQueries, type QuizDifficulty } from "@/entities/chord-quiz";
 import { useQuizGameState } from "./use-quiz-game-state";
 import { useQuizFeedback } from "./use-quiz-feedback";
 import { useQuizTimer } from "./use-quiz-timer";

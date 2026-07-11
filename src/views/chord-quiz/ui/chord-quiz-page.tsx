@@ -2,15 +2,15 @@
 
 import { useTranslations } from "next-intl";
 import { usePianoInput } from "@/features/piano-player";
-import { useQuizOrchestrator } from "@/features/quiz-game";
+import { useQuizOrchestrator } from "@/features/chord-quiz";
 import { PianoKeyboard, MidiStatus } from "@/widgets/piano-keyboard";
-import { ChordPrompt } from "@/widgets/chord-quiz-game";
+import { ChordPrompt } from "@/widgets/chord-practice-game";
 import {
   DifficultySelect,
   QuizProgress,
   QuizResult,
   QuizFeedbackOverlay,
-} from "@/widgets/quiz-game-panel";
+} from "@/widgets/chord-quiz-panel";
 import { Countdown } from "@/shared/ui/countdown";
 import { cn } from "@/shared/lib/utils";
 

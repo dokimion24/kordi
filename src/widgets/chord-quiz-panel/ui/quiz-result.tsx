@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import type { QuizGameState } from "@/entities/quiz";
+import type { QuizGameState } from "@/entities/chord-quiz";
 import { MonoCard } from "@/shared/ui/mono-card";
 import { MonoButton } from "@/shared/ui/mono-button";
 import { SectionHeader } from "@/shared/ui/section-header";

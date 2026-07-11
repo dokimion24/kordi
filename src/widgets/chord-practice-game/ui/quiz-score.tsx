@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import type { QuizState } from "@/entities/chord-quiz";
+import type { QuizState } from "@/entities/chord-practice";
 
 interface QuizScoreProps {
   state: QuizState;

@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Trophy } from "lucide-react";
-import type { ScoreRecord, QuizDifficulty } from "@/entities/quiz";
+import type { ScoreRecord, QuizDifficulty } from "@/entities/chord-quiz";
 import { MonoCard } from "@/shared/ui/mono-card";
 import { MonoPill } from "@/shared/ui/mono-button";
 import { SectionHeader } from "@/shared/ui/section-header";

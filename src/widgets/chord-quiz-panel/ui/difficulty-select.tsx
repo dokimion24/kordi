@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import type { QuizDifficulty } from "@/entities/quiz";
+import type { QuizDifficulty } from "@/entities/chord-quiz";
 
 interface DifficultySelectProps {
   onSelect: (difficulty: QuizDifficulty) => void;

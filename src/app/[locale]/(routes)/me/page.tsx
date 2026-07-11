@@ -6,8 +6,8 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import { userServerQueries } from "@/entities/user/server";
-import { getMyScores } from "@/entities/quiz/server";
-import type { ScoreRecord } from "@/entities/quiz";
+import { getMyScores } from "@/entities/chord-quiz/server";
+import type { ScoreRecord } from "@/entities/chord-quiz";
 import { MePage } from "@/views/me";
 import { ROUTES } from "@/shared/config/routes";
 

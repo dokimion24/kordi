@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useCallbackRef } from "@/shared/lib/react/use-callback-ref";
 import { validateChord } from "@/shared/lib/music";
 import type { ActiveNote } from "@/entities/note";
-import type { QuizResult } from "@/entities/chord-quiz";
+import type { QuizResult } from "@/entities/chord-practice";
 
 interface UseChordValidatorOptions {
   activeNotes: ActiveNote[];

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import * as Tone from "tone";
 import { useCallbackRef } from "@/shared/lib/react/use-callback-ref";
 import { TIME_SIGNATURE_CONFIGS } from "@/shared/lib/music/time-signature";
-import type { TimeSignature } from "@/entities/chord-quiz";
+import type { TimeSignature } from "@/entities/chord-practice";
 
 interface UseMetronomeOptions {
   bpm: number;

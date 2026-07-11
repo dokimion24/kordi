@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { DEFAULT_QUIZ_SETTINGS, type QuizSettings } from "@/entities/chord-quiz";
+import { DEFAULT_QUIZ_SETTINGS, type QuizSettings } from "@/entities/chord-practice";
 import { usePianoInput } from "@/features/piano-player";
-import { useQuizGame } from "@/features/chord-quiz";
+import { useQuizGame } from "@/features/chord-practice";
 import {
   PianoKeyboard,
   MidiStatus,
@@ -16,7 +16,7 @@ import {
   QuizScore,
   QuizControls,
   QuizSettingsPanel,
-} from "@/widgets/chord-quiz-game";
+} from "@/widgets/chord-practice-game";
 import { cn } from "@/shared/lib/utils";
 
 export function ChordPracticePage() {

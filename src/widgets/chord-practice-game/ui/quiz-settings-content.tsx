@@ -9,7 +9,7 @@ import {
   type Difficulty,
   type TimeSignature,
   type GameMode,
-} from "@/entities/chord-quiz";
+} from "@/entities/chord-practice";
 import { MonoPill } from "@/shared/ui/mono-button";
 import {
   DropdownMenu,

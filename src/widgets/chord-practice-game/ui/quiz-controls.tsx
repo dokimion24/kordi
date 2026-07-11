@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Settings } from "lucide-react";
-import type { QuizStatus } from "@/entities/chord-quiz";
+import type { QuizStatus } from "@/entities/chord-practice";
 
 interface QuizControlsProps {
   ns: string;

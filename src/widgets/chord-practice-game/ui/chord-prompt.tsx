@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { cn } from "@/shared/lib/utils";
-import type { QuizChord, QuizResult } from "@/entities/chord-quiz";
+import type { QuizChord, QuizResult } from "@/entities/chord-practice";
 
 interface ChordPromptProps {
   ns: string;
