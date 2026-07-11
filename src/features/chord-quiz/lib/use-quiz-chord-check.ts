@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { validateChord } from "@/shared/lib/music";
+import { useMemo, useRef } from "react";
+import { useChordCheck } from "@/shared/lib/music/use-chord-check";
 import type { ActiveNote } from "@/entities/note";
 import type { QuizChordItem } from "@/entities/chord-quiz";
 
@@ -14,9 +14,6 @@ interface UseQuizChordCheckOptions {
   onIncorrect: () => void;
 }
 
-const MIN_NOTES = 2;
-const COOLDOWN_MS = 600;
-
 export function useQuizChordCheck({
   currentChord,
   activeNotes,
@@ -25,38 +22,22 @@ export function useQuizChordCheck({
   onCorrect,
   onIncorrect,
 }: UseQuizChordCheckOptions) {
-  const answeredRef = useRef(false);
-  const lastChangeRef = useRef(0);
-  const onCorrectRef = useRef(onCorrect);
-  const onIncorrectRef = useRef(onIncorrect);
+  const midiNotes = useMemo(() => activeNotes.map((n) => n.midi), [activeNotes]);
+  const timeLeftRef = useRef(timeLeft);
+  timeLeftRef.current = timeLeft;
 
-  onCorrectRef.current = onCorrect;
-  onIncorrectRef.current = onIncorrect;
-
-  // Reset answered flag when chord changes
-  useEffect(() => {
-    answeredRef.current = false;
-    lastChangeRef.current = performance.now();
-  }, [currentChord]);
-
-  useEffect(() => {
-    if (!enabled || !currentChord || answeredRef.current) return;
-    if (activeNotes.length < MIN_NOTES) return;
-
-    const elapsed = performance.now() - lastChangeRef.current;
-    if (elapsed < COOLDOWN_MS) return;
-
-    const midiNotes = activeNotes.map((n) => n.midi);
-    const isCorrect = validateChord(currentChord.name, midiNotes);
-
-    if (isCorrect) {
-      answeredRef.current = true;
-      const remainingSeconds = timeLeft / 1000;
-      const score = Math.floor(remainingSeconds * 10);
-      onCorrectRef.current(score);
-    } else if (activeNotes.length >= 3) {
-      answeredRef.current = true;
-      onIncorrectRef.current();
-    }
-  }, [activeNotes, currentChord, timeLeft, enabled]);
+  useChordCheck({
+    targetChordName: currentChord?.name ?? null,
+    midiNotes,
+    enabled,
+    minNotesToCheck: 2,
+    finalizeIncorrect: true,
+    // Timer ticks re-run validation so a chord held through the cooldown still registers
+    revalidateKey: timeLeft,
+    onCorrect: () => {
+      const remainingSeconds = timeLeftRef.current / 1000;
+      onCorrect(Math.floor(remainingSeconds * 10));
+    },
+    onIncorrect,
+  });
 }

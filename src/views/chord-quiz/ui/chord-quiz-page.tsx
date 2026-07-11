@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { usePianoInput } from "@/features/piano-player";
 import { useQuizOrchestrator } from "@/features/chord-quiz";
 import { PianoKeyboard, MidiStatus } from "@/widgets/piano-keyboard";
-import { ChordPrompt } from "@/widgets/chord-practice-game";
+import { ChordPrompt } from "@/widgets/chord-prompt";
 import {
   DifficultySelect,
   QuizProgress,
@@ -85,14 +85,7 @@ export function ChordQuizPage() {
             <div className="flex flex-col items-center gap-6">
               <ChordPrompt
                 ns="chordQuiz"
-                currentChord={{
-                  name: currentChord.name,
-                  rootIndex: 0,
-                  type: "",
-                  pitchClasses: [],
-                }}
-                nextChord={null}
-                showNext={false}
+                chordName={currentChord.name}
                 feedbackState={feedbackState}
               />
             </div>

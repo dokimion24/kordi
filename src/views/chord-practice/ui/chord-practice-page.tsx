@@ -10,8 +10,8 @@ import {
   MidiStatus,
   AudioStartPrompt,
 } from "@/widgets/piano-keyboard";
+import { ChordPrompt } from "@/widgets/chord-prompt";
 import {
-  ChordPrompt,
   MetronomeDisplay,
   QuizScore,
   QuizControls,
@@ -72,8 +72,8 @@ export function ChordPracticePage() {
           <div className="flex flex-col items-center gap-6">
             <ChordPrompt
               ns="chordPractice"
-              currentChord={state.currentChord}
-              nextChord={state.nextChord}
+              chordName={state.currentChord?.name ?? null}
+              nextChordName={state.nextChord?.name ?? null}
               showNext={settings.showNextChord}
               feedbackState={feedbackState}
             />

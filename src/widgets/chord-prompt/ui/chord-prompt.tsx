@@ -2,21 +2,22 @@
 
 import { useTranslations } from "next-intl";
 import { cn } from "@/shared/lib/utils";
-import type { QuizChord, QuizResult } from "@/entities/chord-practice";
+
+type ChordFeedback = "correct" | "incorrect" | "timeout" | null;
 
 interface ChordPromptProps {
   ns: string;
-  currentChord: QuizChord | null;
-  nextChord: QuizChord | null;
-  showNext: boolean;
-  feedbackState: QuizResult;
+  chordName: string | null;
+  nextChordName?: string | null;
+  showNext?: boolean;
+  feedbackState: ChordFeedback;
 }
 
 export function ChordPrompt({
   ns,
-  currentChord,
-  nextChord,
-  showNext,
+  chordName,
+  nextChordName = null,
+  showNext = false,
   feedbackState,
 }: ChordPromptProps) {
   const t = useTranslations(ns);
@@ -33,14 +34,14 @@ export function ChordPrompt({
         )}
       >
         <span className="font-heading text-5xl font-black tracking-tight tabular-nums">
-          {currentChord?.name ?? "-"}
+          {chordName ?? "-"}
         </span>
       </div>
 
-      {showNext && nextChord && (
+      {showNext && nextChordName && (
         <div className="text-xs font-bold uppercase tracking-widest opacity-60">
           {t("upNext")}:{" "}
-          <span className="font-black text-black">{nextChord.name}</span>
+          <span className="font-black text-black">{nextChordName}</span>
         </div>
       )}
     </div>
