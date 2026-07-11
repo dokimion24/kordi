@@ -1,7 +1,6 @@
 "use client";
 
-import { usePianoInput } from "@/features/piano-player";
-import { InstrumentSelector } from "@/shared/ui/instrument-selector";
+import { usePianoInput, InstrumentSelector } from "@/features/piano-player";
 import {
   AudioStartPrompt,
   ChordDisplay,
