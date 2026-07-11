@@ -18,6 +18,9 @@ export function useSoundEngine({ noteOn, noteOff }: UseSoundEngineOptions) {
   const [isAudioStarted, setIsAudioStarted] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const startingRef = useRef(false);
+  const sustainRef = useRef(false);
+  // Notes released while the sustain pedal is down — kept ringing until pedal-up
+  const sustainedNotes = useRef(new Set<number>());
 
   const startAudio = useCallback(async () => {
     if (startingRef.current) return;
@@ -32,6 +35,8 @@ export function useSoundEngine({ noteOn, noteOff }: UseSoundEngineOptions) {
 
   const handleNoteOn = useCallback(
     (midi: number, velocity: number, source: ActiveNote["source"]) => {
+      // Re-pressing a sustained note: it's held again, no longer pedal-owned
+      sustainedNotes.current.delete(midi);
       playNoteOn(midi, velocity);
       noteOn(midi, velocity, source);
     },
@@ -40,11 +45,25 @@ export function useSoundEngine({ noteOn, noteOff }: UseSoundEngineOptions) {
 
   const handleNoteOff = useCallback(
     (midi: number, source: ActiveNote["source"]) => {
-      playNoteOff(midi);
       noteOff(midi);
+      if (sustainRef.current) {
+        sustainedNotes.current.add(midi);
+        return;
+      }
+      playNoteOff(midi);
     },
     [noteOff]
   );
+
+  const setSustain = useCallback((on: boolean) => {
+    sustainRef.current = on;
+    if (!on) {
+      for (const midi of sustainedNotes.current) {
+        playNoteOff(midi);
+      }
+      sustainedNotes.current.clear();
+    }
+  }, []);
 
   return {
     isAudioStarted,
@@ -52,5 +71,6 @@ export function useSoundEngine({ noteOn, noteOff }: UseSoundEngineOptions) {
     startAudio,
     handleNoteOn,
     handleNoteOff,
+    setSustain,
   };
 }

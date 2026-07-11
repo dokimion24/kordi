@@ -13,8 +13,14 @@ import { useSoundEngine } from "./use-sound-engine";
 export function usePianoInput() {
   const { activeNotes, noteOn, noteOff } = useActiveNotes();
 
-  const { isAudioStarted, isLoaded, startAudio, handleNoteOn, handleNoteOff } =
-    useSoundEngine({ noteOn, noteOff });
+  const {
+    isAudioStarted,
+    isLoaded,
+    startAudio,
+    handleNoteOn,
+    handleNoteOff,
+    setSustain,
+  } = useSoundEngine({ noteOn, noteOff });
 
   // Source-specific handlers (Factory pattern)
   const keyboardNoteOn = useCallback(
@@ -29,6 +35,7 @@ export function usePianoInput() {
   const { octave, velocity, sustain } = useKeyboardInput({
     onNoteOn: keyboardNoteOn,
     onNoteOff: keyboardNoteOff,
+    onSustainChange: setSustain,
     enabled: isAudioStarted,
   });
 
