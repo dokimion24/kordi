@@ -1,7 +1,7 @@
 "use client";
 
 import { useReducer, useCallback } from "react";
-import type { QuizState, QuizChord } from "./types";
+import type { QuizState, QuizChord } from "@/entities/chord-practice";
 
 const INITIAL_STATE: QuizState = {
   status: "idle",

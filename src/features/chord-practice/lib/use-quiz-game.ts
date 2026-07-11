@@ -2,7 +2,8 @@
 
 import { useCallback, useRef } from "react";
 import type { ActiveNote } from "@/entities/note";
-import { useQuizState, type QuizSettings } from "@/entities/chord-practice";
+import type { QuizSettings } from "@/entities/chord-practice";
+import { useQuizState } from "../model/use-quiz-state";
 import { useMetronome } from "./use-metronome";
 import { useChordGenerator } from "./use-chord-generator";
 import { useChordValidator } from "./use-chord-validator";
