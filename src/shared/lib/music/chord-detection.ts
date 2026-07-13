@@ -63,7 +63,14 @@ function collectCandidates(
   return candidates;
 }
 
-export function detectChord(midiNotes: number[]): string | null {
+export interface DetectedChord {
+  /** Main display name */
+  primary: string;
+  /** Slash form shown as a small caption for casual (close-position) inversions */
+  secondary: string | null;
+}
+
+export function detectChord(midiNotes: number[]): DetectedChord | null {
   if (midiNotes.length < 1) return null;
 
   const pitchClasses = toPitchClasses(midiNotes);
@@ -73,15 +80,37 @@ export function detectChord(midiNotes: number[]): string | null {
 
   // The bass note decides between enharmonic sets (C6 vs Am7, Csus2 vs Gsus4, …)
   const rootedFull = fullCandidates.find((c) => c.root === bass);
-  if (rootedFull) return `${NOTE_LABELS[rootedFull.root]}${rootedFull.suffix}`;
+  if (rootedFull) {
+    return {
+      primary: `${NOTE_LABELS[rootedFull.root]}${rootedFull.suffix}`,
+      secondary: null,
+    };
+  }
 
   // Omitted-fifth reading rooted at the bass (e.g. C-E-Bb → C7)
   const no5Candidates = collectCandidates(pitchClasses, OMITTED_FIFTH_ORDER);
   const rootedNo5 = no5Candidates.find((c) => c.root === bass);
-  if (rootedNo5) return `${NOTE_LABELS[rootedNo5.root]}${rootedNo5.suffix}`;
+  if (rootedNo5) {
+    return {
+      primary: `${NOTE_LABELS[rootedNo5.root]}${rootedNo5.suffix}`,
+      secondary: null,
+    };
+  }
 
-  // Bass isn't any candidate's root → inversion, shown as a slash chord
+  // Bass isn't any candidate's root → inversion.
   const best = fullCandidates[0] ?? no5Candidates[0];
   if (!best) return null;
-  return `${NOTE_LABELS[best.root]}${best.suffix}/${NOTE_LABELS[bass]}`;
+
+  const rootName = `${NOTE_LABELS[best.root]}${best.suffix}`;
+  const slashName = `${rootName}/${NOTE_LABELS[bass]}`;
+
+  // A bass isolated an octave+ below the rest reads as a deliberate bass line →
+  // the slash chord IS the name. A close-position inversion (e.g. right-hand
+  // A-D-F#) reads as plain D, with the slash form as an informative caption.
+  const sorted = [...new Set(midiNotes)].sort((a, b) => a - b);
+  const hasIsolatedBass = sorted.length >= 2 && sorted[1] - sorted[0] >= 12;
+
+  return hasIsolatedBass
+    ? { primary: slashName, secondary: null }
+    : { primary: rootName, secondary: slashName };
 }

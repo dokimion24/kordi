@@ -7,6 +7,8 @@ interface PianoKeyProps {
   midi: number;
   isBlack: boolean;
   isActive: boolean;
+  /** Released but still ringing under the sustain pedal — lighter highlight */
+  isRinging?: boolean;
   keyboardShortcut?: string;
   noteName: string;
   onNoteOn: (midi: number) => void;
@@ -17,6 +19,7 @@ export const PianoKey = memo(function PianoKey({
   midi,
   isBlack,
   isActive,
+  isRinging = false,
   keyboardShortcut,
   noteName,
   onNoteOn,
@@ -59,6 +62,7 @@ export const PianoKey = memo(function PianoKey({
         role="button"
         aria-label={noteName}
         data-active={isActive || undefined}
+        data-ringing={isRinging || undefined}
         className={cn(
           "flex flex-col items-center justify-end",
           "h-[60%] w-full rounded-b-md",
@@ -66,6 +70,7 @@ export const PianoKey = memo(function PianoKey({
           "border border-[oklch(0_0_0/10%)] dark:border-[oklch(1_0_0/6%)]",
           "transition-all duration-75",
           "hover:bg-[oklch(0.26_0.01_260)] dark:hover:bg-[oklch(0.17_0.01_260)]",
+          "data-[ringing]:bg-[oklch(0.29_0.04_155)] dark:data-[ringing]:bg-[oklch(0.22_0.03_155)]",
           "data-[active]:bg-[oklch(0.35_0.08_155)] dark:data-[active]:bg-[oklch(0.3_0.06_155)]",
           "data-[active]:shadow-[0_0_12px_var(--neon-glow)]",
           "touch-none select-none cursor-pointer"
@@ -89,6 +94,7 @@ export const PianoKey = memo(function PianoKey({
       role="button"
       aria-label={noteName}
       data-active={isActive || undefined}
+      data-ringing={isRinging || undefined}
       className={cn(
         "relative flex flex-col items-center justify-end",
         "h-full flex-1 rounded-b-lg",
@@ -96,6 +102,7 @@ export const PianoKey = memo(function PianoKey({
         "border border-[oklch(0_0_0/8%)] dark:border-[oklch(0.8_0.01_260)]",
         "transition-all duration-75",
         "hover:bg-[oklch(0.94_0.005_260)] dark:hover:bg-[oklch(0.88_0.01_260)]",
+        "data-[ringing]:bg-[oklch(0.93_0.025_155)] dark:data-[ringing]:bg-[oklch(0.87_0.02_155)]",
         "data-[active]:bg-[oklch(0.88_0.05_155)] dark:data-[active]:bg-[oklch(0.82_0.04_155)]",
         "data-[active]:shadow-[0_0_16px_var(--neon-glow)]",
         "touch-none select-none cursor-pointer"

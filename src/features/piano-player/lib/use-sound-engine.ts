@@ -21,6 +21,8 @@ export function useSoundEngine({ noteOn, noteOff }: UseSoundEngineOptions) {
   const sustainRef = useRef(false);
   // Notes released while the sustain pedal is down — kept ringing until pedal-up
   const sustainedNotes = useRef(new Set<number>());
+  // State mirror of sustainedNotes so the UI can show/detect what's still ringing
+  const [ringingNotes, setRingingNotes] = useState<number[]>([]);
   // Visual-only mode: keep note tracking but skip app audio (e.g. DP has its own speakers)
   const [isMuted, setIsMuted] = useState(false);
   const mutedRef = useRef(false);
@@ -39,7 +41,9 @@ export function useSoundEngine({ noteOn, noteOff }: UseSoundEngineOptions) {
   const handleNoteOn = useCallback(
     (midi: number, velocity: number, source: ActiveNote["source"]) => {
       // Re-pressing a sustained note: it's held again, no longer pedal-owned
-      sustainedNotes.current.delete(midi);
+      if (sustainedNotes.current.delete(midi)) {
+        setRingingNotes([...sustainedNotes.current]);
+      }
       if (!mutedRef.current) playNoteOn(midi, velocity);
       noteOn(midi, velocity, source);
     },
@@ -51,6 +55,7 @@ export function useSoundEngine({ noteOn, noteOff }: UseSoundEngineOptions) {
       noteOff(midi);
       if (sustainRef.current) {
         sustainedNotes.current.add(midi);
+        setRingingNotes([...sustainedNotes.current]);
         return;
       }
       playNoteOff(midi);
@@ -65,6 +70,7 @@ export function useSoundEngine({ noteOn, noteOff }: UseSoundEngineOptions) {
         playNoteOff(midi);
       }
       sustainedNotes.current.clear();
+      setRingingNotes([]);
     }
   }, []);
 
@@ -83,6 +89,7 @@ export function useSoundEngine({ noteOn, noteOff }: UseSoundEngineOptions) {
     handleNoteOn,
     handleNoteOff,
     setSustain,
+    ringingNotes,
     isMuted,
     toggleMute,
   };

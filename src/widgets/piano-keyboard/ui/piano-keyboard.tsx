@@ -10,6 +10,8 @@ interface PianoKeyboardProps {
   startMidi?: number;
   endMidi?: number;
   activeNotes: ActiveNote[];
+  /** Pedal-sustained notes shown with a lighter highlight */
+  ringingNotes?: number[];
   onNoteOn: (midi: number) => void;
   onNoteOff: (midi: number) => void;
   showShortcuts?: boolean;
@@ -30,6 +32,7 @@ export function PianoKeyboard({
   startMidi = 48,
   endMidi = 84,
   activeNotes,
+  ringingNotes,
   onNoteOn,
   onNoteOff,
   showShortcuts = true,
@@ -44,6 +47,11 @@ export function PianoKeyboard({
   const activeMidiSet = useMemo(
     () => new Set(activeNotes.map((n) => n.midi)),
     [activeNotes]
+  );
+
+  const ringingMidiSet = useMemo(
+    () => new Set(ringingNotes ?? []),
+    [ringingNotes]
   );
 
   const { whiteKeys, blackKeys, whiteKeyCount } = useMemo(() => {
@@ -79,6 +87,7 @@ export function PianoKeyboard({
           midi={midi}
           isBlack={false}
           isActive={activeMidiSet.has(midi)}
+          isRinging={!activeMidiSet.has(midi) && ringingMidiSet.has(midi)}
           noteName={midiToNoteName(midi)}
           keyboardShortcut={showShortcuts ? keyboardLabelMap.get(midi) : undefined}
           onNoteOn={onNoteOn}
@@ -106,6 +115,7 @@ export function PianoKeyboard({
               midi={midi}
               isBlack={true}
               isActive={activeMidiSet.has(midi)}
+              isRinging={!activeMidiSet.has(midi) && ringingMidiSet.has(midi)}
               noteName={midiToNoteName(midi)}
               keyboardShortcut={showShortcuts ? keyboardLabelMap.get(midi) : undefined}
               onNoteOn={onNoteOn}

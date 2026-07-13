@@ -20,6 +20,7 @@ export function usePianoInput() {
     handleNoteOn,
     handleNoteOff,
     setSustain,
+    ringingNotes,
     isMuted,
     toggleMute,
   } = useSoundEngine({ noteOn, noteOff });
@@ -96,6 +97,7 @@ export function usePianoInput() {
 
   return {
     activeNotes,
+    ringingNotes,
     isAudioStarted,
     isLoaded,
     startAudio,

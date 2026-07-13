@@ -19,6 +19,7 @@ export function PianoPage() {
 
   const {
     activeNotes,
+    ringingNotes,
     isAudioStarted,
     isLoaded,
     startAudio,
@@ -62,7 +63,7 @@ export function PianoPage() {
       </div>
 
       <div className="flex flex-1 flex-col items-center justify-center">
-        <ChordDisplay activeNotes={activeNotes} />
+        <ChordDisplay activeNotes={activeNotes} ringingNotes={ringingNotes} />
 
         {!isLoaded && (
           <div className="mt-4 text-sm opacity-60">{t("loadingSamples")}</div>
@@ -84,6 +85,7 @@ export function PianoPage() {
               startMidi={KEYBOARD_START_MIDI}
               endMidi={KEYBOARD_END_MIDI}
               activeNotes={activeNotes}
+              ringingNotes={ringingNotes}
               onNoteOn={mouse.onNoteOn}
               onNoteOff={mouse.onNoteOff}
               showShortcuts
