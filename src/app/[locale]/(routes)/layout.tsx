@@ -38,7 +38,7 @@ export default async function RoutesLayout({
           <header className="sticky top-0 z-20 flex h-14 shrink-0 items-center justify-end gap-2 border-b border-black bg-white px-4 md:px-6">
             <Link
               href={ROUTES.ME}
-              className="rounded-lg p-2 transition-colors hover:bg-black hover:text-white"
+              className="rounded-lg p-2 transition-colors hover:bg-muted"
               aria-label="Profile"
             >
               <CircleUserRound className="size-5" strokeWidth={1.75} />

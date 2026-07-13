@@ -220,7 +220,7 @@ function KeySection({
       <Label>{t("key")}</Label>
       <DropdownMenu>
         <DropdownMenuTrigger
-          className="flex w-full cursor-pointer items-center justify-between rounded-lg border border-black bg-white px-3 py-1.5 text-sm text-black transition-colors hover:bg-black hover:text-white data-[popup-open]:bg-black data-[popup-open]:text-white"
+          className="flex w-full cursor-pointer items-center justify-between rounded-lg border border-black bg-white px-3 py-1.5 text-sm text-black transition-colors hover:bg-muted data-[popup-open]:bg-black data-[popup-open]:text-white"
         >
           <span>{displayLabel}</span>
           <ChevronDown className="size-4 shrink-0" strokeWidth={2} />
