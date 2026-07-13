@@ -108,14 +108,6 @@
   --text-status-label--line-height: 12px;
   --text-status-label--font-weight: 700;
 
-  /* Spacing scale (Precision: 4px base, 24px gutter) */
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 40px;
-  --spacing-gutter: 24px;
-  --spacing-container-max: 1440px;
 }
 
 /* Light mode (Precision Analytical System — primary theme) */
