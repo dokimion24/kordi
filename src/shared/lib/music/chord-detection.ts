@@ -35,6 +35,20 @@ const OMITTED_FIFTH_ORDER: [ChordType, number[]][] = DETECTION_ORDER.filter(
   ([, template]) => template.length >= 4 && template.includes(7),
 ).map(([suffix, template]) => [suffix, template.filter((iv) => iv !== 7)]);
 
+// 13th chords are commonly voiced without the 11th (and often the 5th too):
+// 1-3-(5)-b7-9-13. Only the plain-11 thirteenths qualify — #11 chords keep
+// their color tone. Checked after full and no5 matching.
+const PLAIN_THIRTEENTHS: ChordType[] = ["maj13", "13", "m13"];
+const OMITTED_ELEVENTH_ORDER: [ChordType, number[]][] = PLAIN_THIRTEENTHS.flatMap(
+  (suffix) => {
+    const template = CHORD_TEMPLATES[suffix];
+    return [
+      [suffix, template.filter((iv) => iv !== 5)],
+      [suffix, template.filter((iv) => iv !== 5 && iv !== 7)],
+    ] as [ChordType, number[]][];
+  },
+);
+
 function matchRoots(pitchClasses: number[], template: number[]): number[] {
   if (pitchClasses.length !== template.length) return [];
 
@@ -97,8 +111,18 @@ export function detectChord(midiNotes: number[]): DetectedChord | null {
     };
   }
 
+  // 13th voicings without the 11th (e.g. G-B-F-A-E → G13)
+  const no11Candidates = collectCandidates(pitchClasses, OMITTED_ELEVENTH_ORDER);
+  const rootedNo11 = no11Candidates.find((c) => c.root === bass);
+  if (rootedNo11) {
+    return {
+      primary: `${NOTE_LABELS[rootedNo11.root]}${rootedNo11.suffix}`,
+      secondary: null,
+    };
+  }
+
   // Bass isn't any candidate's root → inversion.
-  const best = fullCandidates[0] ?? no5Candidates[0];
+  const best = fullCandidates[0] ?? no5Candidates[0] ?? no11Candidates[0];
   if (!best) return null;
 
   const rootName = `${NOTE_LABELS[best.root]}${best.suffix}`;
