@@ -4,7 +4,10 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import type { ActiveNote } from "@/entities/note";
 import { quizQueries, type QuizDifficulty } from "@/entities/chord-quiz";
-import { useQuizGameState } from "./use-quiz-game-state";
+import {
+  useQuizGameState,
+  QUIZ_TIME_PER_QUESTION_MS,
+} from "./use-quiz-game-state";
 import { useQuizFeedback } from "./use-quiz-feedback";
 import { useQuizTimer } from "./use-quiz-timer";
 import { useQuizChordCheck } from "./use-quiz-chord-check";
@@ -96,7 +99,7 @@ export function useQuizOrchestrator({
   }, [answerTimeout, showTimeout]);
 
   useQuizTimer({
-    duration: 20000,
+    duration: QUIZ_TIME_PER_QUESTION_MS,
     enabled: state.phase === "playing",
     resetKey: state.currentIndex,
     onTick: tick,
