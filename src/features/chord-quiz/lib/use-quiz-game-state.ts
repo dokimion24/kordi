@@ -7,12 +7,15 @@ import type {
   QuizDifficulty,
 } from "@/entities/chord-quiz";
 
+// 서버 검증(ScoreService.MAX_SCORE_PER_QUESTION)과 짝 — 시간을 바꾸면 서버 상한도 함께 변경
+export const QUIZ_TIME_PER_QUESTION_MS = 20000;
+
 const INITIAL_STATE: QuizGameState = {
   phase: "select",
   difficulty: null,
   questions: [],
   currentIndex: 0,
-  timeLeft: 10000,
+  timeLeft: QUIZ_TIME_PER_QUESTION_MS,
   scores: [],
   answers: [],
   totalScore: 0,
@@ -50,7 +53,7 @@ function reducer(state: QuizGameState, action: Action): QuizGameState {
         answers: newAnswers,
         totalScore: state.totalScore + action.score,
         currentIndex: isLast ? state.currentIndex : nextIndex,
-        timeLeft: 10000,
+        timeLeft: QUIZ_TIME_PER_QUESTION_MS,
         phase: isLast ? "result" : "playing",
       };
     }
@@ -62,7 +65,7 @@ function reducer(state: QuizGameState, action: Action): QuizGameState {
         scores: [...state.scores, 0],
         answers: [...state.answers, "incorrect" as const],
         currentIndex: isLast ? state.currentIndex : nextIndex,
-        timeLeft: 10000,
+        timeLeft: QUIZ_TIME_PER_QUESTION_MS,
         phase: isLast ? "result" : "playing",
       };
     }
@@ -74,7 +77,7 @@ function reducer(state: QuizGameState, action: Action): QuizGameState {
         scores: [...state.scores, 0],
         answers: [...state.answers, "timeout" as const],
         currentIndex: isLast ? state.currentIndex : nextIndex,
-        timeLeft: 10000,
+        timeLeft: QUIZ_TIME_PER_QUESTION_MS,
         phase: isLast ? "result" : "playing",
       };
     }
