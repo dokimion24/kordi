@@ -54,7 +54,7 @@ export function QuizSettingsPanel({
           </h2>
           <button
             onClick={onClose}
-            className="rounded-lg border border-black bg-white p-1.5 text-black transition-colors hover:bg-black hover:text-white"
+            className="rounded-lg border border-black bg-white p-1.5 text-black transition-colors hover:bg-muted"
             aria-label="Close"
           >
             <X className="size-4" strokeWidth={2} />

@@ -24,7 +24,7 @@ export function DifficultySelect({
   const t = useTranslations("chordQuiz");
 
   return (
-    <div className="flex flex-col items-center gap-6">
+    <div className="flex w-full flex-col items-center gap-6">
       <h2 className="font-heading text-xl font-extrabold uppercase tracking-tight text-black">
         {t("selectDifficulty")}
       </h2>
@@ -34,9 +34,9 @@ export function DifficultySelect({
             key={value}
             onClick={() => onSelect(value)}
             disabled={isLoading}
-            className="group flex items-center gap-4 rounded-lg border border-black bg-white p-5 transition-all hover:bg-black hover:text-white disabled:opacity-50"
+            className="flex items-center gap-4 rounded-lg border border-black bg-white p-5 transition-all hover:bg-muted disabled:opacity-50"
           >
-            <div className="flex size-10 items-center justify-center rounded-lg border border-black bg-black text-white transition-all group-hover:bg-white group-hover:text-black">
+            <div className="flex size-10 items-center justify-center rounded-lg border border-black bg-black text-white">
               <span className="font-heading text-lg font-black">
                 {key.charAt(0).toUpperCase()}
               </span>

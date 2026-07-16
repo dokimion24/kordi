@@ -20,7 +20,7 @@ export function QuickAccessCard({
     <Link href={href} className="block h-full">
       <div className="group flex h-full cursor-pointer flex-col justify-between rounded-lg border border-black p-6 transition-all hover:shadow-[inset_0_0_0_1px_#000]">
         <div className="mb-10 space-y-2">
-          <div className="flex size-12 items-center justify-center rounded-lg border border-black bg-black text-white transition-all group-hover:bg-white group-hover:text-black">
+          <div className="flex size-12 items-center justify-center rounded-lg border border-black bg-black text-white">
             <Icon className="size-6" strokeWidth={1.75} />
           </div>
           <h2 className="font-heading text-2xl font-bold uppercase leading-tight">

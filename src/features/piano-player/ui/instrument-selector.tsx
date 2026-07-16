@@ -36,7 +36,7 @@ export function InstrumentSelector() {
             "rounded-lg border border-black px-3 py-1.5 text-xs font-semibold transition-colors duration-150",
             id === activeId
               ? "bg-black text-white"
-              : "bg-white text-black hover:bg-black hover:text-white",
+              : "bg-white text-black hover:bg-muted",
             loading && "cursor-wait opacity-50"
           )}
         >

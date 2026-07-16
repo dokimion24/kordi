@@ -17,9 +17,9 @@ export function AudioStartPrompt({
     <main className="flex flex-1 items-center justify-center p-6">
       <button
         onClick={onStart}
-        className="group flex flex-col items-center gap-4 rounded-lg border border-black bg-white px-12 py-10 transition-all hover:bg-black hover:text-white"
+        className="flex flex-col items-center gap-4 rounded-lg border border-black bg-white px-12 py-10 transition-all hover:bg-muted"
       >
-        <div className="flex size-16 items-center justify-center rounded-lg border border-black bg-black text-white transition-all group-hover:bg-white group-hover:text-black">
+        <div className="flex size-16 items-center justify-center rounded-lg border border-black bg-black text-white">
           <Piano className="size-8" strokeWidth={1.75} />
         </div>
         <div className="text-center">

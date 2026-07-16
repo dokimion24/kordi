@@ -12,10 +12,10 @@ export function GoogleLoginButton({ label }: GoogleLoginButtonProps) {
       onClick={() => {
         window.location.href = GOOGLE_LOGIN_URL;
       }}
-      className="group flex w-full items-center justify-center gap-3 whitespace-nowrap rounded-lg border border-black bg-white px-6 py-4 text-sm font-bold text-black transition-all hover:bg-black hover:text-white"
+      className="flex w-full items-center justify-center gap-3 whitespace-nowrap rounded-lg border border-black bg-white px-6 py-4 text-sm font-bold text-black transition-all hover:bg-muted"
     >
       <svg
-        className="size-5 transition-all group-hover:grayscale group-hover:invert"
+        className="size-5"
         viewBox="0 0 24 24"
         aria-hidden="true"
       >

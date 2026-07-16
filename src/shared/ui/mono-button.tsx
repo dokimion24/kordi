@@ -3,14 +3,14 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/shared/lib/utils";
 
 const monoButton = cva(
-  "inline-flex items-center justify-center whitespace-nowrap rounded-lg border border-black font-bold uppercase transition-colors disabled:opacity-40 disabled:pointer-events-none",
+  "inline-flex items-center justify-center whitespace-nowrap rounded-lg border border-black font-bold uppercase transition disabled:opacity-40 disabled:pointer-events-none",
   {
     variants: {
       variant: {
-        /** Solid black — primary action. Hover inverts to white/black. */
-        solid: "bg-black text-white hover:bg-white hover:text-black",
-        /** Outlined white — secondary. Hover fills to black/white. */
-        outline: "bg-white text-black hover:bg-black hover:text-white",
+        /** Solid black — primary action. Hover dims slightly. */
+        solid: "bg-black text-white hover:opacity-90",
+        /** Outlined white — secondary. Hover shifts to muted bg. */
+        outline: "bg-white text-black hover:bg-muted",
         /** Pill (tab) active state — solid black. */
         "pill-active": "bg-black text-white",
         /** Pill (tab) inactive state — outlined with subtle hover. */
