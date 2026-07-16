@@ -38,7 +38,11 @@ async function handle(
       method,
       ...(body !== undefined && { json: body }),
       ...(authorization && { headers: { Authorization: authorization } }),
-    }).json<{ data: unknown }>();
+    }).json<Record<string, unknown>>();
+    // TEMP DEBUG: data가 없는 2xx 응답의 원본을 노출해 원인 추적
+    if (res.data === undefined || res.data === null) {
+      return { __debug: "envelope-without-data", envelope: res };
+    }
     return res.data;
   };
 
