@@ -7,6 +7,9 @@ import type { User } from "../model/types";
  * same request tree share a single network call.
  */
 export const getMe = cache(async (): Promise<User> => {
-  const res = await apiClient.get("api/users/me").json<{ data: User }>();
-  return res.data;
+  // 객체 응답은 @JsonUnwrapped로 평탄화되어 오고, 서버 통일 후에는 data 키로 온다
+  const res = await apiClient
+    .get("api/users/me")
+    .json<{ data?: User } & User>();
+  return res.data ?? res;
 });

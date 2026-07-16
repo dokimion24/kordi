@@ -39,11 +39,9 @@ async function handle(
       ...(body !== undefined && { json: body }),
       ...(authorization && { headers: { Authorization: authorization } }),
     }).json<Record<string, unknown>>();
-    // TEMP DEBUG: data가 없는 2xx 응답의 원본을 노출해 원인 추적
-    if (res.data === undefined || res.data === null) {
-      return { __debug: "envelope-without-data", envelope: res };
-    }
-    return res.data;
+    // Spring ApiResponse의 @JsonUnwrapped 때문에 객체 응답은 껍데기 없이
+    // 평탄화되어 온다(리스트만 data 키 유지). 어느 쪽이든 payload를 반환.
+    return res.data ?? res;
   };
 
   try {
