@@ -26,6 +26,10 @@ export function useQuizGame(
 
   const { generateNext } = useChordGenerator(settings);
   const barCountRef = useRef(0);
+  // Bar at which the current chord appeared — early correct answers move this
+  // anchor so the next chord gets its full barsPerChord instead of inheriting
+  // the previous chord's grid position (which skipped it via a false timeout)
+  const chordStartBarRef = useRef(0);
 
   const handleBarComplete = useCallback(
     (barCount: number) => {
@@ -33,7 +37,8 @@ export function useQuizGame(
       if (isPractice) return; // No timeout in practice mode
 
       barCountRef.current = barCount;
-      if (barCount > 0 && barCount % settings.barsPerChord === 0) {
+      if (barCount - chordStartBarRef.current >= settings.barsPerChord) {
+        chordStartBarRef.current = barCount;
         const next = generateNext(state.nextChord?.name ?? null);
         markTimeout({ ...next });
       }
@@ -49,6 +54,7 @@ export function useQuizGame(
   });
 
   const handleCorrect = useCallback(() => {
+    chordStartBarRef.current = barCountRef.current;
     const next = generateNext(state.nextChord?.name ?? null);
     markCorrect({ ...next });
   }, [generateNext, state.nextChord, markCorrect]);
@@ -70,6 +76,7 @@ export function useQuizGame(
     const second = generateNext(first.name);
     startQuiz({ ...first }, { ...second });
     barCountRef.current = 0;
+    chordStartBarRef.current = 0;
     if (!isPractice) {
       metronome.start();
     }
