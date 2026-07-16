@@ -1,5 +1,5 @@
 import { CHORD_TEMPLATES, NOTE_LABELS, type ChordType } from "./chord-templates";
-import { ALL_KEYS, getDiatonicChords, type KeySignature } from "./music-theory";
+import { ALL_KEYS, getDiatonicChords } from "./music-theory";
 
 export interface GeneratedChord {
   name: string;

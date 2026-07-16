@@ -51,7 +51,9 @@ export function ProfileForm({ currentNickname }: ProfileFormProps) {
 
   return (
     <div>
-      <p className="mb-2 text-sm font-medium text-primary">{t("displayName")}</p>
+      <p className="mb-2 text-sm font-medium text-primary">
+        {t("displayName")}
+      </p>
 
       {!isEditing ? (
         <div className="flex items-center gap-3">
@@ -83,10 +85,14 @@ export function ProfileForm({ currentNickname }: ProfileFormProps) {
               <p className="mt-1 text-xs text-muted-foreground">...</p>
             )}
             {duplicateStatus === "available" && (
-              <p className="mt-1 text-xs text-success">{t("nicknameAvailable")}</p>
+              <p className="mt-1 text-xs text-success">
+                {t("nicknameAvailable")}
+              </p>
             )}
             {duplicateStatus === "duplicated" && (
-              <p className="mt-1 text-xs text-destructive">{t("nicknameDuplicated")}</p>
+              <p className="mt-1 text-xs text-destructive">
+                {t("nicknameDuplicated")}
+              </p>
             )}
           </div>
           <div className="flex items-center justify-end gap-3">

@@ -51,7 +51,7 @@ export function useSoundEngine({ noteOn, noteOff }: UseSoundEngineOptions) {
   );
 
   const handleNoteOff = useCallback(
-    (midi: number, source: ActiveNote["source"]) => {
+    (midi: number, _source: ActiveNote["source"]) => {
       noteOff(midi);
       if (sustainRef.current) {
         sustainedNotes.current.add(midi);

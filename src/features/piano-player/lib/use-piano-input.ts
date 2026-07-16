@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import { useActiveNotes, type ActiveNote } from "@/entities/note";
+import { useActiveNotes } from "@/entities/note";
 import { useKeyboardInput } from "./use-keyboard-input";
 import { useMidiInput } from "./use-midi-input";
 import { useSoundEngine } from "./use-sound-engine";
