@@ -7,5 +7,6 @@ import type { User } from "../model/types";
  * same request tree share a single network call.
  */
 export const getMe = cache(async (): Promise<User> => {
-  return apiClient.get("api/users/me").json<User>();
+  const res = await apiClient.get("api/users/me").json<{ data: User }>();
+  return res.data;
 });

@@ -1,6 +1,16 @@
 import type { Metadata } from "next";
-import { QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import { requireUser } from "@/entities/user/server";
+import { friendshipQueries } from "@/entities/friendship";
+import {
+  getFriendsServer,
+  getSentRequestsServer,
+  getReceivedRequestsServer,
+} from "@/entities/friendship/server";
 import { FriendsPage } from "@/views/friends";
 
 export const metadata: Metadata = {
@@ -9,7 +19,28 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const queryClient = new QueryClient();
-  const user = await requireUser(queryClient);
 
-  return <FriendsPage user={user} />;
+  // Prefetch with server fetchers so the panel's useSuspenseQuery hydrates
+  // instead of fetching during SSR (browser proxy URLs don't resolve there)
+  const [user] = await Promise.all([
+    requireUser(queryClient),
+    queryClient.prefetchQuery({
+      ...friendshipQueries.friends(),
+      queryFn: getFriendsServer,
+    }),
+    queryClient.prefetchQuery({
+      ...friendshipQueries.sent(),
+      queryFn: getSentRequestsServer,
+    }),
+    queryClient.prefetchQuery({
+      ...friendshipQueries.received(),
+      queryFn: getReceivedRequestsServer,
+    }),
+  ]);
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <FriendsPage user={user} />
+    </HydrationBoundary>
+  );
 }
