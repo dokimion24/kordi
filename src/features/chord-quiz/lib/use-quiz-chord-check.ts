@@ -31,6 +31,9 @@ export function useQuizChordCheck({
     midiNotes,
     enabled,
     minNotesToCheck: 2,
+    // Wait for the hand to settle: without this, the 3rd key of a 4+ note
+    // chord is judged as a wrong answer before the chord can be completed
+    debounceMs: 150,
     finalizeIncorrect: true,
     // Timer ticks re-run validation so a chord held through the cooldown still registers
     revalidateKey: timeLeft,

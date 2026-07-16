@@ -18,6 +18,7 @@ export function useQuizTimer({
   onTimeout,
 }: UseQuizTimerOptions) {
   const startTimeRef = useRef<number>(0);
+  const pausedAtRef = useRef<number>(0);
   const rafRef = useRef<number>(0);
   const onTickRef = useRef(onTick);
   const onTimeoutRef = useRef(onTimeout);
@@ -32,9 +33,8 @@ export function useQuizTimer({
     }
   }, []);
 
-  const restart = useCallback(() => {
+  const startLoop = useCallback(() => {
     stop();
-    startTimeRef.current = performance.now();
 
     const loop = () => {
       const elapsed = performance.now() - startTimeRef.current;
@@ -53,6 +53,12 @@ export function useQuizTimer({
     rafRef.current = requestAnimationFrame(loop);
   }, [duration, stop]);
 
+  const restart = useCallback(() => {
+    startTimeRef.current = performance.now();
+    pausedAtRef.current = 0;
+    startLoop();
+  }, [startLoop]);
+
   useEffect(() => {
     if (enabled) {
       restart();
@@ -61,6 +67,28 @@ export function useQuizTimer({
     }
     return stop;
   }, [enabled, resetKey, restart, stop]);
+
+  // rAF freezes in background tabs, which would otherwise stall the clock and
+  // then fire an instant timeout on return. Pause while hidden and shift the
+  // start time by the hidden duration so the countdown resumes where it left off.
+  useEffect(() => {
+    if (!enabled) return;
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        pausedAtRef.current = performance.now();
+        stop();
+      } else if (pausedAtRef.current > 0) {
+        startTimeRef.current += performance.now() - pausedAtRef.current;
+        pausedAtRef.current = 0;
+        startLoop();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibility);
+  }, [enabled, startLoop, stop]);
 
   return { restart, stop };
 }
