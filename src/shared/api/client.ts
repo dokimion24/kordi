@@ -12,6 +12,9 @@ export const apiClient: KyInstance = ky.create({
   hooks: {
     beforeRequest: [
       async (request) => {
+        // Respect an explicitly provided Authorization header (e.g. retry
+        // with a freshly reissued token) — only fill from the cookie if absent
+        if (request.headers.has("Authorization")) return;
         const cookieStore = await cookies();
         const accessToken = cookieStore.get(AUTH_COOKIES.ACCESS_TOKEN)?.value;
         if (accessToken) {

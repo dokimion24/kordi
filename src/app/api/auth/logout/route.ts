@@ -17,7 +17,8 @@ export async function POST(request: NextRequest) {
       .catch(() => {});
   }
 
-  const response = NextResponse.redirect(new URL(ROUTES.HOME, request.url));
+  // 303: form POST 후 GET으로 전환 (기본 307은 /로 POST를 반복해 405 유발)
+  const response = NextResponse.redirect(new URL(ROUTES.HOME, request.url), 303);
   response.cookies.delete(AUTH_COOKIES.ACCESS_TOKEN);
   response.cookies.delete(AUTH_COOKIES.REFRESH_TOKEN);
   return response;

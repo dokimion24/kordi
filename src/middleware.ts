@@ -49,10 +49,13 @@ export default async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL(ROUTES.LOGIN, request.url));
       }
 
-      const setCookieHeaders = reissueRes.headers.getSetCookie();
-      for (const cookie of setCookieHeaders) {
-        response.headers.append("Set-Cookie", cookie);
+      // 같은 URL로 재진입: 새 쿠키를 심은 뒤 요청을 다시 태워야
+      // 이번 렌더(RSC)도 새 액세스 토큰으로 백엔드를 호출할 수 있다
+      const retry = NextResponse.redirect(request.url);
+      for (const cookie of reissueRes.headers.getSetCookie()) {
+        retry.headers.append("Set-Cookie", cookie);
       }
+      return retry;
     } catch {
       return NextResponse.redirect(new URL(ROUTES.LOGIN, request.url));
     }
