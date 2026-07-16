@@ -5,6 +5,7 @@ import { getMessages, setRequestLocale } from "next-intl/server";
 import { ThemeProvider } from "@/shared/lib/react/theme-provider";
 import { routing } from "@/shared/config/i18n/routing";
 import { QueryProvider } from "@/shared/lib/react/query-provider";
+import { Toaster } from "@/shared/ui/sonner";
 import "../globals.css";
 
 const geistMono = Geist_Mono({
@@ -46,6 +47,7 @@ export default async function LocaleLayout({
           <QueryProvider>
             <NextIntlClientProvider messages={messages}>
               {children}
+              <Toaster />
             </NextIntlClientProvider>
           </QueryProvider>
         </ThemeProvider>
