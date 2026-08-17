@@ -29,25 +29,52 @@ const DETECTION_ORDER: [ChordType, number[]][] = [
   ),
 ].map((k) => [k, CHORD_TEMPLATES[k]]);
 
-// Omitted-fifth variants (jazz shell voicings: 1-3-7, rootful 9ths without the 5th, …).
-// Checked only when no full template matches, so they never override an exact match.
-const OMITTED_FIFTH_ORDER: [ChordType, number[]][] = DETECTION_ORDER.filter(
-  ([, template]) => template.length >= 4 && template.includes(7),
-).map(([suffix, template]) => [suffix, template.filter((iv) => iv !== 7)]);
+// Real voicings freely omit non-defining tones, so exact-template matching alone
+// misreads tension chords (LH C + RH Bb·D is C9, not A#add9/C). Omittable degrees:
+//  - perfect 5th (7): any 4+ note chord
+//  - the 3rd (3/4): only when a 7th keeps the quality readable (shell voicings)
+//    and the 5th is perfect — altered-fifth chords need their 3rd
+//  - the 9th (2): 11th/13th chords, where it's a stacked lower tension
+//  - the 11th (5): 13th chords only (in an 11th chord it's the defining top note)
+// The root and the 7th are never omittable — naming a 9/11/13 without its 7th
+// would announce a tone the player never voiced.
+function omittableIntervals(template: number[]): number[] {
+  if (template.length < 4) return [];
+  const out: number[] = [];
+  if (template.includes(7)) {
+    out.push(7);
+    if (template.includes(10) || template.includes(11)) {
+      if (template.includes(4)) out.push(4);
+      else if (template.includes(3)) out.push(3);
+    }
+  }
+  if (template.length >= 6 && template.includes(2)) out.push(2);
+  if (template.length >= 7 && template.includes(5)) out.push(5);
+  return out;
+}
 
-// 13th chords are commonly voiced without the 11th (and often the 5th too):
-// 1-3-(5)-b7-9-13. Only the plain-11 thirteenths qualify — #11 chords keep
-// their color tone. Checked after full and no5 matching.
-const PLAIN_THIRTEENTHS: ChordType[] = ["maj13", "13", "m13"];
-const OMITTED_ELEVENTH_ORDER: [ChordType, number[]][] = PLAIN_THIRTEENTHS.flatMap(
-  (suffix) => {
-    const template = CHORD_TEMPLATES[suffix];
-    return [
-      [suffix, template.filter((iv) => iv !== 5)],
-      [suffix, template.filter((iv) => iv !== 5 && iv !== 7)],
-    ] as [ChordType, number[]][];
-  },
-);
+// Every legal omission combination of every template, fewest omissions first so a
+// closer-to-complete reading always wins (e.g. m7-no5 beats 7#9-no3-no5 for 1-b3-b7).
+// Checked only when no full template matches, so they never override an exact match.
+const REDUCED_ORDER: [ChordType, number[]][] = (() => {
+  const variants: {
+    suffix: ChordType;
+    reduced: number[];
+    omitted: number;
+    priority: number;
+  }[] = [];
+  DETECTION_ORDER.forEach(([suffix, template], priority) => {
+    const omittable = omittableIntervals(template);
+    for (let mask = 1; mask < 1 << omittable.length; mask++) {
+      const omit = omittable.filter((_, i) => mask & (1 << i));
+      const reduced = template.filter((iv) => !omit.includes(iv));
+      if (reduced.length < 3) continue;
+      variants.push({ suffix, reduced, omitted: omit.length, priority });
+    }
+  });
+  variants.sort((a, b) => a.omitted - b.omitted || a.priority - b.priority);
+  return variants.map((v) => [v.suffix, v.reduced]);
+})();
 
 function matchRoots(pitchClasses: number[], template: number[]): number[] {
   if (pitchClasses.length !== template.length) return [];
@@ -101,28 +128,18 @@ export function detectChord(midiNotes: number[]): DetectedChord | null {
     };
   }
 
-  // Omitted-fifth reading rooted at the bass (e.g. C-E-Bb → C7)
-  const no5Candidates = collectCandidates(pitchClasses, OMITTED_FIFTH_ORDER);
-  const rootedNo5 = no5Candidates.find((c) => c.root === bass);
-  if (rootedNo5) {
+  // Omitted-tone reading rooted at the bass (e.g. C-E-Bb → C7, C-Bb-D → C9)
+  const reducedCandidates = collectCandidates(pitchClasses, REDUCED_ORDER);
+  const rootedReduced = reducedCandidates.find((c) => c.root === bass);
+  if (rootedReduced) {
     return {
-      primary: `${NOTE_LABELS[rootedNo5.root]}${rootedNo5.suffix}`,
-      secondary: null,
-    };
-  }
-
-  // 13th voicings without the 11th (e.g. G-B-F-A-E → G13)
-  const no11Candidates = collectCandidates(pitchClasses, OMITTED_ELEVENTH_ORDER);
-  const rootedNo11 = no11Candidates.find((c) => c.root === bass);
-  if (rootedNo11) {
-    return {
-      primary: `${NOTE_LABELS[rootedNo11.root]}${rootedNo11.suffix}`,
+      primary: `${NOTE_LABELS[rootedReduced.root]}${rootedReduced.suffix}`,
       secondary: null,
     };
   }
 
   // Bass isn't any candidate's root → inversion.
-  const best = fullCandidates[0] ?? no5Candidates[0] ?? no11Candidates[0];
+  const best = fullCandidates[0] ?? reducedCandidates[0];
   if (!best) return null;
 
   const rootName = `${NOTE_LABELS[best.root]}${best.suffix}`;
