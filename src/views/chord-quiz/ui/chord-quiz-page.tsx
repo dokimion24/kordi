@@ -11,6 +11,7 @@ import {
   QuizResult,
   QuizFeedbackOverlay,
 } from "@/widgets/chord-quiz-panel";
+import { toDisplayChordName } from "@/shared/lib/music";
 import { Countdown } from "@/shared/ui/countdown";
 import { cn } from "@/shared/lib/utils";
 
@@ -85,7 +86,7 @@ export function ChordQuizPage() {
             <div className="flex flex-col items-center gap-6">
               <ChordPrompt
                 ns="chordQuiz"
-                chordName={currentChord.name}
+                chordName={toDisplayChordName(currentChord.name)}
                 feedbackState={feedbackState}
               />
             </div>

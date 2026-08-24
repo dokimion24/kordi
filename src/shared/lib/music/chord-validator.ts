@@ -1,4 +1,5 @@
-import { CHORD_TEMPLATES, NOTE_LABELS, type ChordType } from "./chord-templates";
+import { CHORD_TEMPLATES, type ChordType } from "./chord-templates";
+import { NOTE_INDEX } from "./note-names";
 import { toPitchClasses, pitchClassesEqual } from "./pitch-class";
 
 function parseChordName(
@@ -12,19 +13,15 @@ function parseChordName(
     if (!name.endsWith(type) && type !== "") continue;
 
     const rootStr = type === "" ? name : name.slice(0, -type.length);
-    const rootIndex = NOTE_LABELS.indexOf(
-      rootStr as (typeof NOTE_LABELS)[number]
-    );
+    const rootIndex = NOTE_INDEX[rootStr];
 
-    if (rootIndex !== -1) {
+    if (rootIndex !== undefined) {
       return { rootIndex, type: type as ChordType };
     }
   }
 
-  const rootIndex = NOTE_LABELS.indexOf(
-    name as (typeof NOTE_LABELS)[number]
-  );
-  if (rootIndex !== -1) {
+  const rootIndex = NOTE_INDEX[name];
+  if (rootIndex !== undefined) {
     return { rootIndex, type: "" as ChordType };
   }
 

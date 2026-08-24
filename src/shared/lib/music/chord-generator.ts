@@ -1,4 +1,5 @@
-import { CHORD_TEMPLATES, NOTE_LABELS, type ChordType } from "./chord-templates";
+import { CHORD_TEMPLATES, type ChordType } from "./chord-templates";
+import { rootLabel } from "./note-names";
 import { ALL_KEYS, getDiatonicChords } from "./music-theory";
 
 export interface GeneratedChord {
@@ -34,7 +35,7 @@ export function generateChordPool(
   for (let root = 0; root < 12; root++) {
     for (const type of allowedTypes) {
       pool.push({
-        name: `${NOTE_LABELS[root]}${type}`,
+        name: `${rootLabel(root, type)}${type}`,
         rootIndex: root,
         type,
         pitchClasses: buildPitchClasses(root, type),

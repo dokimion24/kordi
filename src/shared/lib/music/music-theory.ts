@@ -1,4 +1,5 @@
 import { NOTE_LABELS, type ChordType } from "./chord-templates";
+import { keyLabels } from "./note-names";
 
 export interface KeySignature {
   name: string;
@@ -27,14 +28,15 @@ export function indexToRootName(index: number): string {
   return NOTE_LABELS[index % 12];
 }
 
+// Key names use signature-appropriate spellings (Bb Major, not A# Major).
 export const ALL_KEYS: KeySignature[] = [
-  ...NOTE_LABELS.map((name, i) => ({
-    name: `${name} Major`,
+  ...NOTE_LABELS.map((_, i) => ({
+    name: `${keyLabels(i, "major")[i]} Major`,
     root: i,
     mode: "major" as const,
   })),
-  ...NOTE_LABELS.map((name, i) => ({
-    name: `${name} minor`,
+  ...NOTE_LABELS.map((_, i) => ({
+    name: `${keyLabels(i, "minor")[i]} minor`,
     root: i,
     mode: "minor" as const,
   })),
@@ -54,12 +56,13 @@ export function getDiatonicChords(
   const scale = key.mode === "major" ? MAJOR_SCALE : MINOR_SCALE;
   const triads = key.mode === "major" ? MAJOR_DIATONIC : MINOR_DIATONIC;
   const sevenths = key.mode === "major" ? MAJOR_DIATONIC_7TH : MINOR_DIATONIC_7TH;
+  const labels = keyLabels(key.root, key.mode);
 
   const chords: DiatonicChord[] = [];
 
   for (let degree = 0; degree < 7; degree++) {
     const root = (key.root + scale[degree]) % 12;
-    const rootName = indexToRootName(root);
+    const rootName = labels[root];
 
     // Try triad first, then 7th
     for (const type of [triads[degree], sevenths[degree]]) {

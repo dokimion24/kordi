@@ -1,4 +1,5 @@
-import { CHORD_TEMPLATES, NOTE_LABELS, type ChordType } from "./chord-templates";
+import { CHORD_TEMPLATES, type ChordType } from "./chord-templates";
+import { rootLabel, bassLabel } from "./note-names";
 import { toPitchClasses, pitchClassesEqual } from "./pitch-class";
 
 // Detection priority, simple/common first. Kept explicit because plain object
@@ -123,7 +124,7 @@ export function detectChord(midiNotes: number[]): DetectedChord | null {
   const rootedFull = fullCandidates.find((c) => c.root === bass);
   if (rootedFull) {
     return {
-      primary: `${NOTE_LABELS[rootedFull.root]}${rootedFull.suffix}`,
+      primary: `${rootLabel(rootedFull.root, rootedFull.suffix)}${rootedFull.suffix}`,
       secondary: null,
     };
   }
@@ -133,7 +134,7 @@ export function detectChord(midiNotes: number[]): DetectedChord | null {
   const rootedReduced = reducedCandidates.find((c) => c.root === bass);
   if (rootedReduced) {
     return {
-      primary: `${NOTE_LABELS[rootedReduced.root]}${rootedReduced.suffix}`,
+      primary: `${rootLabel(rootedReduced.root, rootedReduced.suffix)}${rootedReduced.suffix}`,
       secondary: null,
     };
   }
@@ -142,8 +143,8 @@ export function detectChord(midiNotes: number[]): DetectedChord | null {
   const best = fullCandidates[0] ?? reducedCandidates[0];
   if (!best) return null;
 
-  const rootName = `${NOTE_LABELS[best.root]}${best.suffix}`;
-  const slashName = `${rootName}/${NOTE_LABELS[bass]}`;
+  const rootName = `${rootLabel(best.root, best.suffix)}${best.suffix}`;
+  const slashName = `${rootName}/${bassLabel(bass)}`;
 
   // A bass isolated an octave+ below the rest reads as a deliberate bass line →
   // the slash chord IS the name. A close-position inversion (e.g. right-hand

@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import type { QuizGameState } from "@/entities/chord-quiz";
+import { toDisplayChordName } from "@/shared/lib/music";
 import { MonoCard } from "@/shared/ui/mono-card";
 import { MonoButton } from "@/shared/ui/mono-button";
 import { SectionHeader } from "@/shared/ui/section-header";
@@ -53,7 +54,9 @@ export function QuizResult({
           >
             <div className="flex items-center gap-3">
               <span className="text-xs tabular-nums opacity-60">{i + 1}</span>
-              <span className="font-bold text-black">{q.name}</span>
+              <span className="font-bold text-black">
+                {toDisplayChordName(q.name)}
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <span className="text-[10px] font-bold uppercase tracking-widest opacity-70">
